@@ -1,131 +1,155 @@
+'use client';
+
 import LogoPremium from '@/components/LogoPremium';
 
 export default function Home() {
   return (
-    <div className="relative bg-neutral-950 min-h-screen overflow-x-hidden">
+    <div className="relative min-h-screen bg-[#0A0A0A]">
       {/* Navigation */}
-      <div className="sticky top-0 z-50 mx-auto flex max-w-5xl items-center justify-between glass-nav px-4 py-3 md:px-6 md:py-4">
-        
-        <a href="#" className="relative">
+      <nav className="fixed top-0 left-0 right-0 z-50 bg-[#0A0A0A]/80 backdrop-blur-2xl border-b border-white/5">
+        <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
           <LogoPremium />
-        </a>
+          
+          <div className="hidden lg:flex items-center gap-1">
+            <a href="#le-club" className="text-white/60 hover:text-white transition-all duration-300 text-sm font-medium px-4 py-2">
+              Le club
+            </a>
+            <span className="text-white/20">•</span>
+            <a href="#evenements" className="text-white/60 hover:text-white transition-all duration-300 text-sm font-medium px-4 py-2">
+              Événements
+            </a>
+            <span className="text-white/20">•</span>
+            <a href="#ressources" className="text-white/60 hover:text-white transition-all duration-300 text-sm font-medium px-4 py-2">
+              Ressources
+            </a>
+            <span className="text-white/20">•</span>
+            <a href="#offres" className="text-white/60 hover:text-white transition-all duration-300 text-sm font-medium px-4 py-2">
+              Offres
+            </a>
+            <span className="text-white/20">•</span>
+            <a href="#contact" className="text-white/60 hover:text-white transition-all duration-300 text-sm font-medium px-4 py-2">
+              Contact
+            </a>
+          </div>
+          
+          <div className="flex items-center gap-4">
+            <div className="hidden md:flex items-center gap-1.5 text-xs text-white/50">
+              <span>📍</span>
+              <span>Neuchâtel & environs</span>
+            </div>
+            <a href="#offres" className="px-6 py-2.5 bg-[#FF6633] hover:bg-[#FF5522] text-white text-sm font-medium rounded-full transition-all duration-300 hover:shadow-lg hover:shadow-[#FF6633]/50 hover:scale-105 animate-pulse-slow whitespace-nowrap">
+              Rejoindre BYZCLUB CORE
+            </a>
+          </div>
+        </div>
+      </nav>
+
+      {/* Hero Section */}
+      <section className="relative min-h-screen flex items-center px-6 pt-32 pb-20 overflow-hidden">
+        {/* Background Gradient - Local Sunset */}
+        <div className="absolute inset-0 bg-gradient-to-br from-[#0A0A0A] via-[#1a1520] to-[#0A0A0A]"></div>
+        <div className="absolute inset-0 opacity-[0.015]" style={{backgroundImage: 'url("data:image/svg+xml,%3Csvg width="200" height="200" xmlns="http://www.w3.org/2000/svg"%3E%3Cfilter id="noise"%3E%3CfeTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="4" /%3E%3C/filter%3E%3Crect width="100%25" height="100%25" filter="url(%23noise)" /%3E%3C/svg%3E")'}}></div>
         
-        <nav className="hidden lg:flex items-center gap-8 text-sm font-medium text-neutral-300">
-          <a href="#" className="hover:text-cyan-400 transition-colors">Accueil</a>
-          <a href="#services" className="hover:text-cyan-400 transition-colors">Services</a>
-          <a href="#comment-ca-marche" className="hover:text-cyan-400 transition-colors">Comment ça marche</a>
-          <a href="#formules" className="hover:text-cyan-400 transition-colors">Formules</a>
-          <a href="#contact" className="hover:text-cyan-400 transition-colors">Contact</a>
-        </nav>
+        {/* Orange Glow */}
+        <div className="absolute bottom-[-100px] left-1/2 -translate-x-1/2 w-[1000px] h-[500px] bg-gradient-to-t from-[#FF6633] via-[#FF6633]/40 to-transparent opacity-20 blur-[120px] rounded-full"></div>
         
-        <div className="flex items-center gap-3">
-          <a href="#" className="hidden lg:inline-flex items-center gap-2 px-4 py-2 text-sm text-neutral-300 hover:text-cyan-400 transition-colors">
-            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-            </svg>
-            Login
-          </a>
-          <a href="#contact" className="btn-primary px-4 py-2 text-sm">
-            Prendre RDV
-          </a>
-        </div>
-      </div>
-
-      {/* Section Hero - Premium Dark Style */}
-      <section className="relative pt-32 pb-24 px-6 overflow-hidden min-h-screen flex items-center">
-        {/* Premium gradient orbs */}
-        <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-gradient-to-br from-cyan-500/20 via-violet-500/10 to-transparent rounded-full blur-3xl -translate-y-1/2 translate-x-1/4 animate-morph"></div>
-        <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-gradient-to-tr from-neutral-700/30 to-transparent rounded-full blur-3xl translate-y-1/3 -translate-x-1/4 animate-morph delay-300"></div>
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[900px] h-[900px] bg-gradient-to-r from-neutral-800/20 to-transparent rounded-full blur-3xl"></div>
-        <div className="mx-auto max-w-7xl w-full">
-          <div className="grid lg:grid-cols-2 gap-12 items-start">
-            {/* Left Content */}
-            <div className="pt-8">
-              <div className="inline-flex items-center gap-3 text-sm mb-10 animate-fade-in-up">
-                <span className="w-2 h-2 rounded-full bg-cyan-500 animate-pulse shadow-lg shadow-cyan-500/50"></span>
-                <span className="text-neutral-400 uppercase tracking-widest font-medium">Basé à Neuchâtel</span>
-              </div>
-              
-              <h1 className="text-5xl md:text-6xl lg:text-[5.5rem] font-bold tracking-tight leading-[0.95] mb-10 animate-fade-in-up delay-100">
-                <span className="block text-white">PLUS DE CLIENTS.</span>
-                <span className="block text-neutral-300">MOINS DE TEMPS</span>
-                <span className="block text-gradient-primary">PERDU.</span>
-              </h1>
-              
-              <p className="text-lg text-neutral-400 mb-10 max-w-md leading-relaxed animate-fade-in-up delay-200">
-                BYZCLUB aide les commerçants et entrepreneurs de Neuchâtel à attirer plus de clients grâce à une communication claire, efficace et 100% locale.
-              </p>
-              
-              <div className="flex items-center gap-6 animate-fade-in-up delay-300">
-                <a
-                  href="#formules"
-                  className="group inline-flex items-center gap-3 rounded-full bg-gradient-to-r from-cyan-500 to-violet-500 px-8 py-4 text-sm font-medium text-white transition-all hover:scale-105 hover:shadow-2xl hover:shadow-cyan-500/50"
-                >
-                  Rejoindre BYZCLUB
-                  <svg className="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                  </svg>
-                </a>
-                <a href="#comment-ca-marche" className="text-sm font-medium text-neutral-400 hover:text-white transition-colors">Comment ça marche</a>
-              </div>
+        <div className="relative z-10 max-w-7xl mx-auto grid lg:grid-cols-2 gap-12 items-center">
+          {/* Left Content */}
+          <div>
+            {/* Badge Local */}
+            <div className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#FF6633]/10 backdrop-blur-xl border border-[#FF6633]/30 mb-8">
+              <span className="text-[#FF6633] text-sm font-bold">100% local</span>
+              <span className="text-white/50 text-sm">—</span>
+              <span className="text-white/80 text-sm font-medium">Neuchâtel & environs</span>
             </div>
 
-            {/* Right - Premium Glass Cards */}
-            <div className="relative h-[400px] md:h-[500px] lg:h-[600px] hidden md:block animate-fade-in delay-200">
-              {/* Main glass card */}
-              <div className="absolute top-0 right-0 w-72 h-72 lg:w-80 lg:h-80 card-premium rounded-3xl overflow-hidden animate-float shadow-2xl shadow-black/50">
-                <div className="w-full h-full flex items-center justify-center">
-                  <div className="text-center p-6">
-                    <div className="text-cyan-500 text-6xl font-bold mb-2">+40%</div>
-                    <div className="text-neutral-400 text-sm">Visibilité</div>
-                  </div>
-                </div>
-              </div>
-              
-              {/* Secondary glass card */}
-              <div className="absolute bottom-20 left-0 w-56 h-56 lg:w-64 lg:h-64 card-premium rounded-3xl overflow-hidden animate-float delay-200 shadow-xl shadow-black/40">
-                <div className="w-full h-full flex items-center justify-center">
-                  <div className="text-center p-6">
-                    <div className="text-white text-4xl font-bold mb-2">100%</div>
-                    <div className="text-neutral-400 text-sm">Local</div>
-                  </div>
-                </div>
-              </div>
-              
-              {/* Small accent card */}
-              <div className="absolute top-1/2 left-1/3 w-32 h-32 glass-light rounded-2xl overflow-hidden animate-morph shadow-xl">
-                <div className="w-full h-full flex items-center justify-center">
-                  <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-cyan-500 to-violet-500 flex items-center justify-center shadow-lg shadow-cyan-500/30">
-                    <svg className="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-                    </svg>
-                  </div>
-                </div>
-              </div>
+            {/* H1 */}
+            <h1 className="text-5xl md:text-6xl lg:text-7xl font-light text-white mb-6 leading-[1.05]">
+              Visibilité locale.<br />
+              Réseau.<br />
+              <span className="font-seasons italic text-[#FF6633]">Actions concrètes.</span>
+            </h1>
 
-              {/* Floating glass badge - Stats */}
-              <div className="absolute top-4 right-4 glass-light rounded-2xl shadow-xl px-5 py-3 flex items-center gap-3 animate-slide-in-right delay-400">
-                <div className="text-right">
-                  <div className="text-2xl font-bold text-white">2h</div>
-                  <div className="text-xs text-neutral-400 uppercase tracking-wider">Gagnées</div>
-                </div>
-                <div className="w-10 h-10 rounded-full bg-gradient-to-br from-cyan-500 to-violet-500 flex items-center justify-center">
-                  <svg className="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                  </svg>
-                </div>
-              </div>
+            {/* Sous-titre */}
+            <p className="text-xl text-white/70 mb-10 leading-relaxed max-w-2xl">
+              Chaque mois : <strong className="text-white">1 networking</strong> + <strong className="text-white">1 workshop</strong> + <strong className="text-white">1 Q&A</strong>.<br />
+              Tu repars avec un plan simple et tu avances avec les bons contacts.
+            </p>
 
-              {/* Floating glass badge - Location */}
-              <div className="absolute bottom-32 right-8 glass-light rounded-2xl shadow-xl px-4 py-3 animate-slide-in-right delay-500">
-                <div className="flex items-center gap-2">
-                  <div className="w-8 h-8 rounded-lg bg-cyan-500/20 flex items-center justify-center">
-                    <svg className="w-4 h-4 text-cyan-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                    </svg>
+            {/* CTAs */}
+            <div className="flex flex-col sm:flex-row items-start gap-4 mb-8">
+              <a href="#offres" className="inline-flex items-center gap-2 px-10 py-4 bg-[#FF6633] hover:bg-[#FF5522] text-white text-base font-medium rounded-full transition-all duration-300 hover:shadow-xl hover:shadow-[#FF6633]/50 hover:scale-105">
+                Rejoindre CORE (CHF 59.–/mois)
+                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                </svg>
+              </a>
+              <a href="#contact" className="px-10 py-4 text-white/80 hover:text-white transition-all duration-300 text-base rounded-full hover:bg-white/5 border border-white/10">
+                Demander un audit express (15 min)
+              </a>
+            </div>
+
+            {/* Micro-réassurance */}
+            <div className="flex flex-wrap items-center gap-4 text-white/40 text-sm">
+              <div className="flex items-center gap-2">
+                <svg className="w-4 h-4 text-[#FF6633]" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                </svg>
+                <span>Engagement 3 mois</span>
+              </div>
+              <span className="text-white/20">•</span>
+              <div className="flex items-center gap-2">
+                <svg className="w-4 h-4 text-[#FF6633]" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                </svg>
+                <span>Ensuite mensuel</span>
+              </div>
+              <span className="text-white/20">•</span>
+              <div className="flex items-center gap-2">
+                <svg className="w-4 h-4 text-[#FF6633]" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                </svg>
+                <span>Places limitées</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Right - Ce mois-ci Card */}
+          <div className="hidden lg:block">
+            <div className="relative bg-gradient-to-br from-white/[0.08] to-white/[0.02] backdrop-blur-xl border border-white/10 rounded-3xl p-8 overflow-hidden">
+              {/* Glow */}
+              <div className="absolute top-0 right-0 w-32 h-32 bg-[#FF6633] opacity-10 blur-[60px] rounded-full"></div>
+              
+              <div className="relative z-10">
+                <div className="flex items-center justify-between mb-8">
+                  <h3 className="text-white font-bebas text-2xl tracking-wider">CE MOIS-CI</h3>
+                  <div className="px-3 py-1 rounded-full bg-[#FF6633]/20 text-[#FF6633] text-xs font-medium">Aperçu</div>
+                </div>
+                
+                <div className="space-y-5">
+                  <div className="p-4 rounded-2xl bg-white/[0.03] border border-white/10">
+                    <div className="flex items-center gap-2 mb-2">
+                      <div className="w-2 h-2 rounded-full bg-[#FF6633]"></div>
+                      <p className="text-white/50 text-xs font-bebas tracking-wider">NETWORKING</p>
+                    </div>
+                    <p className="text-white font-medium">12 février, 18h30</p>
                   </div>
-                  <span className="text-sm font-medium text-white">Neuchâtel</span>
+                  
+                  <div className="p-4 rounded-2xl bg-white/[0.03] border border-white/10">
+                    <div className="flex items-center gap-2 mb-2">
+                      <div className="w-2 h-2 rounded-full bg-white/40"></div>
+                      <p className="text-white/50 text-xs font-bebas tracking-wider">WORKSHOP</p>
+                    </div>
+                    <p className="text-white font-medium">Créer une offre qui génère des demandes</p>
+                  </div>
+                  
+                  <div className="p-4 rounded-2xl bg-white/[0.03] border border-white/10">
+                    <div className="flex items-center gap-2 mb-2">
+                      <div className="w-2 h-2 rounded-full bg-white/40"></div>
+                      <p className="text-white/50 text-xs font-bebas tracking-wider">OFFICE HOURS</p>
+                    </div>
+                    <p className="text-white font-medium">26 février, 17h00</p>
+                  </div>
                 </div>
               </div>
             </div>
@@ -133,604 +157,718 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Section Stats */}
-      <section className="relative py-20 px-6 bg-neutral-900 border-y border-neutral-800">
-        <div className="mx-auto max-w-7xl w-full">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-12 md:gap-16">
-            <div className="text-center group hover:scale-110 transition-transform duration-300">
-              <div className="text-5xl md:text-6xl font-bold text-white mb-3 cyan-glow">+40%</div>
-              <div className="text-sm text-neutral-400 font-medium uppercase tracking-wider">de visibilité</div>
+      {/* Bandeau Preuves - Bento Grid */}
+      <section className="relative py-20 px-6">
+        <div className="max-w-7xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+            {/* 1 networking */}
+            <div className="group relative bg-gradient-to-br from-white/[0.08] to-white/[0.02] backdrop-blur-xl border border-white/10 rounded-3xl p-8 hover:border-[#FF6633]/30 transition-all duration-300">
+              <div className="text-6xl font-bebas text-[#FF6633] mb-4">1</div>
+              <h3 className="text-white font-bebas text-lg tracking-wider mb-2">NETWORKING / MOIS</h3>
+              <p className="text-white/60 text-sm">→ connexions locales</p>
             </div>
-            <div className="text-center group hover:scale-110 transition-transform duration-300">
-              <div className="text-5xl md:text-6xl font-bold text-white mb-3">2h</div>
-              <div className="text-sm text-neutral-400 font-medium uppercase tracking-wider">gagnées/semaine</div>
+
+            {/* 1 workshop */}
+            <div className="group relative bg-gradient-to-br from-white/[0.08] to-white/[0.02] backdrop-blur-xl border border-white/10 rounded-3xl p-8 hover:border-[#FF6633]/30 transition-all duration-300">
+              <div className="text-6xl font-bebas text-[#FF6633] mb-4">1</div>
+              <h3 className="text-white font-bebas text-lg tracking-wider mb-2">WORKSHOP / MOIS</h3>
+              <p className="text-white/60 text-sm">→ compétence + application</p>
             </div>
-            <div className="text-center group hover:scale-110 transition-transform duration-300">
-              <div className="text-5xl md:text-6xl font-bold text-white mb-3">100%</div>
-              <div className="text-sm text-neutral-400 font-medium uppercase tracking-wider">local</div>
+
+            {/* 1 Q&A */}
+            <div className="group relative bg-gradient-to-br from-white/[0.08] to-white/[0.02] backdrop-blur-xl border border-white/10 rounded-3xl p-8 hover:border-[#FF6633]/30 transition-all duration-300">
+              <div className="text-6xl font-bebas text-[#FF6633] mb-4">1</div>
+              <h3 className="text-white font-bebas text-lg tracking-wider mb-2">Q&A / MOIS</h3>
+              <p className="text-white/60 text-sm">→ blocages réglés</p>
             </div>
-            <div className="text-center group hover:scale-110 transition-transform duration-300">
-              <div className="text-5xl md:text-6xl font-bold text-white mb-3">0</div>
-              <div className="text-sm text-neutral-400 font-medium uppercase tracking-wider">jargon</div>
+
+            {/* Ressources */}
+            <div className="group relative bg-gradient-to-br from-white/[0.08] to-white/[0.02] backdrop-blur-xl border border-white/10 rounded-3xl p-8 hover:border-[#FF6633]/30 transition-all duration-300">
+              <div className="w-12 h-12 rounded-2xl bg-[#FF6633]/20 flex items-center justify-center mb-4">
+                <svg className="w-6 h-6 text-[#FF6633]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                </svg>
+              </div>
+              <h3 className="text-white font-bebas text-lg tracking-wider mb-2">RESSOURCES + ANNUAIRE</h3>
+              <p className="text-white/60 text-sm">→ exécution plus rapide</p>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Section Services - Premium Dark Style */}
-      <section id="services" className="relative py-32 px-6 bg-neutral-950 overflow-hidden">
-        {/* Premium gradient blobs */}
-        <div className="absolute top-1/2 left-0 w-[500px] h-[500px] bg-gradient-to-r from-cyan-500/10 to-transparent rounded-full blur-3xl -translate-x-1/2 animate-float"></div>
-        <div className="absolute bottom-0 right-0 w-[400px] h-[400px] bg-gradient-to-l from-neutral-700/20 to-transparent rounded-full blur-3xl translate-x-1/3 animate-float-delayed"></div>
-        <div className="mx-auto max-w-7xl w-full">
-          {/* Header with images */}
-          <div className="grid lg:grid-cols-2 gap-12 mb-20">
-            <div>
-              <p className="text-sm text-cyan-500 uppercase tracking-widest font-medium mb-6">Ce qu'on fait pour vous</p>
-              <h2 className="text-4xl md:text-5xl font-bold tracking-tight mb-6">
-                <span className="text-white">Tout ce qu'il faut pour</span><br />
-                <span className="text-gradient-cyan-violet">attirer plus de clients</span>
-              </h2>
-              <p className="text-lg text-neutral-400 max-w-lg leading-relaxed">
-                Formation, accompagnement et services pros. On vous donne les outils et l'expertise pour que votre commerce soit visible là où ça compte : à Neuchâtel.
-              </p>
-            </div>
-            <div className="flex gap-4 items-center justify-end">
-              {/* Circular images like in design */}
-              <div className="w-32 h-32 card-premium rounded-3xl animate-morph shadow-xl shadow-black/50">
-                <div className="w-full h-full flex items-center justify-center text-cyan-500 text-xs font-medium">Creative</div>
-              </div>
-              <div className="w-40 h-40 card-premium rounded-3xl animate-morph delay-200 shadow-xl shadow-black/50">
-                <div className="w-full h-full flex items-center justify-center text-white text-xs font-medium">Strategy</div>
-              </div>
-              <div className="w-28 h-28 card-premium rounded-3xl animate-morph delay-400 shadow-xl shadow-black/50">
-                <div className="w-full h-full flex items-center justify-center text-cyan-500 text-xs font-medium">Results</div>
-              </div>
-            </div>
+      {/* Section Le club */}
+      <section id="le-club" className="relative py-32 px-6 overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#0A1E2E]/20 to-[#0F0F0F]"></div>
+        <div className="absolute top-0 left-1/4 w-[600px] h-[600px] bg-[#FF6633] opacity-[0.03] blur-[150px] rounded-full"></div>
+        
+        <div className="relative z-10 max-w-6xl mx-auto">
+          <div className="text-center mb-20">
+            <h2 className="text-4xl md:text-5xl lg:text-6xl font-light text-white mb-4 leading-[1.1]">
+              BYZCLUB = du terrain + du réseau +<br />
+              <span className="font-seasons italic text-[#FF6633]">du momentum.</span>
+            </h2>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <div className="group relative card-premium rounded-3xl p-8 shadow-2xl hover:shadow-cyan-500/20 transition-all duration-500 hover:-translate-y-2">
-              <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/10 to-transparent rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-              <div className="relative">
-                <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-cyan-500 to-violet-500 flex items-center justify-center text-white text-lg font-bold mb-6 group-hover:scale-110 transition-transform duration-300 shadow-lg shadow-cyan-500/30">01</div>
-                <h3 className="text-xl font-bold text-white mb-3">Réseaux sociaux</h3>
-                <p className="text-neutral-400 leading-relaxed">
-                  Une présence en ligne qui attire vos clients locaux, sans y passer vos soirées
-                </p>
-              </div>
+          {/* 3 Piliers */}
+          <div className="grid md:grid-cols-3 gap-8">
+            {/* Clarté */}
+            <div className="relative bg-gradient-to-br from-white/[0.08] to-white/[0.02] backdrop-blur-xl border border-white/10 rounded-3xl p-12 text-center hover:border-[#FF6633]/30 transition-all duration-300">
+              <div className="text-8xl font-bebas text-[#FF6633]/20 mb-6">01</div>
+              <h3 className="text-white font-bebas text-5xl tracking-wider mb-6">CLARTÉ</h3>
+              <p className="text-white/70 text-base">Message, offre, contenu, priorités</p>
             </div>
 
-            <div className="group relative card-premium rounded-3xl p-8 shadow-2xl hover:shadow-cyan-500/20 transition-all duration-500 hover:-translate-y-2">
-              <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/10 to-transparent rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-              <div className="relative">
-                <div className="w-14 h-14 rounded-2xl bg-neutral-800 border border-cyan-500/30 flex items-center justify-center text-cyan-500 text-lg font-bold mb-6 group-hover:scale-110 transition-transform duration-300">02</div>
-                <h3 className="text-xl font-bold text-white mb-3">Contenu pro</h3>
-                <p className="text-neutral-400 leading-relaxed">
-                  Photos, vidéos et visuels qui donnent envie. Vous restez focus sur votre métier
-                </p>
-              </div>
+            {/* Cadence */}
+            <div className="relative bg-gradient-to-br from-white/[0.08] to-white/[0.02] backdrop-blur-xl border border-white/10 rounded-3xl p-12 text-center hover:border-[#FF6633]/30 transition-all duration-300">
+              <div className="text-8xl font-bebas text-[#FF6633]/20 mb-6">02</div>
+              <h3 className="text-white font-bebas text-5xl tracking-wider mb-6">CADENCE</h3>
+              <p className="text-white/70 text-base">3 rendez-vous/mois (non négociable)</p>
             </div>
 
-            <div className="group relative card-premium rounded-3xl p-8 shadow-2xl hover:shadow-cyan-500/20 transition-all duration-500 hover:-translate-y-2">
-              <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/10 to-transparent rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-              <div className="relative">
-                <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-cyan-500 to-violet-500 flex items-center justify-center text-white text-lg font-bold mb-6 group-hover:scale-110 transition-transform duration-300 shadow-lg shadow-cyan-500/30">03</div>
-                <h3 className="text-xl font-bold text-white mb-3">Publicité locale</h3>
-                <p className="text-neutral-400 leading-relaxed">
-                  Des campagnes qui touchent les bonnes personnes, dans votre zone de chalandise
-                </p>
-              </div>
-            </div>
-
-            <div className="group relative card-premium rounded-3xl p-8 shadow-2xl hover:shadow-cyan-500/20 transition-all duration-500 hover:-translate-y-2">
-              <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/10 to-transparent rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-              <div className="relative">
-                <div className="w-14 h-14 rounded-2xl bg-neutral-800 border border-cyan-500/30 flex items-center justify-center text-cyan-500 text-lg font-bold mb-6 group-hover:scale-110 transition-transform duration-300">04</div>
-                <h3 className="text-xl font-bold text-white mb-3">Image de marque</h3>
-                <p className="text-neutral-400 leading-relaxed">
-                  Logo, site web, supports : une image pro qui inspire confiance dès le premier regard
-                </p>
-              </div>
-            </div>
-
-            <div className="group relative card-premium rounded-3xl p-8 shadow-2xl hover:shadow-cyan-500/20 transition-all duration-500 hover:-translate-y-2">
-              <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/10 to-transparent rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-              <div className="relative">
-                <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-cyan-500 to-violet-500 flex items-center justify-center text-white text-lg font-bold mb-6 group-hover:scale-110 transition-transform duration-300 shadow-lg shadow-cyan-500/30">05</div>
-                <h3 className="text-xl font-bold text-white mb-3">Formation pratique</h3>
-                <p className="text-neutral-400 leading-relaxed">
-                  Apprenez à communiquer efficacement. Des sessions concrètes, pas de théorie inutile
-                </p>
-              </div>
-            </div>
-
-            <div className="group relative card-premium rounded-3xl p-8 shadow-2xl hover:shadow-cyan-500/20 transition-all duration-500 hover:-translate-y-2">
-              <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/10 to-transparent rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-              <div className="relative">
-                <div className="w-14 h-14 rounded-2xl bg-neutral-800 border border-cyan-500/30 flex items-center justify-center text-cyan-500 text-lg font-bold mb-6 group-hover:scale-110 transition-transform duration-300">06</div>
-                <h3 className="text-xl font-bold text-white mb-3">Réseau local</h3>
-                <p className="text-neutral-400 leading-relaxed">
-                  Rencontrez d'autres entrepreneurs de Neuchâtel. Entraide, recommandations, opportunités
-                </p>
-              </div>
+            {/* Opportunités */}
+            <div className="relative bg-gradient-to-br from-white/[0.08] to-white/[0.02] backdrop-blur-xl border border-white/10 rounded-3xl p-12 text-center hover:border-[#FF6633]/30 transition-all duration-300">
+              <div className="text-8xl font-bebas text-[#FF6633]/20 mb-6">03</div>
+              <h3 className="text-white font-bebas text-5xl tracking-wider mb-6">OPPORTUNITÉS</h3>
+              <p className="text-white/70 text-base">Communauté + annuaire + partenaires</p>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Section Process - Premium Style */}
-      <section id="comment-ca-marche" className="relative py-32 px-6 bg-neutral-900 overflow-hidden">
-        {/* Premium decorative elements */}
-        <div className="absolute top-20 right-10 w-[400px] h-[400px] bg-gradient-to-br from-cyan-500/10 to-transparent rounded-full blur-3xl animate-pulse-subtle"></div>
-        <div className="absolute bottom-20 left-10 w-[350px] h-[350px] bg-gradient-to-tr from-neutral-700/20 to-transparent rounded-full blur-3xl animate-pulse-subtle delay-300"></div>
-        <div className="mx-auto max-w-5xl w-full">
+      {/* Section Cadence mensuelle CORE */}
+      <section className="relative py-32 px-6 overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-b from-[#0F0F0F] to-[#0A0A0A]"></div>
+        
+        <div className="relative z-10 max-w-5xl mx-auto">
           <div className="text-center mb-16">
-            <p className="text-sm text-cyan-500 uppercase tracking-widest font-medium mb-6">Comment ça marche</p>
-            <h2 className="text-4xl md:text-5xl font-bold tracking-tight mb-6">
-              <span className="text-white">De zéro à visible</span><br />
-              <span className="text-gradient-cyan-violet">en 4 étapes simples</span>
+            <h2 className="text-4xl md:text-5xl lg:text-6xl font-light text-white mb-6">
+              Un plan mensuel.<br />
+              <span className="font-seasons italic text-[#FF6633]">Trois rendez-vous obligatoires.</span>
             </h2>
-            <p className="text-lg text-neutral-400 max-w-xl mx-auto">
-              Pas de blabla. On clarifie, on structure, on exécute. Vous voyez les résultats.
+            <p className="text-lg text-white/60 max-w-2xl mx-auto">
+              Chaque mois, tu sais où tu vas. Chaque mois, tu rencontres les bonnes personnes.
             </p>
           </div>
 
-          {/* Premium Process Cards Grid */}
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mt-12">
-            {/* Card 1 - Diagnostic */}
-            <div className="group relative card-premium rounded-3xl p-8 shadow-2xl hover:shadow-cyan-500/20 transition-all duration-500 hover:-translate-y-2">
-              <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/10 to-transparent rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-              <div className="relative">
-                <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-cyan-500 to-violet-500 flex items-center justify-center text-white text-lg font-bold mb-6 group-hover:scale-110 transition-transform duration-300 shadow-lg shadow-cyan-500/30">01</div>
-                <h3 className="text-xl font-bold text-white mb-3">Diagnostic</h3>
-                <p className="text-neutral-400 leading-relaxed">
-                  On fait le point sur votre situation. Ce qui marche, ce qui bloque, et où sont vos opportunités.
-                </p>
+          <div className="grid lg:grid-cols-2 gap-12">
+            {/* Timeline verticale */}
+            <div className="space-y-8">
+              <div className="relative pl-8 border-l-2 border-[#FF6633]/30">
+                <div className="absolute left-[-9px] top-0 w-4 h-4 rounded-full bg-[#FF6633]"></div>
+                <div className="mb-2">
+                  <span className="text-[#FF6633] text-sm font-bebas tracking-wider">SEMAINE 1-2</span>
+                </div>
+                <h3 className="text-white text-2xl font-bebas tracking-wider mb-2">NETWORKING</h3>
+                <p className="text-white/70">20-30 entrepreneurs locaux. Format simple : présentation + échanges libres + follow-up.</p>
+              </div>
+
+              <div className="relative pl-8 border-l-2 border-white/10">
+                <div className="absolute left-[-9px] top-0 w-4 h-4 rounded-full bg-white/40"></div>
+                <div className="mb-2">
+                  <span className="text-white/50 text-sm font-bebas tracking-wider">SEMAINE 2-3</span>
+                </div>
+                <h3 className="text-white text-2xl font-bebas tracking-wider mb-2">WORKSHOP</h3>
+                <p className="text-white/70">1 compétence concrète. Format : théorie rapide + exercice pratique + retours en live.</p>
+              </div>
+
+              <div className="relative pl-8 border-l-2 border-white/10">
+                <div className="absolute left-[-9px] top-0 w-4 h-4 rounded-full bg-white/40"></div>
+                <div className="mb-2">
+                  <span className="text-white/50 text-sm font-bebas tracking-wider">SEMAINE 4</span>
+                </div>
+                <h3 className="text-white text-2xl font-bebas tracking-wider mb-2">OFFICE HOURS (Q&A)</h3>
+                <p className="text-white/70">Tu viens avec tes blocages. On règle ça ensemble. Hot seat ouvert.</p>
               </div>
             </div>
 
-            {/* Card 2 - Plan d'action */}
-            <div className="group relative card-premium rounded-3xl p-8 shadow-2xl hover:shadow-cyan-500/20 transition-all duration-500 hover:-translate-y-2">
-              <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/10 to-transparent rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-              <div className="relative">
-                <div className="w-12 h-12 rounded-2xl bg-neutral-800 border border-cyan-500/30 flex items-center justify-center text-cyan-500 text-lg font-bold mb-6 group-hover:scale-110 transition-transform duration-300">02</div>
-                <h3 className="text-xl font-bold text-white mb-3">Plan d'action</h3>
-                <p className="text-neutral-400 leading-relaxed">
-                  On définit ensemble les priorités. Quoi faire, dans quel ordre, avec quels moyens.
-                </p>
+            {/* Résultat attendu */}
+            <div className="flex items-center">
+              <div className="bg-gradient-to-br from-[#FF6633]/10 to-[#FF6633]/5 backdrop-blur-xl border border-[#FF6633]/30 rounded-3xl p-10">
+                <h3 className="text-white font-bebas text-3xl tracking-wider mb-6">RÉSULTAT ATTENDU</h3>
+                <div className="space-y-4">
+                  <div className="flex items-start gap-3">
+                    <svg className="w-6 h-6 text-[#FF6633] flex-shrink-0 mt-1" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                    </svg>
+                    <p className="text-white text-lg">Plus de demandes entrantes</p>
+                  </div>
+                  <div className="flex items-start gap-3">
+                    <svg className="w-6 h-6 text-[#FF6633] flex-shrink-0 mt-1" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                    </svg>
+                    <p className="text-white text-lg">Plus de contacts pertinents</p>
+                  </div>
+                </div>
               </div>
             </div>
-
-            {/* Card 3 - Exécution */}
-            <div className="group relative card-premium rounded-3xl p-8 shadow-2xl hover:shadow-cyan-500/20 transition-all duration-500 hover:-translate-y-2">
-              <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/10 to-transparent rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-              <div className="relative">
-                <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-cyan-500 to-violet-500 flex items-center justify-center text-white text-lg font-bold mb-6 group-hover:scale-110 transition-transform duration-300 shadow-lg shadow-cyan-500/30">03</div>
-                <h3 className="text-xl font-bold text-white mb-3">Exécution</h3>
-                <p className="text-neutral-400 leading-relaxed">
-                  On passe à l'action. Vous apprenez ou on fait pour vous. Dans les deux cas, ça avance.
-                </p>
-              </div>
-            </div>
-
-            {/* Card 4 - Résultats */}
-            <div className="group relative card-premium rounded-3xl p-8 shadow-2xl hover:shadow-cyan-500/20 transition-all duration-500 hover:-translate-y-2">
-              <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/10 to-transparent rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-              <div className="relative">
-                <div className="w-12 h-12 rounded-2xl bg-neutral-800 border border-cyan-500/30 flex items-center justify-center text-cyan-500 text-lg font-bold mb-6 group-hover:scale-110 transition-transform duration-300">04</div>
-                <h3 className="text-xl font-bold text-white mb-3">Résultats</h3>
-                <p className="text-neutral-400 leading-relaxed">
-                  On mesure ce qui fonctionne. On ajuste. Votre visibilité augmente, vos clients aussi.
-                </p>
-              </div>
-            </div>
-          </div>
-
-          {/* Premium CTA */}
-          <div className="text-center mt-20">
-            <p className="text-3xl md:text-4xl font-bold mb-8">
-              <span className="text-white">"Prêt à être enfin <span className="text-gradient-cyan-violet">visible</span> ?"</span>
-            </p>
-            <a href="#formules" className="inline-flex items-center gap-3 rounded-full bg-gradient-to-r from-cyan-500 to-violet-500 px-8 py-4 text-white font-medium hover:scale-105 hover:shadow-2xl hover:shadow-cyan-500/50 transition-all">
-              Découvrir les formules
-              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-              </svg>
-            </a>
           </div>
         </div>
       </section>
 
-      {/* Section Formules - Premium Style */}
-      <section id="formules" className="relative py-32 px-6 bg-neutral-950 overflow-hidden">
-        {/* Premium gradient orbs */}
-        <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-gradient-to-br from-cyan-500/10 to-transparent rounded-full blur-3xl animate-morph"></div>
-        <div className="absolute bottom-0 right-1/4 w-[450px] h-[450px] bg-gradient-to-tl from-neutral-700/20 to-transparent rounded-full blur-3xl animate-morph delay-300"></div>
-        <div className="mx-auto max-w-7xl w-full">
-          <div className="text-center mb-20">
-            <p className="text-sm text-cyan-500 uppercase tracking-widest font-medium mb-6">Nos offres</p>
-            <h2 className="text-5xl font-bold tracking-tight mb-6">
-              <span className="text-white">Deux formules.</span>
-              <span className="text-gradient-cyan-violet"> Un objectif.</span>
+      {/* Section Événements */}
+      <section id="evenements" className="relative py-32 px-6 overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-b from-[#0A0A0A] to-[#0F0F0F]"></div>
+        <div className="absolute bottom-0 right-1/4 w-[600px] h-[600px] bg-[#FF6633] opacity-[0.03] blur-[150px] rounded-full"></div>
+        
+        <div className="relative z-10 max-w-6xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl md:text-5xl lg:text-6xl font-light text-white mb-6">
+              On se voit en vrai.<br />
+              <span className="font-seasons italic text-[#FF6633]">C&#39;est là que ça accélère.</span>
             </h2>
-            <p className="text-lg text-neutral-400 max-w-2xl mx-auto">
-              Que vous vouliez apprendre à faire vous-même ou déléguer, on a ce qu'il vous faut.
+            <p className="text-lg text-white/60 max-w-2xl mx-auto">
+              Pas de formats compliqués. Pas de blabla théorique. Des rendez-vous simples, efficaces, utiles.
             </p>
           </div>
 
-          <div className="grid lg:grid-cols-2 gap-8 max-w-5xl mx-auto">
-            {/* Formule ESSENTIEL */}
-            <div className="group relative card-premium rounded-3xl p-10 shadow-2xl hover:shadow-cyan-500/20 transition-all duration-500 hover:-translate-y-2">
-              <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/10 to-transparent rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-              <div className="relative mb-8">
-                <div className="inline-block rounded-full bg-neutral-800 border border-cyan-500/30 px-4 py-2 text-sm font-semibold text-cyan-500 mb-4">
-                  ESSENTIEL
-                </div>
-                <div className="flex items-baseline gap-2 mb-2">
-                  <span className="text-6xl font-bold tracking-tight text-white">49</span>
-                  <div className="flex flex-col">
-                    <span className="text-sm text-neutral-500">-79</span>
-                    <span className="text-sm text-neutral-400">CHF/mois</span>
-                  </div>
-                </div>
-                <p className="text-neutral-400">Idéal pour apprendre et structurer votre communication</p>
-              </div>
+          <div className="grid lg:grid-cols-2 gap-8 mb-12">
+            {/* Prochain événement */}
+            <div className="relative bg-gradient-to-br from-white/[0.08] to-white/[0.02] backdrop-blur-xl border border-white/10 rounded-3xl p-10 overflow-hidden">
+              <div className="absolute top-0 right-0 w-32 h-32 bg-[#FF6633] opacity-10 blur-[60px] rounded-full"></div>
               
-              <div className="relative space-y-4 mb-10">
-                <div className="flex gap-3 items-start">
-                  <div className="w-6 h-6 rounded-full bg-cyan-500 flex items-center justify-center flex-shrink-0 mt-0.5">
-                    <svg className="w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+              <div className="relative z-10">
+                <div className="inline-block px-3 py-1 rounded-full bg-[#FF6633]/20 text-[#FF6633] text-xs font-bebas tracking-wider mb-6">PROCHAIN ÉVÉNEMENT</div>
+                
+                <h3 className="text-white text-3xl font-bebas tracking-wider mb-6">NETWORKING FÉVRIER</h3>
+                
+                <div className="space-y-4 mb-8">
+                  <div className="flex items-start gap-3">
+                    <svg className="w-5 h-5 text-[#FF6633] flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                     </svg>
+                    <div>
+                      <p className="text-white font-medium">12 février, 18h30</p>
+                      <p className="text-white/60 text-sm">Durée : env. 2h</p>
+                    </div>
                   </div>
-                  <span className="text-neutral-300">1 session formation par mois (concrète et actionnable)</span>
+                  
+                  <div className="flex items-start gap-3">
+                    <svg className="w-5 h-5 text-[#FF6633] flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                    </svg>
+                    <p className="text-white font-medium">Neuchâtel (lieu confirmé par email)</p>
+                  </div>
+                  
+                  <div className="flex items-start gap-3">
+                    <svg className="w-5 h-5 text-[#FF6633] flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                    </svg>
+                    <p className="text-white font-medium">Format : présentations courtes + échanges libres</p>
+                  </div>
                 </div>
-                <div className="flex gap-3 items-start">
-                  <div className="w-6 h-6 rounded-full bg-cyan-500 flex items-center justify-center flex-shrink-0 mt-0.5">
-                    <svg className="w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                    </svg>
-                  </div>
-                  <span className="text-neutral-300">Accès au groupe privé d'entrepreneurs locaux</span>
+                
+                <a href="#contact" className="block w-full text-center bg-[#FF6633] hover:bg-[#FF5522] text-white py-3 rounded-full transition-all duration-300 font-medium">
+                  Rejoindre pour participer
+                </a>
+              </div>
+            </div>
+
+            {/* Workshop du mois */}
+            <div className="relative bg-gradient-to-br from-white/[0.08] to-white/[0.02] backdrop-blur-xl border border-white/10 rounded-3xl p-10">
+              <div className="inline-block px-3 py-1 rounded-full bg-white/10 text-white/70 text-xs font-bebas tracking-wider mb-6">WORKSHOP DU MOIS</div>
+              
+              <h3 className="text-white text-2xl font-bebas tracking-wider mb-6">Créer une offre qui génère des demandes</h3>
+              
+              <p className="text-white/70 mb-6">
+                Arrête de proposer &quot;tout ce que tu fais&quot;. Construis une offre claire, concrète, qui attire les bonnes personnes.
+              </p>
+              
+              <div className="space-y-3 mb-8">
+                <div className="flex items-center gap-2 text-white/60 text-sm">
+                  <svg className="w-4 h-4 text-[#FF6633]" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                  </svg>
+                  <span>Définir ton offre principale</span>
                 </div>
-                <div className="flex gap-3 items-start">
-                  <div className="w-6 h-6 rounded-full bg-cyan-500 flex items-center justify-center flex-shrink-0 mt-0.5">
-                    <svg className="w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                    </svg>
-                  </div>
-                  <span className="text-neutral-300">Templates et outils prêts à l'emploi</span>
+                <div className="flex items-center gap-2 text-white/60 text-sm">
+                  <svg className="w-4 h-4 text-[#FF6633]" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                  </svg>
+                  <span>Formuler le problème que tu règles</span>
                 </div>
-                <div className="flex gap-3 items-start">
-                  <div className="w-6 h-6 rounded-full bg-cyan-500 flex items-center justify-center flex-shrink-0 mt-0.5">
-                    <svg className="w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                    </svg>
-                  </div>
-                  <span className="text-neutral-300">-20% sur tous les services pros</span>
+                <div className="flex items-center gap-2 text-white/60 text-sm">
+                  <svg className="w-4 h-4 text-[#FF6633]" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                  </svg>
+                  <span>Créer une présentation efficace</span>
                 </div>
               </div>
+            </div>
+          </div>
+
+          {/* Mini bonus */}
+          <div className="text-center">
+            <div className="inline-flex items-center gap-3 px-8 py-4 rounded-full bg-white/5 border border-white/10">
+              <span className="text-2xl">🎥</span>
+              <span className="text-white/70 text-sm">Les events servent aussi à créer du contenu (stories, reels, photos).</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Section Offres */}
+      <section id="offres" className="relative py-32 px-6 overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-b from-[#0F0F0F] to-[#0A0A0A]"></div>
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-[#FF6633] opacity-[0.03] blur-[150px] rounded-full"></div>
+        
+        <div className="relative z-10 max-w-6xl mx-auto">
+          <div className="text-center mb-20">
+            <p className="text-[#FF6633] text-sm font-bebas tracking-[0.3em] mb-4">OFFRES</p>
+            <h2 className="text-4xl md:text-5xl lg:text-6xl font-light text-white mb-6 leading-tight">
+              Rejoins le club.<br />
+              <span className="font-seasons italic text-[#FF6633]">Crée du momentum local.</span>
+            </h2>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+            {/* BYZCLUB CORE */}
+            <div className="relative bg-gradient-to-br from-white/[0.08] to-white/[0.02] backdrop-blur-xl border border-white/10 rounded-3xl p-10 hover:border-[#FF6633]/30 transition-all duration-500">
+              <div className="absolute top-4 right-4 px-4 py-2 rounded-full bg-green-500/20 text-green-400 text-xs font-bebas tracking-wider">OUVERT</div>
               
-              <a
-                href="#contact"
-                className="relative block w-full rounded-full bg-gradient-to-r from-cyan-500 to-violet-500 px-6 py-4 text-center font-semibold text-white transition-all hover:scale-105 hover:shadow-lg hover:shadow-cyan-500/30"
-              >
-                Rejoindre BYZCLUB
+              <div className="mb-8">
+                <h3 className="text-white/80 text-sm font-bebas tracking-[0.2em] mb-4">🔵 BYZCLUB CORE</h3>
+                <div className="flex items-baseline gap-2 mb-6">
+                  <span className="text-5xl font-light text-white">59</span>
+                  <span className="text-white/50">CHF / mois</span>
+                </div>
+                <p className="text-white/60 mb-4">Engagement minimum : <strong className="text-white">3 mois</strong></p>
+              </div>
+
+              <div className="mb-8">
+                <p className="text-white font-medium mb-4">CORE, c&apos;est pour toi si :</p>
+                <ul className="space-y-3">
+                  <li className="flex items-start gap-3">
+                    <div className="w-5 h-5 rounded-full bg-[#FF6633]/20 flex items-center justify-center flex-shrink-0 mt-0.5">
+                      <svg className="w-3 h-3 text-[#FF6633]" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                      </svg>
+                    </div>
+                    <span className="text-white/80 text-sm">tu veux une structure simple</span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <div className="w-5 h-5 rounded-full bg-[#FF6633]/20 flex items-center justify-center flex-shrink-0 mt-0.5">
+                      <svg className="w-3 h-3 text-[#FF6633]" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                      </svg>
+                    </div>
+                    <span className="text-white/80 text-sm">tu veux rencontrer les bonnes personnes localement</span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <div className="w-5 h-5 rounded-full bg-[#FF6633]/20 flex items-center justify-center flex-shrink-0 mt-0.5">
+                      <svg className="w-3 h-3 text-[#FF6633]" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                      </svg>
+                    </div>
+                    <span className="text-white/80 text-sm">tu veux arrêter de communiquer au hasard</span>
+                  </li>
+                </ul>
+              </div>
+
+              <a href="#contact" className="block w-full text-center bg-[#FF6633] hover:bg-[#FF5522] text-white py-4 rounded-full transition-all duration-300 font-medium hover:shadow-xl hover:shadow-[#FF6633]/50">
+                Rejoindre CORE
               </a>
             </div>
 
-            {/* Formule PRO */}
-            <div className="group relative bg-gradient-to-br from-cyan-500 to-violet-500 rounded-3xl p-10 shadow-2xl hover:shadow-cyan-500/50 transition-all duration-500 transform hover:scale-105">
-              <div className="absolute -top-4 left-1/2 -translate-x-1/2 rounded-full bg-neutral-900 border border-white/20 px-6 py-2 text-sm font-semibold text-white shadow-lg">
-                ✨ Le plus populaire
+            {/* BYZCLUB PREMIUM - Coming Soon */}
+            <div className="relative bg-gradient-to-br from-white/[0.03] to-white/[0.01] backdrop-blur-xl border border-white/10 rounded-3xl p-10 opacity-60">
+              <div className="absolute top-4 right-4 px-4 py-2 rounded-full bg-white/10 text-white/50 text-xs font-bebas tracking-wider flex items-center gap-2">
+                <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clipRule="evenodd" />
+                </svg>
+                COMING SOON
               </div>
               
-              <div className="relative mb-8">
-                <div className="inline-block rounded-full bg-white/20 backdrop-blur-sm px-4 py-2 text-sm font-semibold text-white mb-4">
-                  PRO
-                </div>
-                <div className="flex items-baseline gap-2 mb-2">
-                  <span className="text-6xl font-bold tracking-tight text-white cyan-glow">149</span>
-                  <span className="text-sm text-white/80">CHF/mois</span>
-                </div>
-                <p className="text-white/90">Pour ceux qui veulent des résultats rapides</p>
-              </div>
-              
-              <div className="space-y-4 mb-10">
-                <div className="flex gap-3 items-start">
-                  <div className="w-6 h-6 rounded-full bg-white flex items-center justify-center flex-shrink-0 mt-0.5">
-                    <svg className="w-4 h-4 text-neutral-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                    </svg>
-                  </div>
-                  <span className="text-neutral-100">Tout le pack Essentiel inclus</span>
-                </div>
-                <div className="flex gap-3 items-start">
-                  <div className="w-6 h-6 rounded-full bg-white flex items-center justify-center flex-shrink-0 mt-0.5">
-                    <svg className="w-4 h-4 text-neutral-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                    </svg>
-                  </div>
-                  <span className="text-neutral-100">Audit express de votre communication</span>
-                </div>
-                <div className="flex gap-3 items-start">
-                  <div className="w-6 h-6 rounded-full bg-white flex items-center justify-center flex-shrink-0 mt-0.5">
-                    <svg className="w-4 h-4 text-neutral-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                    </svg>
-                  </div>
-                  <span className="text-neutral-100">Accompagnement individuel prioritaire</span>
-                </div>
-                <div className="flex gap-3 items-start">
-                  <div className="w-6 h-6 rounded-full bg-white flex items-center justify-center flex-shrink-0 mt-0.5">
-                    <svg className="w-4 h-4 text-neutral-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                    </svg>
-                  </div>
-                  <span className="text-neutral-100">Plan d'action personnalisé chaque mois</span>
+              <div className="mb-8">
+                <h3 className="text-white/50 text-sm font-bebas tracking-[0.2em] mb-4">🟨 BYZCLUB PREMIUM</h3>
+                <div className="flex items-baseline gap-2 mb-6">
+                  <span className="text-5xl font-light text-white/50">179</span>
+                  <span className="text-white/30">CHF / mois</span>
                 </div>
               </div>
-              
-              <a
-                href="#contact"
-                className="block w-full rounded-full bg-white px-6 py-4 text-center font-semibold text-neutral-900 transition-all hover:bg-neutral-50"
-              >
-                Passer en PRO
-              </a>
+
+              <p className="text-white/60 mb-6 leading-relaxed">
+                <strong className="text-white/80">BYZCLUB PREMIUM arrive bientôt.</strong><br />
+                Une offre limitée orientée opportunités, connexions stratégiques et croissance.
+              </p>
+
+              <div className="px-4 py-2 rounded-full bg-white/5 text-white/50 text-sm text-center">
+                Ouverture après 3 mois
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Section Témoignages avec style moderne */}
-      <section className="relative py-24 px-6 bg-white overflow-hidden">
-        {/* Decorative gradient */}
-        <div className="absolute top-0 right-0 w-[450px] h-[450px] bg-gradient-to-bl from-neutral-100/40 to-transparent rounded-full blur-3xl"></div>
-        <div className="mx-auto max-w-7xl w-full">
-          <div className="text-center mb-20">
-            <h2 className="text-5xl font-bold tracking-tight text-neutral-950 mb-6">
-              Vous n'êtes plus seul<br />
-              face à votre communication
+      {/* Section Bêta PREMIUM */}
+      <section className="relative py-32 px-6 overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-b from-[#0A0A0A] to-[#0F0F0F]"></div>
+        
+        <div className="relative z-10 max-w-5xl mx-auto">
+          <div className="bg-gradient-to-br from-white/[0.08] to-white/[0.02] backdrop-blur-xl border border-white/10 rounded-3xl p-12">
+            <div className="text-center mb-12">
+              <h2 className="text-3xl md:text-4xl lg:text-5xl font-light text-white mb-6">
+                Bêta contrôlée : on construit la légitimité<br />
+                <span className="font-seasons italic text-[#FF6633]">avant d&apos;ouvrir.</span>
+              </h2>
+            </div>
+
+            <div className="max-w-3xl mx-auto">
+              <div className="mb-10">
+                <h3 className="text-white font-bebas text-xl tracking-wider mb-6">COMMENT ÇA MARCHE :</h3>
+                <div className="space-y-4">
+                  <div className="flex items-start gap-4">
+                    <div className="w-8 h-8 rounded-full bg-[#FF6633]/20 flex items-center justify-center flex-shrink-0 mt-1">
+                      <span className="text-[#FF6633] font-bebas">1</span>
+                    </div>
+                    <p className="text-white/80">Chaque mois, <strong className="text-white">1 membre CORE est sélectionné</strong></p>
+                  </div>
+                  <div className="flex items-start gap-4">
+                    <div className="w-8 h-8 rounded-full bg-[#FF6633]/20 flex items-center justify-center flex-shrink-0 mt-1">
+                      <span className="text-[#FF6633] font-bebas">2</span>
+                    </div>
+                    <p className="text-white/80">Upgrade <strong className="text-white">PREMIUM gratuit 1 mois</strong></p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="bg-white/[0.03] border border-white/10 rounded-2xl p-8">
+                <h4 className="text-white font-bebas text-lg tracking-wider mb-4">CRITÈRES (pas un tirage au sort)</h4>
+                <div className="grid md:grid-cols-2 gap-4">
+                  <div className="flex items-center gap-3">
+                    <svg className="w-5 h-5 text-[#FF6633]" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                    </svg>
+                    <span className="text-white/80 text-sm">Implication</span>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <svg className="w-5 h-5 text-[#FF6633]" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                    </svg>
+                    <span className="text-white/80 text-sm">Projet clair</span>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <svg className="w-5 h-5 text-[#FF6633]" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                    </svg>
+                    <span className="text-white/80 text-sm">Besoin réel</span>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <svg className="w-5 h-5 text-[#FF6633]" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                    </svg>
+                    <span className="text-white/80 text-sm">Potentiel de synergie</span>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <svg className="w-5 h-5 text-[#FF6633]" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                    </svg>
+                    <span className="text-white/80 text-sm">Attitude pro</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Section PREMIUM (après ouverture) */}
+      <section className="relative py-32 px-6 overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-b from-[#0F0F0F] to-[#0A0A0A]"></div>
+        <div className="absolute top-1/4 left-1/4 w-[600px] h-[600px] bg-[#FF6633] opacity-[0.03] blur-[150px] rounded-full"></div>
+        
+        <div className="relative z-10 max-w-6xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl md:text-5xl lg:text-6xl font-light text-white mb-6">
+              PREMIUM = proximité +<br />
+              <span className="font-seasons italic text-[#FF6633]">opportunités réelles.</span>
             </h2>
-            <p className="text-lg text-neutral-700 max-w-2xl mx-auto">
-              Une communauté d'entrepreneurs locaux qui s'entraident. Des événements concrets. Des résultats partagés.
+            <p className="text-lg text-white/60 max-w-2xl mx-auto mb-4">
+              Prix cible : <strong className="text-white">CHF 179.– / mois</strong> (min. 3 mois)
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 gap-8 mb-12">
-            <div className="bg-white rounded-3xl p-10 shadow-sm hover:shadow-xl transition-all duration-300 border border-neutral-100">
-              <div className="w-14 h-14 rounded-2xl bg-neutral-900 flex items-center justify-center mb-6">
-                <svg className="w-7 h-7 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                </svg>
-              </div>
-              <h3 className="text-2xl font-bold text-neutral-900 mb-3">Sessions mensuelles</h3>
-              <p className="text-neutral-600 mb-4">
-                Formations pratiques, Q&A en direct, audits de communication. Vous repartez avec des actions concrètes.
-              </p>
-              <div className="inline-flex items-center gap-2 text-sm font-semibold text-neutral-600">
-                Voir le programme
-                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                </svg>
+          <div className="max-w-4xl mx-auto">
+            <div className="relative bg-gradient-to-br from-[#FF6633]/10 to-[#FF6633]/5 backdrop-blur-xl border border-[#FF6633]/30 rounded-3xl p-10 overflow-hidden">
+              <div className="absolute top-0 right-0 w-40 h-40 bg-[#FF6633] opacity-10 blur-[60px] rounded-full"></div>
+              
+              <div className="relative z-10">
+                <div className="mb-10">
+                  <h3 className="text-white font-bebas text-2xl tracking-wider mb-6">INCLUT CORE +</h3>
+                  <div className="grid md:grid-cols-2 gap-6">
+                    <div className="flex items-start gap-3">
+                      <div className="w-6 h-6 rounded-full bg-white/20 flex items-center justify-center flex-shrink-0 mt-1">
+                        <svg className="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
+                          <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                        </svg>
+                      </div>
+                      <p className="text-white">1 event VIP / mois (places limitées)</p>
+                    </div>
+                    <div className="flex items-start gap-3">
+                      <div className="w-6 h-6 rounded-full bg-white/20 flex items-center justify-center flex-shrink-0 mt-1">
+                        <svg className="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
+                          <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                        </svg>
+                      </div>
+                      <p className="text-white">1 mastermind / mois (6–10)</p>
+                    </div>
+                    <div className="flex items-start gap-3">
+                      <div className="w-6 h-6 rounded-full bg-white/20 flex items-center justify-center flex-shrink-0 mt-1">
+                        <svg className="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
+                          <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                        </svg>
+                      </div>
+                      <p className="text-white">2 introductions qualifiées / mois</p>
+                    </div>
+                    <div className="flex items-start gap-3">
+                      <div className="w-6 h-6 rounded-full bg-white/20 flex items-center justify-center flex-shrink-0 mt-1">
+                        <svg className="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
+                          <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                        </svg>
+                      </div>
+                      <p className="text-white">1 Hot Seat / mois (analyse + plan d&apos;action)</p>
+                    </div>
+                    <div className="flex items-start gap-3">
+                      <div className="w-6 h-6 rounded-full bg-white/20 flex items-center justify-center flex-shrink-0 mt-1">
+                        <svg className="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
+                          <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                        </svg>
+                      </div>
+                      <p className="text-white">Audit express trimestriel</p>
+                    </div>
+                    <div className="flex items-start gap-3">
+                      <div className="w-6 h-6 rounded-full bg-white/20 flex items-center justify-center flex-shrink-0 mt-1">
+                        <svg className="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
+                          <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                        </svg>
+                      </div>
+                      <p className="text-white">Priorité opportunités</p>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
-
-            <div className="bg-white rounded-3xl p-10 shadow-sm hover:shadow-xl transition-all duration-300 border border-neutral-100">
-              <div className="w-14 h-14 rounded-2xl bg-neutral-900 flex items-center justify-center mb-6">
-                <svg className="w-7 h-7 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
-                </svg>
-              </div>
-              <h3 className="text-2xl font-bold text-neutral-900 mb-3">Entraide locale</h3>
-              <p className="text-neutral-600 mb-4">
-                Des entrepreneurs de Neuchâtel qui partagent leurs expériences, se recommandent et créent des opportunités.
-              </p>
-              <div className="inline-flex items-center gap-2 text-sm font-semibold text-neutral-600">
-                Rejoindre le groupe
-                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                </svg>
-              </div>
-            </div>
-          </div>
-
-          <div className="bg-gradient-to-r from-neutral-900 to-neutral-600 rounded-3xl p-12 text-center">
-            <p className="text-lg text-white font-medium">
-              💡 Bonus : Chaque événement est aussi une occasion de créer du contenu pour votre business
-            </p>
           </div>
         </div>
       </section>
 
-      {/* Section Témoignages clients */}
-      <section className="relative py-24 px-6 bg-gradient-to-t from-neutral-50 via-neutral-50/20 to-neutral-50 overflow-hidden">
-        {/* Decorative elements */}
-        <div className="absolute top-1/3 left-0 w-[300px] h-[300px] bg-gradient-to-r from-neutral-200/25 to-transparent rounded-full blur-3xl"></div>
-        <div className="absolute bottom-1/4 right-0 w-[350px] h-[350px] bg-gradient-to-l from-neutral-200/20 to-transparent rounded-full blur-3xl"></div>
-        <div className="mx-auto max-w-7xl w-full">
-          <div className="text-center mb-20">
-            <h2 className="text-5xl font-bold tracking-tight text-neutral-950 mb-4">
-              Ce qu'ils en disent
+      {/* Section Introductions qualifiées */}
+      <section className="relative py-32 px-6 overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-b from-[#0A0A0A] to-[#0F0F0F]"></div>
+        
+        <div className="relative z-10 max-w-5xl mx-auto">
+          <div className="bg-gradient-to-br from-white/[0.08] to-white/[0.02] backdrop-blur-xl border border-white/10 rounded-3xl p-12">
+            <div className="text-center mb-10">
+              <h2 className="text-3xl md:text-4xl lg:text-5xl font-light text-white mb-6">
+                1 introduction qualifiée =<br />
+                <span className="font-seasons italic text-[#FF6633]">1 action concrète.</span>
+              </h2>
+            </div>
+
+            <div className="max-w-3xl mx-auto">
+              <p className="text-white/70 text-lg mb-8 text-center">
+                C&apos;est :
+              </p>
+              <div className="grid md:grid-cols-2 gap-6 mb-8">
+                <div className="flex items-start gap-3">
+                  <div className="w-6 h-6 rounded-full bg-[#FF6633]/20 flex items-center justify-center flex-shrink-0 mt-1">
+                    <svg className="w-3 h-3 text-[#FF6633]" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                    </svg>
+                  </div>
+                  <div>
+                    <p className="text-white font-medium mb-1">Besoin clair</p>
+                    <p className="text-white/60 text-sm">On sait pourquoi on connecte</p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-3">
+                  <div className="w-6 h-6 rounded-full bg-[#FF6633]/20 flex items-center justify-center flex-shrink-0 mt-1">
+                    <svg className="w-3 h-3 text-[#FF6633]" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                    </svg>
+                  </div>
+                  <div>
+                    <p className="text-white font-medium mb-1">Personne pertinente</p>
+                    <p className="text-white/60 text-sm">Compétence + disponibilité</p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-3">
+                  <div className="w-6 h-6 rounded-full bg-[#FF6633]/20 flex items-center justify-center flex-shrink-0 mt-1">
+                    <svg className="w-3 h-3 text-[#FF6633]" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                    </svg>
+                  </div>
+                  <div>
+                    <p className="text-white font-medium mb-1">Intro cadrée</p>
+                    <p className="text-white/60 text-sm">Objectif + next step</p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-3">
+                  <div className="w-6 h-6 rounded-full bg-[#FF6633]/20 flex items-center justify-center flex-shrink-0 mt-1">
+                    <svg className="w-3 h-3 text-[#FF6633]" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                    </svg>
+                  </div>
+                  <div>
+                    <p className="text-white font-medium mb-1">Suivi minimum</p>
+                    <p className="text-white/60 text-sm">On vérifie que ça avance</p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="flex items-center justify-center gap-6 pt-8 border-t border-white/10">
+                <div className="flex items-center gap-2">
+                  <svg className="w-5 h-5 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                  </svg>
+                  <span className="text-white/80 text-sm">Action promise</span>
+                </div>
+                <span className="text-white/20">•</span>
+                <div className="flex items-center gap-2">
+                  <svg className="w-5 h-5 text-red-500" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
+                  </svg>
+                  <span className="text-white/80 text-sm">Pas de promesse de résultat</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Boutique de services */}
+      <section id="ressources" className="relative py-32 px-6 overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-b from-[#0F0F0F] to-[#0A0A0A]"></div>
+        
+        <div className="relative z-10 max-w-7xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl md:text-5xl lg:text-6xl font-light text-white mb-6">
+              Besoin d&apos;accélérer ?<br />
+              <span className="font-seasons italic text-[#FF6633]">Packs réservés membres.</span>
             </h2>
-            <p className="text-lg text-neutral-700 max-w-2xl mx-auto">
-              Des entrepreneurs de Neuchâtel qui ont transformé leur visibilité avec BYZCLUB
+            <p className="text-white/60 max-w-2xl mx-auto text-sm">
+              Pas de sur-mesure infini • Pas de négociation permanente
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 gap-8 max-w-6xl mx-auto">
-            <div className="bg-white rounded-3xl p-10 shadow-sm hover:shadow-xl transition-all duration-300 border border-neutral-100">
-              <div className="flex gap-1 mb-6">
-                {[...Array(5)].map((_, i) => (
-                  <svg key={i} className="w-5 h-5 text-neutral-500" fill="currentColor" viewBox="0 0 20 20">
-                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                  </svg>
-                ))}
-              </div>
-              <p className="text-lg text-neutral-700 mb-6 italic">
-                "Avant BYZCLUB, je passais des heures sur les réseaux sans résultats. Maintenant j'ai une stratégie claire et mes clients viennent à moi."
-              </p>
-              <div className="flex items-center gap-4">
-                <div className="w-12 h-12 rounded-full bg-gradient-to-br from-neutral-200 to-neutral-300"></div>
-                <div>
-                  <div className="font-semibold text-neutral-900">Marie L.</div>
-                  <div className="text-sm text-neutral-600">Boutique, Neuchâtel</div>
+          <div className="grid md:grid-cols-3 lg:grid-cols-5 gap-6">
+            {[
+              { name: 'Social Setup', duration: '2 semaines', result: 'Présence pro' },
+              { name: 'Content Sprint', duration: '1 mois', result: '12 contenus' },
+              { name: 'Ads Kickstart', duration: '2 semaines', result: 'Premières demandes' },
+              { name: 'Brand Refresh', duration: '3 semaines', result: 'Identité claire' },
+              { name: 'Landing Page Express', duration: '1 semaine', result: 'Page qui convertit' },
+            ].map((pack, index) => (
+              <div key={index} className="bg-gradient-to-br from-white/[0.08] to-white/[0.02] backdrop-blur-xl border border-white/10 rounded-3xl p-6 hover:border-[#FF6633]/30 transition-all duration-300">
+                <h3 className="text-white font-bebas text-lg tracking-wider mb-3">{pack.name}</h3>
+                <div className="space-y-2 mb-4">
+                  <div className="flex items-center gap-2 text-white/60 text-sm">
+                    <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    <span>{pack.duration}</span>
+                  </div>
+                  <div className="flex items-center gap-2 text-white/60 text-sm">
+                    <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    <span>{pack.result}</span>
+                  </div>
                 </div>
+                <a href="#contact" className="block w-full text-center py-2 rounded-full bg-white/10 hover:bg-white/20 text-white text-sm transition-all duration-300">
+                  Infos
+                </a>
               </div>
-            </div>
-
-            <div className="bg-white rounded-3xl p-10 shadow-sm hover:shadow-xl transition-all duration-300 border border-neutral-100">
-              <div className="flex gap-1 mb-6">
-                {[...Array(5)].map((_, i) => (
-                  <svg key={i} className="w-5 h-5 text-neutral-500" fill="currentColor" viewBox="0 0 20 20">
-                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                  </svg>
-                ))}
-              </div>
-              <p className="text-lg text-neutral-700 mb-6 italic">
-                "Le réseau local fait toute la différence. J'ai déjà eu 3 collaborations avec d'autres membres. Concret et efficace."
-              </p>
-              <div className="flex items-center gap-4">
-                <div className="w-12 h-12 rounded-full bg-gradient-to-br from-neutral-200 to-neutral-300"></div>
-                <div>
-                  <div className="font-semibold text-neutral-900">Thomas R.</div>
-                  <div className="text-sm text-neutral-600">Restaurant, Neuchâtel</div>
-                </div>
-              </div>
-            </div>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* Section CTA Final - Premium Style */}
-      <section id="contact" className="relative py-32 px-6 bg-neutral-900 overflow-hidden">
-        {/* Premium animated background */}
-        <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:50px_50px]"></div>
-        <div className="absolute top-0 left-1/4 w-[600px] h-[600px] bg-gradient-to-br from-cyan-500/20 to-transparent rounded-full blur-3xl animate-morph"></div>
-        <div className="absolute bottom-0 right-1/4 w-[500px] h-[500px] bg-gradient-to-tl from-neutral-700/30 to-transparent rounded-full blur-3xl animate-morph delay-300"></div>
-        <div className="mx-auto max-w-4xl w-full text-center relative">
-          <p className="text-sm text-cyan-500 uppercase tracking-widest font-medium mb-6">Passez à l'action</p>
-          <h2 className="text-5xl md:text-6xl font-bold tracking-tight mb-6">
-            <span className="text-white">Arrêtez de perdre des clients</span><br />
-            <span className="text-white">par manque de <span className="text-gradient-primary">visibilité</span></span>
+      {/* CTA Final simplifié */}
+      <section id="contact" className="relative py-32 px-6 overflow-hidden bg-gradient-to-b from-[#0A0A0A] to-[#0F0F0F]">
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] bg-[#FF6633] opacity-10 blur-[120px] rounded-full"></div>
+        
+        <div className="relative z-10 max-w-4xl mx-auto text-center">
+          <h2 className="text-5xl md:text-6xl lg:text-7xl font-light text-white mb-6 leading-tight">
+            Rejoins le club.<br />
+            <span className="font-seasons italic text-[#FF6633]">Crée du momentum local.</span>
           </h2>
-          <p className="text-xl text-white/80 mb-10 max-w-2xl mx-auto animate-fade-in-up delay-200">
-            Rejoignez BYZCLUB aujourd'hui. Premier mois satisfait ou remboursé.
-          </p>
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <a
-              href="#formules"
-              className="group inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-cyan-500 to-violet-500 px-10 py-5 text-base font-semibold text-white transition-all hover:scale-110 hover:shadow-2xl hover:shadow-cyan-500/50"
-            >
-              Rejoindre BYZCLUB
-              <svg className="w-5 h-5 transition-transform group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+          
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-8">
+            <a href="#offres" className="inline-flex items-center gap-2 px-10 py-5 bg-[#FF6633] hover:bg-[#FF5522] text-white text-lg font-medium rounded-full transition-all duration-300 hover:shadow-xl hover:shadow-[#FF6633]/50 hover:scale-105">
+              Rejoindre CORE
+              <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
               </svg>
             </a>
-            <a
-              href="mailto:contact@byzclub.ch"
-              className="inline-flex items-center gap-2 rounded-full border-2 border-neutral-700 glass-light px-10 py-5 text-base font-semibold text-white transition-all hover:border-cyan-500/50 hover:scale-105"
-            >
-              Demander un audit express gratuit
+            <a href="#contact" className="px-10 py-5 text-white/80 hover:text-white transition-all duration-300 text-lg rounded-full hover:bg-white/5 border border-white/10">
+              Audit express 15 min
             </a>
           </div>
-          <div className="mt-12 flex flex-wrap items-center justify-center gap-8 text-sm text-neutral-400">
+          
+          <div className="flex flex-wrap items-center justify-center gap-6 text-white/40 text-sm">
             <div className="flex items-center gap-2">
-              <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+              <svg className="w-4 h-4 text-[#FF6633]" fill="currentColor" viewBox="0 0 20 20">
+                <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
               </svg>
-              Sans engagement long terme
+              <span>3 mois minimum</span>
             </div>
+            <span className="text-white/20">•</span>
             <div className="flex items-center gap-2">
-              <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+              <svg className="w-4 h-4 text-[#FF6633]" fill="currentColor" viewBox="0 0 20 20">
+                <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
               </svg>
-              Satisfait ou remboursé
+              <span>Ensuite mensuel</span>
             </div>
+            <span className="text-white/20">•</span>
             <div className="flex items-center gap-2">
-              <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+              <svg className="w-4 h-4 text-[#FF6633]" fill="currentColor" viewBox="0 0 20 20">
+                <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
               </svg>
-              100% basé à Neuchâtel
+              <span>Places limitées</span>
             </div>
           </div>
         </div>
       </section>
 
       {/* Footer */}
-      <footer className="border-t border-neutral-800 bg-neutral-950 py-16 px-6">
-        <div className="mx-auto max-w-7xl w-full">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
-            <div className="md:col-span-2">
-              <h3 className="text-2xl font-bold text-white mb-4">BYZCLUB</h3>
-              <p className="text-neutral-300 mb-6 max-w-md">
-                L'accélérateur de communication pour les entrepreneurs de Neuchâtel qui veulent plus de clients, sans perdre de temps.
-              </p>
-              <div className="flex gap-4">
-                <a href="#" className="w-10 h-10 rounded-full bg-neutral-800 flex items-center justify-center text-neutral-400 hover:text-cyan-500 hover:bg-neutral-700 transition-all">
-                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"/>
-                  </svg>
-                </a>
-                <a href="#" className="w-10 h-10 rounded-full bg-neutral-800 flex items-center justify-center text-neutral-400 hover:text-cyan-500 hover:bg-neutral-700 transition-all">
-                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
-                  </svg>
-                </a>
-                <a href="#" className="w-10 h-10 rounded-full bg-neutral-800 flex items-center justify-center text-neutral-400 hover:text-cyan-500 hover:bg-neutral-700 transition-all">
-                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
-                  </svg>
-                </a>
-              </div>
-            </div>
-
-            <div>
-              <h4 className="text-white font-semibold mb-4">Navigation</h4>
-              <ul className="space-y-3">
-                <li>
-                  <a href="#services" className="text-neutral-300 hover:text-white transition-colors">Services</a>
-                </li>
-                <li>
-                  <a href="#comment-ca-marche" className="text-neutral-300 hover:text-white transition-colors">Comment ça marche</a>
-                </li>
-                <li>
-                  <a href="#formules" className="text-neutral-300 hover:text-white transition-colors">Formules</a>
-                </li>
-                <li>
-                  <a href="#contact" className="text-neutral-300 hover:text-white transition-colors">Contact</a>
-                </li>
-              </ul>
-            </div>
-
-            <div>
-              <h4 className="text-white font-semibold mb-4">Contact</h4>
-              <ul className="space-y-3">
-                <li>
-                  <a href="mailto:contact@byzclub.ch" className="text-neutral-300 hover:text-white transition-colors">
-                    contact@byzclub.ch
-                  </a>
-                </li>
-                <li className="text-neutral-300">
-                  Neuchâtel, Suisse
-                </li>
-              </ul>
-            </div>
+      <footer className="relative py-12 px-6 bg-[#050505]">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-8">
+            <LogoPremium />
+            <p className="text-white/40 mt-6 leading-relaxed max-w-2xl mx-auto">
+              BYZCLUB — Réseau local pour entrepreneurs & commerçants à Neuchâtel.
+            </p>
+          </div>
+          
+          <div className="flex flex-wrap items-center justify-center gap-8 mb-8 text-white/40 text-sm">
+            <a href="#le-club" className="hover:text-[#FF6633] transition-colors">Le club</a>
+            <a href="#evenements" className="hover:text-[#FF6633] transition-colors">Événements</a>
+            <a href="#ressources" className="hover:text-[#FF6633] transition-colors">Ressources</a>
+            <a href="#offres" className="hover:text-[#FF6633] transition-colors">Offres</a>
+            <a href="#contact" className="hover:text-[#FF6633] transition-colors">Contact</a>
+            <span className="text-white/20">|</span>
+            <a href="#" className="hover:text-[#FF6633] transition-colors">Mentions légales</a>
+            <a href="#" className="hover:text-[#FF6633] transition-colors">Politique de confidentialité</a>
+          </div>
+          
+          <div className="flex items-center justify-center gap-4 mb-8">
+            <a href="#" className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-white/40 hover:bg-[#FF6633]/20 hover:text-[#FF6633] transition-all duration-300">
+              <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073z"/>
+              </svg>
+            </a>
+            <a href="#" className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-white/40 hover:bg-[#FF6633]/20 hover:text-[#FF6633] transition-all duration-300">
+              <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+              </svg>
+            </a>
           </div>
 
-          <div className="border-t border-neutral-800 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
-            <p className="text-sm text-neutral-400">
-              © {new Date().getFullYear()} BYZCLUB. Tous droits réservés.
+          <div className="pt-6 border-t border-white/5 text-center">
+            <p className="text-white/30 text-sm mb-2">
+              © 2025 BYZCLUB · Tous droits réservés
             </p>
-            <div className="flex gap-6 text-sm">
-              <a href="#" className="text-neutral-400 hover:text-white transition-colors">
-                Politique de confidentialité
-              </a>
-              <a href="#" className="text-neutral-400 hover:text-white transition-colors">
-                Conditions d'utilisation
-              </a>
-            </div>
           </div>
         </div>
       </footer>

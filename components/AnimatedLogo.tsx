@@ -1,13 +1,9 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 export default function AnimatedLogo() {
-  const [isAnimating, setIsAnimating] = useState(false);
-
-  useEffect(() => {
-    setIsAnimating(true);
-  }, []);
+  const [isAnimating, setIsAnimating] = useState(true);
 
   return (
     <div className="relative group cursor-pointer" onClick={() => setIsAnimating(!isAnimating)}>
