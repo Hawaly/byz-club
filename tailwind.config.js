@@ -89,6 +89,7 @@ module.exports = {
         'pulse': 'pulse 3s ease-in-out infinite',
         'float': 'float 15s ease-in-out infinite',
         'gradient': 'gradient 15s ease infinite',
+        'gradient-x': 'gradient-x 8s ease infinite',
         'shine': 'shine 3s ease-in-out infinite',
         'bounce-sm': 'bounce-sm 3s ease-in-out infinite',
         'fade-up': 'fade-up 700ms ease-out both',

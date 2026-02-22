@@ -51,7 +51,7 @@ export default function LoginPage() {
           <div className="relative inline-flex">
             <div className="w-20 h-20 bg-white rounded-2xl flex items-center justify-center shadow-xl shadow-orange-500/30 transform hover:scale-105 transition-transform p-3">
               <img 
-                src="/images/logos/urstoryBlack.png" 
+                src="/images/Logo.png" 
                 alt="BYZCLUB Logo" 
                 className="w-14 h-14 object-contain"
               />
@@ -61,7 +61,7 @@ export default function LoginPage() {
             </div>
           </div>
           <h1 className="text-2xl font-bold bg-gradient-to-r from-slate-900 to-slate-700 bg-clip-text text-transparent mt-6">
-            BYZCLUB Compta
+            BYZCLUB
           </h1>
           <p className="text-slate-500 mt-2">Connectez-vous à votre espace</p>
         </div>
@@ -145,7 +145,7 @@ export default function LoginPage() {
 
         {/* Footer */}
         <p className="text-center text-xs text-slate-400 mt-6">
-          BYZCLUB Compta © 2024
+          BYZCLUB © 2025
         </p>
       </div>
     </div>

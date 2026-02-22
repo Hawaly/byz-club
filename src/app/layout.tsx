@@ -18,7 +18,8 @@ export const metadata: Metadata = {
   description:
     "BYZCLUB : Visibilité locale, réseau et actions concrètes. Chaque mois : 1 networking, 1 workshop, 1 Q&A. Rejoignez la communauté d'entrepreneurs à Neuchâtel.",
   icons: {
-    icon: '/icon.png',
+    icon: '/images/Logo.png',
+    apple: '/images/Logo.png',
   },
 };
 
