@@ -13,45 +13,47 @@ interface ModernCardProps {
   children: React.ReactNode;
   className?: string;
   noPadding?: boolean;
+  delay?: number;
 }
 
 export function ModernCard({
   title,
   subtitle,
   icon: Icon,
-  gradient = 'from-orange-500 to-orange-600',
+  gradient = 'from-orange-400 to-pink-500',
   headerAction,
   children,
   className = '',
-  noPadding = false
+  noPadding = false,
+  delay = 0,
 }: ModernCardProps) {
   return (
-    <motion.div 
+    <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      className={`form-section !p-0 overflow-hidden ${className}`}
+      transition={{ delay }}
+      className={`bg-white rounded-3xl border border-slate-200 overflow-hidden shadow-sm ${className}`}
     >
       {/* Header */}
-      <div className="p-6 sm:p-8 flex items-center justify-between border-b-2 border-slate-50">
-        <div className="flex items-center gap-4">
+      <div className="flex items-center justify-between px-6 py-5 border-b border-slate-100">
+        <div className="flex items-center gap-3">
           {Icon && (
-            <div className={`w-12 h-12 rounded-2xl bg-gradient-to-br ${gradient} flex items-center justify-center shadow-lg`}>
-              <Icon className="w-6 h-6 text-white" />
+            <div className={`w-10 h-10 rounded-2xl bg-gradient-to-br ${gradient} flex items-center justify-center shadow-md flex-shrink-0`}>
+              <Icon className="w-5 h-5 text-white" />
             </div>
           )}
           <div>
-            <h3 className="text-lg sm:text-xl font-black text-slate-900 uppercase tracking-tight">{title}</h3>
+            <h3 className="font-black text-slate-900 text-base leading-tight">{title}</h3>
             {subtitle && (
-              <p className="text-xs font-bold text-slate-500 uppercase">{subtitle}</p>
+              <p className="text-[10px] text-slate-400 font-semibold uppercase tracking-wider mt-0.5">{subtitle}</p>
             )}
           </div>
         </div>
-        
-        {headerAction}
+        {headerAction && <div className="flex-shrink-0">{headerAction}</div>}
       </div>
 
       {/* Content */}
-      <div className={noPadding ? '' : 'p-4 sm:p-6'}>
+      <div className={noPadding ? '' : 'p-5'}>
         {children}
       </div>
     </motion.div>

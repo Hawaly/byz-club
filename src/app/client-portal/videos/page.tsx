@@ -125,24 +125,23 @@ export default function VideosPage() {
       console.log('Posts récupérés:', posts);
       console.log('Nombre de posts:', posts?.length || 0);
 
-      // Filtrer les posts de type vidéo (content_type peut contenir "video", "Vidéo", ou des variations)
-      const videoPosts = (posts || []).filter(post => 
-        post.content_type && 
-        (post.content_type.toLowerCase().includes('video') || 
-         post.content_type.toLowerCase().includes('vidéo') ||
-         post.content_type.toLowerCase().includes('short') ||
-         post.content_type.toLowerCase().includes('reel'))
-      );
+      // Afficher tous les types de contenu pour débogage
+      const contentTypes = (posts || []).map(p => p.content_type).filter(Boolean);
+      console.log('Types de contenu trouvés:', [...new Set(contentTypes)]);
 
-      console.log('Posts vidéo filtrés:', videoPosts);
+      // Afficher tous les posts (pas seulement les vidéos)
+      const allPosts = posts || [];
 
-      if (videoPosts.length === 0) {
+      console.log('Tous les posts:', allPosts);
+      console.log('Nombre total de posts:', allPosts.length);
+
+      if (allPosts.length === 0) {
         setVideoPosts([]);
         setIsLoading(false);
         return;
       }
 
-      const postIds = videoPosts.map(p => p.id);
+      const postIds = allPosts.map(p => p.id);
 
       // 4. Récupérer les scripts associés à ces posts
       const { data: scripts, error: scriptsError } = await supabase
@@ -155,7 +154,7 @@ export default function VideosPage() {
       console.log('Scripts récupérés:', scripts);
 
       // 5. Associer les scripts aux posts
-      const postsWithScripts = videoPosts.map(post => {
+      const postsWithScripts = allPosts.map(post => {
         const relatedScript = (scripts || []).find(s => s.editorial_post_id === post.id);
         return {
           ...post,

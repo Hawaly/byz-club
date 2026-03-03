@@ -31,6 +31,11 @@ export default function Home() {
               <span className="absolute inset-0 rounded-lg bg-white/0 group-hover:bg-white/5 transition-all duration-300"></span>
             </a>
             <span className="text-white/20">•</span>
+            <a href="#services" className="group relative text-white/60 hover:text-white transition-all duration-300 text-sm font-medium px-4 py-2">
+              <span className="relative z-10">Services</span>
+              <span className="absolute inset-0 rounded-lg bg-white/0 group-hover:bg-white/5 transition-all duration-300"></span>
+            </a>
+            <span className="text-white/20">•</span>
             <a href="#contact" className="group relative text-white/60 hover:text-white transition-all duration-300 text-sm font-medium px-4 py-2">
               <span className="relative z-10">Contact</span>
               <span className="absolute inset-0 rounded-lg bg-white/0 group-hover:bg-white/5 transition-all duration-300"></span>
@@ -42,9 +47,10 @@ export default function Home() {
               <span>📍</span>
               <span>Neuchâtel & environs</span>
             </div>
-            <a href="/login" className="group relative px-6 py-2.5 text-white/80 hover:text-white transition-all duration-300 text-sm font-medium rounded-full hover:bg-white/10 border border-white/10 hover:border-white/30 backdrop-blur-sm overflow-hidden">
+            <a href="/client-portal" className="group relative px-5 py-2.5 text-white/70 hover:text-white transition-all duration-300 text-sm font-medium rounded-full hover:bg-white/10 border border-white/10 hover:border-white/30 backdrop-blur-sm overflow-hidden flex items-center gap-2">
               <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700"></span>
-              <span className="relative">Login</span>
+              <svg className="relative w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" /></svg>
+              <span className="relative">Espace Client</span>
             </a>
             <a href="#offres" className="group relative px-6 py-2.5 bg-gradient-to-r from-[#FF6633] to-[#FF5522] hover:from-[#FF5522] hover:to-[#FF6633] text-white text-sm font-bold rounded-full transition-all duration-500 hover:shadow-2xl hover:shadow-[#FF6633]/60 hover:scale-105 whitespace-nowrap overflow-hidden">
               <span className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/20 to-white/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000"></span>
@@ -470,6 +476,170 @@ export default function Home() {
       </section>
 
 
+      {/* ═══════════════════════════════════════════════════════════
+           SECTION : ACCOMPAGNEMENT MARKETING
+      ══════════════════════════════════════════════════════════════ */}
+      <section id="services" className="relative py-28 px-6 bg-gradient-to-b from-[#0A0A0A] to-[#060606] overflow-hidden">
+        {/* Bg glows */}
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-[#FF6633]/8 blur-[120px] rounded-full pointer-events-none"></div>
+        <div className="absolute bottom-0 right-0 w-[400px] h-[400px] bg-purple-900/10 blur-[100px] rounded-full pointer-events-none"></div>
+
+        <div className="max-w-6xl mx-auto">
+          {/* Header */}
+          <div className="text-center mb-20">
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#FF6633]/10 border border-[#FF6633]/30 text-[#FF6633] text-xs font-bold uppercase tracking-widest mb-6">
+              / Les abonnements /
+            </div>
+            <h2 className="text-5xl md:text-6xl lg:text-7xl font-light text-white mb-6 leading-[1.05]">
+              Gestion Réseaux<br />
+              <span className="font-serif italic text-transparent bg-clip-text bg-gradient-to-r from-[#FF6633] via-[#FF8855] to-[#FF6633]">Sociaux.</span>
+            </h2>
+            <p className="text-white/60 text-lg max-w-2xl mx-auto">
+              Un accompagnement marketing complet pour booster ta présence en ligne et transformer ton audience en clients.
+            </p>
+          </div>
+
+          {/* Pricing Cards */}
+          <div className="grid lg:grid-cols-3 gap-6 items-start">
+
+            {/* Starter */}
+            <div className="group relative p-8 rounded-3xl bg-gradient-to-br from-[#161616] to-[#0f0f0f] border border-[#2a2a2a] hover:border-[#FF6633]/40 transition-all duration-500 hover:shadow-2xl hover:shadow-[#FF6633]/10 hover:-translate-y-2 overflow-hidden">
+              <div className="absolute inset-0 bg-gradient-to-br from-[#FF6633]/0 group-hover:from-[#FF6633]/5 to-transparent transition-all duration-500"></div>
+              <div className="absolute top-0 right-0 w-40 h-40 bg-white/[0.02] rounded-bl-full"></div>
+              <div className="relative z-10">
+                <h3 className="text-2xl font-bold text-white mb-2">Starter</h3>
+                <p className="text-white/50 text-sm mb-6">Idéal pour une présence en ligne régulière et pro</p>
+                <ul className="space-y-3 mb-8">
+                  {[
+                    'Gestion de 1 Plateforme',
+                    '10 posts/mois (graphismes + captions)',
+                    'Analyse trimestrielle de la performance',
+                    'Contenus cohérents pour renforcer ton image',
+                  ].map((item) => (
+                    <li key={item} className="flex items-start gap-3 text-white/70 text-sm">
+                      <span className="text-[#FF6633] mt-0.5 flex-shrink-0">•</span>
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+                <div className="mb-8">
+                  <span className="text-6xl font-black text-white">750.–</span>
+                  <span className="text-white/50 text-base ml-1">/mo</span>
+                </div>
+                <a href="#contact" className="group/btn relative w-full inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-full border border-[#FF6633]/50 text-[#FF6633] text-sm font-bold hover:bg-[#FF6633] hover:text-white transition-all duration-300 overflow-hidden">
+                  <span className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/10 to-white/0 translate-x-[-100%] group-hover/btn:translate-x-[100%] transition-transform duration-700"></span>
+                  <svg className="relative w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" /></svg>
+                  <span className="relative">Demander un Devis</span>
+                </a>
+              </div>
+            </div>
+
+            {/* Growth — Populaire */}
+            <div className="group relative p-8 rounded-3xl bg-gradient-to-br from-[#1e1e1e] to-[#141414] border-2 border-[#FF6633]/50 shadow-2xl shadow-[#FF6633]/20 hover:-translate-y-3 transition-all duration-500 overflow-hidden">
+              <div className="absolute inset-0 bg-gradient-to-br from-[#FF6633]/8 to-transparent pointer-events-none"></div>
+              {/* Badge populaire */}
+              <div className="absolute -top-4 left-1/2 -translate-x-1/2">
+                <div className="relative">
+                  <div className="absolute inset-0 bg-gradient-to-r from-[#FF6633] to-[#FF5522] rounded-full blur-lg opacity-60"></div>
+                  <span className="relative inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-gradient-to-r from-[#FF6633] to-[#FF5522] text-white text-xs font-black uppercase tracking-widest shadow-lg">
+                    ★ Populaire
+                  </span>
+                </div>
+              </div>
+              <div className="relative z-10 mt-2">
+                <h3 className="text-2xl font-bold text-white mb-2">Growth</h3>
+                <p className="text-[#FF6633] text-sm font-semibold mb-6">Notre BestSeller pour booster ton engagement</p>
+                <ul className="space-y-3 mb-8">
+                  {[
+                    'Gestion jusqu\'à 2 plateformes',
+                    'Gestion des commentaires & messages',
+                    '15 à 20 contenus/mois (graphismes, captions, vidéos courtes)',
+                    'Analyse mensuelle + conseils stratégiques',
+                  ].map((item) => (
+                    <li key={item} className="flex items-start gap-3 text-white/80 text-sm">
+                      <span className="text-[#FF6633] mt-0.5 flex-shrink-0">•</span>
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+                <div className="mb-8">
+                  <span className="text-6xl font-black text-white">1450.–</span>
+                  <span className="text-white/50 text-base ml-1">/mo</span>
+                </div>
+                <a href="#contact" className="group/btn relative w-full inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-full bg-gradient-to-r from-[#FF6633] to-[#FF5522] hover:from-[#FF5522] hover:to-[#FF6633] text-white text-sm font-bold transition-all duration-500 hover:shadow-2xl hover:shadow-[#FF6633]/60 overflow-hidden">
+                  <span className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/20 to-white/0 translate-x-[-100%] group-hover/btn:translate-x-[100%] transition-transform duration-1000"></span>
+                  <svg className="relative w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" /></svg>
+                  <span className="relative">Demander un Devis</span>
+                </a>
+              </div>
+            </div>
+
+            {/* Accelerate */}
+            <div className="group relative p-8 rounded-3xl bg-gradient-to-br from-[#161616] to-[#0f0f0f] border border-[#2a2a2a] hover:border-[#FF6633]/40 transition-all duration-500 hover:shadow-2xl hover:shadow-[#FF6633]/10 hover:-translate-y-2 overflow-hidden">
+              <div className="absolute inset-0 bg-gradient-to-br from-[#FF6633]/0 group-hover:from-[#FF6633]/5 to-transparent transition-all duration-500"></div>
+              <div className="absolute bottom-0 left-0 w-40 h-40 bg-white/[0.02] rounded-tr-full"></div>
+              <div className="relative z-10">
+                <h3 className="text-2xl font-bold text-white mb-2">Accelerate</h3>
+                <p className="text-white/50 text-sm mb-6">La formule complète pour une croissance maximale</p>
+                <ul className="space-y-3 mb-8">
+                  {[
+                    'Gestion multi-plateformes avec +25 contenus/mois (premium vidéos)',
+                    'Stratégie d\'influence et collaborations',
+                    'Publicité payante (budget à part)',
+                    'Analytics hebdomadaires & coaching personnalisé',
+                  ].map((item) => (
+                    <li key={item} className="flex items-start gap-3 text-white/70 text-sm">
+                      <span className="text-[#FF6633] mt-0.5 flex-shrink-0">•</span>
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+                <div className="mb-8">
+                  <span className="text-6xl font-black text-white">2250.–</span>
+                  <span className="text-white/50 text-base ml-1">/mo</span>
+                </div>
+                <a href="#contact" className="group/btn relative w-full inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-full border border-[#FF6633]/50 text-[#FF6633] text-sm font-bold hover:bg-[#FF6633] hover:text-white transition-all duration-300 overflow-hidden">
+                  <span className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/10 to-white/0 translate-x-[-100%] group-hover/btn:translate-x-[100%] transition-transform duration-700"></span>
+                  <svg className="relative w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" /></svg>
+                  <span className="relative">Demander un Devis</span>
+                </a>
+              </div>
+            </div>
+
+          </div>
+
+          {/* Portail client CTA */}
+          <div className="mt-16 relative overflow-hidden rounded-3xl bg-gradient-to-r from-[#1a1a1a] via-[#161616] to-[#1a1a1a] border border-white/10 p-8 md:p-10">
+            <div className="absolute -top-20 -right-20 w-64 h-64 rounded-full bg-[#FF6633]/10 blur-[80px] pointer-events-none"></div>
+            <div className="absolute -bottom-10 -left-10 w-48 h-48 rounded-full bg-purple-600/10 blur-[60px] pointer-events-none"></div>
+            <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-8">
+              <div>
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-bold uppercase tracking-widest mb-4">
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                  Déjà client
+                </div>
+                <h3 className="text-2xl md:text-3xl font-bold text-white mb-2">Accède à ton espace client</h3>
+                <p className="text-white/60 text-base max-w-lg">
+                  Suis tes projets, consulte tes stratégies, approuve tes concepts et télécharge tes documents — tout en un seul endroit.
+                </p>
+              </div>
+              <div className="flex flex-col sm:flex-row gap-3 flex-shrink-0">
+                <a href="/client-portal" className="group relative inline-flex items-center justify-center gap-2.5 px-8 py-4 bg-gradient-to-r from-[#FF6633] to-[#FF5522] hover:from-[#FF5522] hover:to-[#FF6633] text-white font-bold rounded-full transition-all duration-500 hover:shadow-2xl hover:shadow-[#FF6633]/60 hover:scale-105 whitespace-nowrap overflow-hidden">
+                  <span className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/20 to-white/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000"></span>
+                  <svg className="relative w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" /></svg>
+                  <span className="relative">Accéder à mon espace</span>
+                </a>
+                <a href="/login" className="group relative inline-flex items-center justify-center gap-2 px-6 py-4 text-white/70 hover:text-white rounded-full border border-white/10 hover:border-white/30 hover:bg-white/5 transition-all duration-300 whitespace-nowrap overflow-hidden">
+                  <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700"></span>
+                  <span className="relative text-sm font-medium">Se connecter</span>
+                </a>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
       {/* Section: Contact */}
       <section id="contact" className="relative py-24 px-6 bg-gradient-to-b from-[#0A0A0A] to-[#050505] overflow-hidden">
         <div className="absolute inset-0 opacity-30">
@@ -526,8 +696,17 @@ export default function Home() {
               <span className="relative z-10">Offres</span>
               <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#FF6633] group-hover:w-full transition-all duration-300"></span>
             </a>
+            <a href="#services" className="group relative hover:text-[#FF6633] transition-all duration-300">
+              <span className="relative z-10">Services</span>
+              <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#FF6633] group-hover:w-full transition-all duration-300"></span>
+            </a>
             <a href="#contact" className="group relative hover:text-[#FF6633] transition-all duration-300">
               <span className="relative z-10">Contact</span>
+              <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#FF6633] group-hover:w-full transition-all duration-300"></span>
+            </a>
+            <a href="/client-portal" className="group relative hover:text-[#FF6633] transition-all duration-300 flex items-center gap-1.5">
+              <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" /></svg>
+              <span className="relative z-10">Espace Client</span>
               <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#FF6633] group-hover:w-full transition-all duration-300"></span>
             </a>
           </div>

@@ -215,14 +215,14 @@ export default function ScriptsPage() {
 
       const calendarIds = calendars.map(c => c.id);
 
-      // Récupérer les posts de type vidéo
+      // Récupérer tous les posts (pas seulement vidéos)
       const { data: posts } = await supabase
         .from("editorial_post")
         .select("id, calendar_id, title, publication_date, platform, content_type, status")
         .in("calendar_id", calendarIds)
-        .or('content_type.ilike.%vidéo%,content_type.ilike.%video%,content_type.ilike.%reel%,content_type.ilike.%short%')
         .order("publication_date", { ascending: false });
 
+      console.log('Posts récupérés pour le client:', posts);
       setEditorialPosts(posts || []);
     } catch (error) {
       console.error("Erreur chargement posts:", error);
@@ -409,20 +409,54 @@ export default function ScriptsPage() {
     <>
       <Header title="Scripts Vidéo" />
       <main className="p-4 sm:p-6 lg:p-8 max-w-[1800px] mx-auto">
-        {/* Header avec bouton nouveau script */}
-        <div className="bg-gradient-to-br from-brand-orange via-brand-orange-light to-orange-400 rounded-2xl shadow-2xl p-6 sm:p-8 text-white mb-6">
-          <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
+        {/* Header avec statistiques et actions */}
+        <div className="bg-gradient-to-br from-orange-500 via-orange-600 to-red-500 rounded-3xl shadow-2xl p-6 sm:p-8 text-white mb-8">
+          <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6 mb-6">
             <div>
-              <h1 className="text-3xl sm:text-4xl font-bold mb-2">Scripts Vidéo</h1>
+              <div className="flex items-center gap-3 mb-2">
+                <div className="p-3 bg-white/20 backdrop-blur-sm rounded-xl">
+                  <FileText className="w-8 h-8 text-white" />
+                </div>
+                <h1 className="text-3xl sm:text-4xl font-bold">Scripts Vidéo</h1>
+              </div>
               <p className="text-white/90 text-lg">Créez et gérez vos scripts de vidéos</p>
             </div>
-            <button
-              onClick={handleNewScript}
-              className="flex items-center gap-2 px-6 py-3 bg-white text-brand-orange rounded-xl font-bold hover:shadow-xl transition-all"
-            >
-              <Plus className="w-5 h-5" />
-              Nouveau script
-            </button>
+            <div className="flex gap-3">
+              <button
+                onClick={() => setShowWizard(true)}
+                className="flex items-center gap-2 px-5 py-3 bg-white/20 backdrop-blur-sm text-white rounded-xl font-semibold hover:bg-white/30 transition-all border-2 border-white/30"
+              >
+                <Video className="w-5 h-5" />
+                Assistant IA
+              </button>
+              <button
+                onClick={handleNewScript}
+                className="flex items-center gap-2 px-6 py-3 bg-white text-orange-600 rounded-xl font-bold hover:shadow-xl transition-all"
+              >
+                <Plus className="w-5 h-5" />
+                Nouveau script
+              </button>
+            </div>
+          </div>
+          
+          {/* Statistiques */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4 border border-white/20">
+              <div className="text-3xl font-bold mb-1">{scripts.length}</div>
+              <div className="text-white/80 text-sm font-medium">Total scripts</div>
+            </div>
+            <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4 border border-white/20">
+              <div className="text-3xl font-bold mb-1">{scripts.filter(s => s.editorial_post).length}</div>
+              <div className="text-white/80 text-sm font-medium">Liés à des posts</div>
+            </div>
+            <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4 border border-white/20">
+              <div className="text-3xl font-bold mb-1">{scripts.filter(s => s.client).length}</div>
+              <div className="text-white/80 text-sm font-medium">Avec client</div>
+            </div>
+            <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4 border border-white/20">
+              <div className="text-3xl font-bold mb-1">{scripts.filter(s => s.mandat).length}</div>
+              <div className="text-white/80 text-sm font-medium">Avec mandat</div>
+            </div>
           </div>
         </div>
 
@@ -449,58 +483,80 @@ export default function ScriptsPage() {
             {scripts.map((script) => (
               <div
                 key={script.id}
-                className="bg-white rounded-xl shadow-md p-6 hover:shadow-lg transition-shadow border-l-4 border-brand-orange"
+                className="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden border border-slate-200 hover:border-orange-300"
               >
-                <div className="flex items-start justify-between mb-4">
-                  <div className="flex items-center gap-3">
-                    <div className="p-2 bg-orange-100 rounded-lg">
-                      <FileText className="w-5 h-5 text-brand-orange" />
+                {/* Header avec gradient */}
+                <div className="bg-gradient-to-r from-orange-50 to-red-50 p-5 border-b-2 border-orange-200">
+                  <div className="flex items-start justify-between">
+                    <div className="flex-1">
+                      <div className="flex items-center gap-2 mb-2">
+                        <div className="p-2 bg-gradient-to-br from-orange-500 to-red-500 rounded-lg shadow-lg">
+                          <FileText className="w-4 h-4 text-white" />
+                        </div>
+                        {script.editorial_post && (
+                          <div className="px-2 py-1 bg-green-100 text-green-700 rounded-full text-xs font-semibold flex items-center gap-1">
+                            <CheckCircle2 className="w-3 h-3" />
+                            Lié
+                          </div>
+                        )}
+                      </div>
+                      <h3 className="font-bold text-gray-900 text-lg leading-tight line-clamp-2">{script.title}</h3>
                     </div>
-                    <h3 className="font-bold text-gray-900 text-lg">{script.title}</h3>
-                  </div>
-                  <div className="flex gap-2">
-                    <button
-                      onClick={() => handleEditScript(script)}
-                      className="p-2 hover:bg-blue-50 rounded-lg transition-colors"
-                      title="Modifier"
-                    >
-                      <Edit3 className="w-4 h-4 text-blue-600" />
-                    </button>
-                    <button
-                      onClick={() => handleDeleteScript(script.id)}
-                      className="p-2 hover:bg-red-50 rounded-lg transition-colors"
-                      title="Supprimer"
-                    >
-                      <Trash2 className="w-4 h-4 text-red-600" />
-                    </button>
+                    <div className="flex gap-1 ml-2">
+                      <button
+                        onClick={() => handleEditScript(script)}
+                        className="p-2 hover:bg-blue-100 rounded-lg transition-colors group/edit"
+                        title="Modifier"
+                      >
+                        <Edit3 className="w-4 h-4 text-blue-600 group-hover/edit:scale-110 transition-transform" />
+                      </button>
+                      <button
+                        onClick={() => handleDeleteScript(script.id)}
+                        className="p-2 hover:bg-red-100 rounded-lg transition-colors group/delete"
+                        title="Supprimer"
+                      >
+                        <Trash2 className="w-4 h-4 text-red-600 group-hover/delete:scale-110 transition-transform" />
+                      </button>
+                    </div>
                   </div>
                 </div>
 
-                {script.client && (
-                  <div className="flex items-center gap-2 text-sm text-gray-600 mb-2">
-                    <User className="w-4 h-4" />
-                    <span>{script.client.name}</span>
-                  </div>
-                )}
+                {/* Contenu */}
+                <div className="p-5 space-y-3">
+                  {script.client && (
+                    <div className="flex items-center gap-2 text-sm bg-slate-50 px-3 py-2 rounded-lg">
+                      <User className="w-4 h-4 text-slate-600" />
+                      <span className="font-medium text-slate-700">{script.client.name}</span>
+                    </div>
+                  )}
 
-                {script.mandat && (
-                  <div className="flex items-center gap-2 text-sm text-gray-600 mb-2">
-                    <FileText className="w-4 h-4" />
-                    <span>{script.mandat.title}</span>
-                  </div>
-                )}
+                  {script.mandat && (
+                    <div className="flex items-center gap-2 text-sm bg-blue-50 px-3 py-2 rounded-lg">
+                      <FileText className="w-4 h-4 text-blue-600" />
+                      <span className="font-medium text-blue-700">{script.mandat.title}</span>
+                    </div>
+                  )}
 
-                {script.editorial_post && (
-                  <div className="flex items-center gap-2 text-sm text-green-600 mb-2 font-semibold">
-                    <Video className="w-4 h-4" />
-                    <span>{script.editorial_post.title}</span>
-                    <span className="text-xs text-gray-500">({new Date(script.editorial_post.publication_date).toLocaleDateString('fr-FR')} - {script.editorial_post.platform})</span>
-                  </div>
-                )}
+                  {script.editorial_post && (
+                    <div className="bg-gradient-to-r from-green-50 to-emerald-50 border-2 border-green-200 rounded-lg p-3">
+                      <div className="flex items-start gap-2">
+                        <Video className="w-4 h-4 text-green-600 mt-0.5 flex-shrink-0" />
+                        <div className="flex-1 min-w-0">
+                          <div className="font-semibold text-green-900 text-sm line-clamp-1">{script.editorial_post.title}</div>
+                          <div className="text-xs text-green-700 mt-1 flex items-center gap-2">
+                            <span>{new Date(script.editorial_post.publication_date).toLocaleDateString('fr-FR')}</span>
+                            <span>•</span>
+                            <span>{script.editorial_post.platform}</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  )}
 
-                <div className="flex items-center gap-2 text-xs text-gray-500 mt-4">
-                  <Calendar className="w-3 h-3" />
-                  <span>Modifié le {new Date(script.updated_at).toLocaleDateString('fr-FR')}</span>
+                  <div className="flex items-center gap-2 text-xs text-slate-500 pt-2 border-t border-slate-100">
+                    <Calendar className="w-3 h-3" />
+                    <span>Modifié le {new Date(script.updated_at).toLocaleDateString('fr-FR')}</span>
+                  </div>
                 </div>
               </div>
             ))}
