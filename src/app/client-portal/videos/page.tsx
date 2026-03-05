@@ -252,7 +252,7 @@ export default function VideosPage() {
       />
 
       {/* Modern Stats Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-6">
         <StatCard
           label="Total vidéos"
           value={videoPosts.length}
@@ -296,19 +296,19 @@ export default function VideosPage() {
           iconGradient="from-orange-500 to-orange-600"
         />
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
           {videoPosts.map((video) => (
             <motion.div
               key={video.id}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              whileHover={{ y: -8, scale: 1.02 }}
+              whileHover={{ y: -4, scale: 1.01 }}
               transition={{ duration: 0.3 }}
-              className="bg-white rounded-3xl shadow-sm hover:shadow-2xl transition-all overflow-hidden border border-slate-200/60 hover:border-orange-300 h-full"
+              className="bg-white rounded-2xl md:rounded-3xl shadow-sm hover:shadow-xl transition-all overflow-hidden border border-slate-200/60 hover:border-orange-300 h-full active:scale-[0.99]"
             >
                 {/* Media Preview if available */}
                 {video.media_urls && video.media_urls.length > 0 ? (
-                  <div className="relative h-48 overflow-hidden bg-slate-100">
+                  <div className="relative h-40 sm:h-48 overflow-hidden bg-slate-100">
                     <img 
                       src={video.media_urls[0]} 
                       alt={video.title}
@@ -331,7 +331,7 @@ export default function VideosPage() {
                     </div>
                   </div>
                 ) : (
-                  <div className="relative h-48 bg-gradient-to-br from-slate-100 to-slate-200 flex items-center justify-center">
+                  <div className="relative h-40 sm:h-48 bg-gradient-to-br from-slate-100 to-slate-200 flex items-center justify-center">
                     <div className="text-center">
                       <div className="p-4 bg-orange-500 rounded-2xl inline-flex mb-3">
                         <Video className="w-8 h-8 text-white" />
@@ -422,11 +422,11 @@ export default function VideosPage() {
 
       {/* Script Modal */}
       {selectedScript && (
-        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-end sm:items-center justify-center p-0 sm:p-4">
           <motion.div
-            initial={{ scale: 0.95, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            className="bg-white rounded-2xl w-full max-w-4xl max-h-[90vh] overflow-hidden shadow-2xl"
+            initial={{ opacity: 0, y: 40 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="bg-white rounded-t-3xl sm:rounded-2xl w-full sm:max-w-4xl max-h-[90vh] overflow-hidden shadow-2xl"
           >
             {/* Header */}
             <div className="flex items-center justify-between p-6 bg-gradient-to-r from-orange-50 to-amber-50 border-b border-orange-200/60">

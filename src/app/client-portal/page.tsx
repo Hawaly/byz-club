@@ -174,47 +174,68 @@ export default function ClientDashboard() {
       <motion.div
         initial={{ opacity: 0, y: -16 }}
         animate={{ opacity: 1, y: 0 }}
-        className="relative overflow-hidden rounded-3xl bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 p-7 md:p-10 shadow-2xl"
+        className="relative overflow-hidden rounded-2xl md:rounded-3xl bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 p-5 md:p-10 shadow-2xl"
       >
         {/* Déco circles */}
         <div className="absolute -top-12 -right-12 w-56 h-56 rounded-full bg-orange-500/10 blur-3xl" />
         <div className="absolute -bottom-8 -left-8 w-40 h-40 rounded-full bg-pink-500/10 blur-2xl" />
 
-        <div className="relative z-10 flex flex-col sm:flex-row sm:items-center justify-between gap-6">
-          <div>
-            <p className="text-orange-400 text-sm font-bold uppercase tracking-widest mb-1">{greeting} 👋</p>
-            <h1 className="text-3xl md:text-4xl font-black text-white leading-tight">
-              {user?.client_name?.split(' ')[0] || 'Bienvenue'}
-            </h1>
-            <p className="text-slate-400 mt-1.5 text-sm font-medium">
-              Voici un aperçu de votre activité en temps réel
-            </p>
+        <div className="relative z-10">
+          {/* Mobile: compact row */}
+          <div className="flex items-center justify-between sm:hidden">
+            <div>
+              <p className="text-orange-400 text-xs font-bold uppercase tracking-widest mb-0.5">{greeting} 👋</p>
+              <h1 className="text-2xl font-black text-white leading-tight">
+                {user?.client_name?.split(' ')[0] || 'Bienvenue'}
+              </h1>
+            </div>
+            {stats.mandats.enCours > 0 && (
+              <div className="bg-emerald-500/10 border border-emerald-500/20 px-3 py-2 rounded-xl text-right">
+                <p className="text-[9px] text-emerald-400 font-black uppercase">Actifs</p>
+                <p className="text-white font-black text-lg leading-none flex items-center gap-1 justify-end">
+                  <span className="w-1.5 h-1.5 bg-emerald-400 rounded-full animate-pulse" />
+                  {stats.mandats.enCours}
+                </p>
+              </div>
+            )}
           </div>
 
-          <div className="flex flex-wrap gap-3">
-            {clientInfo && (
-              <div className="bg-white/5 backdrop-blur border border-white/10 px-4 py-3 rounded-2xl">
-                <p className="text-[9px] text-orange-400 font-black uppercase tracking-widest">Client depuis</p>
-                <p className="text-white font-bold text-sm mt-0.5">
-                  {new Date(clientInfo.created_at).toLocaleDateString('fr-FR', { month: 'long', year: 'numeric' })}
-                </p>
-              </div>
-            )}
-            {stats.mandats.enCours > 0 && (
-              <div className="bg-emerald-500/10 backdrop-blur border border-emerald-500/20 px-4 py-3 rounded-2xl">
-                <p className="text-[9px] text-emerald-400 font-black uppercase tracking-widest">Projets actifs</p>
-                <p className="text-white font-bold text-sm mt-0.5 flex items-center gap-1.5">
-                  <span className="w-2 h-2 bg-emerald-400 rounded-full animate-pulse" />
-                  {stats.mandats.enCours} en cours
-                </p>
-              </div>
-            )}
+          {/* Desktop: original layout */}
+          <div className="hidden sm:flex sm:flex-row sm:items-center justify-between gap-6">
+            <div>
+              <p className="text-orange-400 text-sm font-bold uppercase tracking-widest mb-1">{greeting} 👋</p>
+              <h1 className="text-3xl md:text-4xl font-black text-white leading-tight">
+                {user?.client_name?.split(' ')[0] || 'Bienvenue'}
+              </h1>
+              <p className="text-slate-400 mt-1.5 text-sm font-medium">
+                Voici un aperçu de votre activité en temps réel
+              </p>
+            </div>
+            <div className="flex flex-wrap gap-3">
+              {clientInfo && (
+                <div className="bg-white/5 backdrop-blur border border-white/10 px-4 py-3 rounded-2xl">
+                  <p className="text-[9px] text-orange-400 font-black uppercase tracking-widest">Client depuis</p>
+                  <p className="text-white font-bold text-sm mt-0.5">
+                    {new Date(clientInfo.created_at).toLocaleDateString('fr-FR', { month: 'long', year: 'numeric' })}
+                  </p>
+                </div>
+              )}
+              {stats.mandats.enCours > 0 && (
+                <div className="bg-emerald-500/10 backdrop-blur border border-emerald-500/20 px-4 py-3 rounded-2xl">
+                  <p className="text-[9px] text-emerald-400 font-black uppercase tracking-widest">Projets actifs</p>
+                  <p className="text-white font-bold text-sm mt-0.5 flex items-center gap-1.5">
+                    <span className="w-2 h-2 bg-emerald-400 rounded-full animate-pulse" />
+                    {stats.mandats.enCours} en cours
+                  </p>
+                </div>
+              )}
+            </div>
           </div>
         </div>
       </motion.div>
 
       {/* ── Stats Cards ── */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
         {[
           {
             label: 'Stratégies', value: stats.strategies.total,
@@ -252,26 +273,26 @@ export default function ClientDashboard() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: i * 0.08 }}
               whileHover={{ y: -4, scale: 1.02 }}
-              className="group bg-white rounded-2xl border border-slate-200 p-5 hover:shadow-xl hover:border-slate-300 transition-all cursor-pointer overflow-hidden relative"
+              className="group bg-white rounded-2xl border border-slate-200 p-4 md:p-5 hover:shadow-xl hover:border-slate-300 transition-all cursor-pointer overflow-hidden relative"
             >
               <div className={`absolute inset-0 bg-gradient-to-br ${card.gradient} opacity-0 group-hover:opacity-5 transition-opacity duration-300`} />
-              <div className={`w-12 h-12 rounded-2xl bg-gradient-to-br ${card.gradient} flex items-center justify-center mb-4 shadow-lg ${card.glow} group-hover:scale-110 transition-transform`}>
-                <card.icon className="w-6 h-6 text-white" />
+              <div className={`w-10 h-10 md:w-12 md:h-12 rounded-xl md:rounded-2xl bg-gradient-to-br ${card.gradient} flex items-center justify-center mb-3 md:mb-4 shadow-lg ${card.glow} group-hover:scale-110 transition-transform`}>
+                <card.icon className="w-5 h-5 md:w-6 md:h-6 text-white" />
               </div>
-              <p className="text-2xl font-black text-slate-900 mb-0.5 truncate">{card.value}</p>
-              <p className="text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-3">{card.label}</p>
-              <span className={`text-[10px] font-black px-2.5 py-1 rounded-lg ${card.tag}`}>{card.sub}</span>
+              <p className="text-xl md:text-2xl font-black text-slate-900 mb-0.5 truncate">{card.value}</p>
+              <p className="text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-2 md:mb-3">{card.label}</p>
+              <span className={`text-[10px] font-black px-2 py-0.5 md:px-2.5 md:py-1 rounded-lg ${card.tag}`}>{card.sub}</span>
             </motion.div>
           </Link>
         ))}
       </div>
 
       {/* ── Activité + Échéances ── */}
-      <div className="grid gap-5 lg:grid-cols-3">
+      <div className="grid gap-4 md:gap-5 lg:grid-cols-3">
 
         {/* Activité récente */}
-        <div className="lg:col-span-2 bg-white rounded-3xl border border-slate-200 overflow-hidden shadow-sm">
-          <div className="flex items-center justify-between px-6 py-5 border-b border-slate-100">
+        <div className="lg:col-span-2 bg-white rounded-2xl md:rounded-3xl border border-slate-200 overflow-hidden shadow-sm">
+          <div className="flex items-center justify-between px-4 md:px-6 py-4 md:py-5 border-b border-slate-100">
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-orange-400 to-pink-500 flex items-center justify-center shadow-md shadow-orange-500/20">
                 <Activity className="w-5 h-5 text-white" />
@@ -288,14 +309,14 @@ export default function ClientDashboard() {
             </Link>
           </div>
 
-          <div className="p-5 space-y-2">
-            {recentActivity.length > 0 ? recentActivity.slice(0, 5).map((item, i) => (
+          <div className="p-3 md:p-5 space-y-1 md:space-y-2">
+            {recentActivity.length > 0 ? recentActivity.slice(0, 4).map((item, i) => (
               <motion.div
                 key={item.id}
                 initial={{ opacity: 0, x: -16 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: i * 0.07 }}
-                className="flex items-center gap-4 px-4 py-3 rounded-2xl hover:bg-slate-50 transition-colors cursor-pointer group"
+                className="flex items-center gap-3 px-3 md:px-4 py-3 rounded-xl md:rounded-2xl hover:bg-slate-50 active:bg-slate-100 transition-colors cursor-pointer group"
               >
                 <div className={`w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 ${
                   item.type === 'strategy' ? 'bg-gradient-to-br from-orange-400 to-pink-500' :
@@ -326,8 +347,8 @@ export default function ClientDashboard() {
         </div>
 
         {/* Échéances + progression */}
-        <div className="bg-white rounded-3xl border border-slate-200 overflow-hidden shadow-sm flex flex-col">
-          <div className="flex items-center justify-between px-6 py-5 border-b border-slate-100">
+        <div className="bg-white rounded-2xl md:rounded-3xl border border-slate-200 overflow-hidden shadow-sm flex flex-col">
+          <div className="flex items-center justify-between px-4 md:px-6 py-4 md:py-5 border-b border-slate-100">
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-rose-500 to-red-600 flex items-center justify-center shadow-md shadow-rose-500/20">
                 <Calendar className="w-5 h-5 text-white" />
@@ -337,14 +358,14 @@ export default function ClientDashboard() {
                 <p className="text-[10px] text-slate-400 font-semibold uppercase tracking-wider">À venir</p>
               </div>
             </div>
-            <Link href="/client-portal/calendrier">
+            <Link href="/client-portal/calendrier-editorial">
               <span className="text-xs font-bold text-blue-500 hover:text-blue-600 transition-colors flex items-center gap-1">
                 Calendrier <ChevronRight className="w-3.5 h-3.5" />
               </span>
             </Link>
           </div>
 
-          <div className="p-5 space-y-2 flex-1">
+          <div className="p-3 md:p-5 space-y-2 flex-1">
             {upcomingDeadlines.length > 0 ? upcomingDeadlines.map((dl, i) => {
               const days = Math.ceil((new Date(dl.date).getTime() - Date.now()) / 86400000);
               const urgent = days <= 7;
@@ -408,20 +429,44 @@ export default function ClientDashboard() {
       </div>
 
       {/* ── Accès rapides ── */}
-      <div className="bg-white rounded-3xl border border-slate-200 p-6 shadow-sm">
-        <div className="flex items-center gap-3 mb-6">
+      <div className="bg-white rounded-2xl md:rounded-3xl border border-slate-200 p-4 md:p-6 shadow-sm">
+        <div className="flex items-center gap-3 mb-4 md:mb-6">
           <div className="w-1 h-7 bg-gradient-to-b from-orange-400 to-pink-500 rounded-full" />
           <div>
-            <h3 className="font-black text-slate-900 text-lg">Accès Rapides</h3>
-            <p className="text-[10px] text-slate-400 font-semibold uppercase tracking-wider">Vos outils en un clic</p>
+            <h3 className="font-black text-slate-900 text-base md:text-lg">Accès Rapides</h3>
+            <p className="text-[10px] text-slate-400 font-semibold uppercase tracking-wider hidden sm:block">Vos outils en un clic</p>
           </div>
         </div>
 
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+        {/* Mobile: horizontal scroll */}
+        <div className="flex gap-3 overflow-x-auto pb-1 -mx-1 px-1 snap-x snap-mandatory md:hidden">
+          {[
+            { label: 'Stratégies',  href: '/client-portal/strategies',          gradient: 'from-orange-400 to-pink-500',   icon: Target },
+            { label: 'Factures',    href: '/client-portal/factures',             gradient: 'from-purple-500 to-fuchsia-500', icon: FileText },
+            { label: 'Projets',     href: '/client-portal/mandats',              gradient: 'from-blue-500 to-violet-500',    icon: Briefcase },
+            { label: 'Calendrier',  href: '/client-portal/calendrier-editorial', gradient: 'from-rose-400 to-red-500',       icon: Calendar },
+            { label: 'Contact',     href: '/client-portal/contact',              gradient: 'from-emerald-400 to-teal-500',   icon: MessageSquare },
+          ].map((a, i) => (
+            <Link key={i} href={a.href} className="snap-start flex-shrink-0">
+              <motion.div
+                whileTap={{ scale: 0.94 }}
+                className="flex flex-col items-center gap-2 p-3.5 rounded-2xl bg-slate-50 active:bg-slate-100 border border-slate-100 w-[88px] text-center"
+              >
+                <div className={`w-11 h-11 rounded-2xl bg-gradient-to-br ${a.gradient} flex items-center justify-center shadow-md`}>
+                  <a.icon className="w-5 h-5 text-white" />
+                </div>
+                <p className="font-bold text-slate-800 text-xs leading-tight">{a.label}</p>
+              </motion.div>
+            </Link>
+          ))}
+        </div>
+
+        {/* Desktop: grid */}
+        <div className="hidden md:grid grid-cols-2 lg:grid-cols-4 gap-4">
           {[
             { label: 'Stratégies',  href: '/client-portal/strategies',  gradient: 'from-orange-400 to-pink-500',   icon: Target },
             { label: 'Factures',    href: '/client-portal/factures',     gradient: 'from-purple-500 to-fuchsia-500', icon: FileText },
-            { label: 'Mandats',     href: '/client-portal/mandats',      gradient: 'from-blue-500 to-violet-500',    icon: Briefcase },
+            { label: 'Projets',     href: '/client-portal/mandats',      gradient: 'from-blue-500 to-violet-500',    icon: Briefcase },
             { label: 'Contact',     href: '/client-portal/contact',      gradient: 'from-emerald-400 to-teal-500',   icon: MessageSquare },
           ].map((a, i) => (
             <Link key={i} href={a.href}>

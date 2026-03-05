@@ -478,7 +478,7 @@ export default function MandatsPage() {
           />
 
       {/* Modern Stats Cards */}
-      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-6">
         <StatCard
           label="Projets en cours"
           value={activeMandats.length}
@@ -515,7 +515,7 @@ export default function MandatsPage() {
             <h2 className="text-xl sm:text-2xl font-black text-slate-900 uppercase tracking-tight">Projets en cours</h2>
           </div>
 
-          <div className="grid gap-6 lg:grid-cols-2">
+          <div className="grid gap-4 md:gap-6 lg:grid-cols-2">
             {activeMandats.map((mandat) => {
               const progress = mandat.progression || 0;
               const tasks = mandatTasks[mandat.id] || [];
@@ -539,10 +539,10 @@ export default function MandatsPage() {
                   transition={{ duration: 0.3 }}
                 >
                   <ModernCard title="Détails du mandat" className="h-full border-none shadow-sm !p-0 overflow-hidden bg-white">
-                    <div className="p-6 sm:p-8">
-                      <div className="flex items-start justify-between gap-4 mb-6">
+                    <div className="p-2 sm:p-4 md:p-6">
+                      <div className="flex items-start justify-between gap-3 mb-4 md:mb-6">
                         <div className="min-w-0">
-                          <h3 className="text-lg sm:text-xl font-black text-slate-900 uppercase tracking-tight truncate mb-1">
+                          <h3 className="text-base sm:text-lg md:text-xl font-black text-slate-900 uppercase tracking-tight truncate mb-1">
                             {mandat.title}
                           </h3>
                           <div className="flex items-center gap-2 text-xs font-bold text-slate-400 uppercase tracking-widest">

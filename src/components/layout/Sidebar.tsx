@@ -102,7 +102,9 @@ const menuItems: MenuEntry[] = [
     children: [
       { href: "/taches", label: "Toutes les tâches", icon: ClipboardList, color: "from-purple-600 to-purple-500" },
       { href: "/concepts", label: "Concepts créatifs", icon: Lightbulb, color: "from-purple-600 to-purple-500" },
-      { href: "/scripts", label: "Scripts vidéo", icon: Film, color: "from-purple-600 to-purple-500" },
+      { href: "/calendrier", label: "Calendrier éditorial", icon: Calendar, color: "from-purple-600 to-purple-500" },
+      { href: "/scripts", label: "Scripts", icon: Film, color: "from-purple-600 to-purple-500" },
+      { href: "/strategie", label: "Stratégie", icon: Target, color: "from-purple-600 to-purple-500" },
       { href: "/clients", label: "Gérer le client", icon: UserCog, color: "from-purple-600 to-purple-500" },
     ]
   },
@@ -230,7 +232,7 @@ export function Sidebar() {
           <div className="relative">
             <div className="w-11 h-11 bg-white rounded-xl flex items-center justify-center shadow-brand group-hover:shadow-brand-lg transition-all duration-300 p-1.5">
               <img 
-                src="/images/logos/urstoryBlack.png" 
+                src="/images/Logo.png" 
                 alt="BYZCLUB Logo" 
                 className="w-8 h-8 object-contain"
               />
@@ -242,7 +244,7 @@ export function Sidebar() {
               BYZCLUB
             </span>
             <span className="text-xs text-slate-400 font-medium">
-              Comptabilité
+              Marketing Digital
             </span>
           </div>
         </Link>

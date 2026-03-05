@@ -99,6 +99,15 @@ export default function ConceptsPage() {
   const [isLoading, setIsLoading] = useState(true);
   const [showCreateModal, setShowCreateModal] = useState(false);
   const [selectedConcept, setSelectedConcept] = useState<Concept | null>(null);
+  const [isEditing, setIsEditing] = useState(false);
+  const [editData, setEditData] = useState<{
+    type: 'reel' | 'post';
+    title: string;
+    description: string;
+    goal: string;
+    client_id: string;
+  }>({ type: 'post', title: '', description: '', goal: '', client_id: '' });
+  const [isSaving, setIsSaving] = useState(false);
   const [filterClient, setFilterClient] = useState<number | null>(null);
   const [filterType, setFilterType] = useState<string | null>(null);
   const [searchTerm, setSearchTerm] = useState('');
@@ -200,6 +209,49 @@ export default function ConceptsPage() {
       loadData();
     } catch (error: any) {
       alert(error.message);
+    }
+  }
+
+  function openConceptDetail(concept: Concept) {
+    setSelectedConcept(concept);
+    setIsEditing(false);
+    setEditData({
+      type: concept.type,
+      title: concept.title,
+      description: concept.description || '',
+      goal: concept.goal || '',
+      client_id: String(concept.client_id),
+    });
+  }
+
+  async function handleUpdateConcept() {
+    if (!selectedConcept) return;
+    if (!editData.title || !editData.client_id) {
+      alert('Titre et client sont obligatoires');
+      return;
+    }
+    try {
+      setIsSaving(true);
+      const response = await fetch(`/api/concepts/${selectedConcept.id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          type: editData.type,
+          title: editData.title,
+          description: editData.description,
+          goal: editData.goal,
+          client_id: parseInt(editData.client_id),
+        }),
+      });
+      const data = await response.json();
+      if (!response.ok) throw new Error(data.error || 'Erreur modification concept');
+      setIsEditing(false);
+      setSelectedConcept(null);
+      loadData();
+    } catch (error: any) {
+      alert(error.message);
+    } finally {
+      setIsSaving(false);
     }
   }
 
@@ -414,7 +466,7 @@ export default function ConceptsPage() {
                           concept={concept}
                           onSendForApproval={handleSendForApproval}
                           onDelete={handleDeleteConcept}
-                          onClick={() => setSelectedConcept(concept)}
+                          onClick={() => openConceptDetail(concept)}
                         />
                       ))
                     )}
@@ -425,6 +477,219 @@ export default function ConceptsPage() {
           </div>
         )}
       </div>
+
+      {/* Modal de détail / édition */}
+      <AnimatePresence>
+        {selectedConcept && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+            onClick={() => { setSelectedConcept(null); setIsEditing(false); }}
+          >
+            <motion.div
+              initial={{ scale: 0.95, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.95, opacity: 0 }}
+              onClick={(e) => e.stopPropagation()}
+              className="bg-white rounded-2xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto"
+            >
+              {/* Header coloré selon type */}
+              <div className={`bg-gradient-to-r ${TYPE_CONFIG[selectedConcept.type]?.gradient || TYPE_CONFIG.post.gradient} p-6 text-white`}>
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-3">
+                    {React.createElement(TYPE_CONFIG[selectedConcept.type]?.icon || ImageIcon, { className: 'w-7 h-7' })}
+                    <div>
+                      <p className="text-white/70 text-xs font-semibold uppercase tracking-widest">
+                        {TYPE_CONFIG[selectedConcept.type]?.label || 'Post'}
+                      </p>
+                      <h2 className="text-xl font-black">{selectedConcept.title}</h2>
+                      <p className="text-white/80 text-sm mt-0.5">
+                        {selectedConcept.client?.company_name || selectedConcept.client?.name || 'Client inconnu'}
+                      </p>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    {!isEditing && (
+                      <button
+                        onClick={() => setIsEditing(true)}
+                        className="flex items-center gap-1.5 px-4 py-2 bg-white/20 hover:bg-white/30 rounded-xl text-sm font-bold transition-all"
+                      >
+                        ✏️ Modifier
+                      </button>
+                    )}
+                    <button
+                      onClick={() => { setSelectedConcept(null); setIsEditing(false); }}
+                      className="p-2 hover:bg-white/20 rounded-xl transition-colors"
+                    >
+                      <X className="w-5 h-5" />
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <div className="p-6 space-y-5">
+                {isEditing ? (
+                  /* Mode édition */
+                  <>
+                    <div>
+                      <label className="block text-sm font-semibold text-gray-700 mb-2">Type *</label>
+                      <div className="grid grid-cols-2 gap-3">
+                        {(['reel', 'post'] as const).map((t) => {
+                          const cfg = TYPE_CONFIG[t];
+                          const Icon = cfg.icon;
+                          return (
+                            <button
+                              key={t}
+                              type="button"
+                              onClick={() => setEditData({ ...editData, type: t })}
+                              className={`p-3 rounded-xl border-2 flex items-center gap-2 transition-all ${
+                                editData.type === t
+                                  ? 'border-purple-600 bg-purple-50'
+                                  : 'border-gray-200 hover:border-gray-300'
+                              }`}
+                            >
+                              <Icon className={`w-5 h-5 ${editData.type === t ? 'text-purple-600' : 'text-gray-400'}`} />
+                              <span className={`font-semibold text-sm ${editData.type === t ? 'text-purple-600' : 'text-gray-600'}`}>{cfg.label}</span>
+                            </button>
+                          );
+                        })}
+                      </div>
+                    </div>
+
+                    <div>
+                      <label className="block text-sm font-semibold text-gray-700 mb-2">Client *</label>
+                      <select
+                        value={editData.client_id}
+                        onChange={(e) => setEditData({ ...editData, client_id: e.target.value })}
+                        className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-purple-600 focus:ring-2 focus:ring-purple-600/20 outline-none transition-all"
+                      >
+                        <option value="">Sélectionner un client</option>
+                        {clients.map((client) => (
+                          <option key={client.id} value={client.id}>
+                            {client.company_name || client.name}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+
+                    <div>
+                      <label className="block text-sm font-semibold text-gray-700 mb-2">Titre *</label>
+                      <input
+                        type="text"
+                        value={editData.title}
+                        onChange={(e) => setEditData({ ...editData, title: e.target.value })}
+                        className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-purple-600 focus:ring-2 focus:ring-purple-600/20 outline-none transition-all"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-sm font-semibold text-gray-700 mb-2">Description</label>
+                      <textarea
+                        value={editData.description}
+                        onChange={(e) => setEditData({ ...editData, description: e.target.value })}
+                        rows={3}
+                        className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-purple-600 focus:ring-2 focus:ring-purple-600/20 outline-none transition-all"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-sm font-semibold text-gray-700 mb-2">Objectif</label>
+                      <input
+                        type="text"
+                        value={editData.goal}
+                        onChange={(e) => setEditData({ ...editData, goal: e.target.value })}
+                        className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-purple-600 focus:ring-2 focus:ring-purple-600/20 outline-none transition-all"
+                      />
+                    </div>
+
+                    <div className="flex gap-3 pt-2">
+                      <button
+                        type="button"
+                        onClick={() => setIsEditing(false)}
+                        className="flex-1 px-6 py-3 border-2 border-gray-300 text-gray-700 rounded-xl hover:bg-gray-50 transition-all font-semibold"
+                      >
+                        Annuler
+                      </button>
+                      <button
+                        type="button"
+                        onClick={handleUpdateConcept}
+                        disabled={isSaving}
+                        className="flex-1 px-6 py-3 bg-gradient-to-r from-purple-600 to-purple-500 text-white rounded-xl hover:shadow-lg transition-all font-semibold disabled:opacity-50"
+                      >
+                        {isSaving ? 'Sauvegarde...' : '💾 Sauvegarder'}
+                      </button>
+                    </div>
+                  </>
+                ) : (
+                  /* Mode lecture */
+                  <>
+                    {selectedConcept.description && (
+                      <div>
+                        <h3 className="text-sm font-bold text-gray-500 uppercase tracking-wide mb-1">Description</h3>
+                        <p className="text-gray-800 leading-relaxed">{selectedConcept.description}</p>
+                      </div>
+                    )}
+
+                    {selectedConcept.goal && (
+                      <div className="bg-purple-50 rounded-xl p-4 border border-purple-200">
+                        <h3 className="text-sm font-bold text-purple-700 uppercase tracking-wide mb-1">🎯 Objectif</h3>
+                        <p className="text-gray-800">{selectedConcept.goal}</p>
+                      </div>
+                    )}
+
+                    {selectedConcept.status === 'rejected' && selectedConcept.rejection_reason && (
+                      <div className="bg-red-50 rounded-xl p-4 border border-red-200">
+                        <h3 className="text-sm font-bold text-red-700 uppercase tracking-wide mb-1">⚠️ Raison du rejet</h3>
+                        <p className="text-gray-800">{selectedConcept.rejection_reason}</p>
+                      </div>
+                    )}
+
+                    {selectedConcept.review_notes && (
+                      <div className="bg-gray-50 rounded-xl p-4 border border-gray-200">
+                        <h3 className="text-sm font-bold text-gray-700 uppercase tracking-wide mb-1">💬 Notes de révision</h3>
+                        <p className="text-gray-800">{selectedConcept.review_notes}</p>
+                      </div>
+                    )}
+
+                    {/* Actions selon statut */}
+                    {selectedConcept.status === 'draft' && (
+                      <div className="flex gap-3 pt-2 border-t border-gray-200">
+                        <button
+                          onClick={() => { handleSendForApproval(selectedConcept.id); setSelectedConcept(null); }}
+                          className="flex-1 flex items-center justify-center gap-2 px-6 py-3 bg-gradient-to-r from-blue-600 to-cyan-600 text-white rounded-xl hover:shadow-lg transition-all font-semibold"
+                        >
+                          <Send className="w-4 h-4" />
+                          Envoyer pour approbation
+                        </button>
+                        <button
+                          onClick={() => { handleDeleteConcept(selectedConcept.id); setSelectedConcept(null); }}
+                          className="px-4 py-3 bg-red-50 text-red-600 border border-red-200 rounded-xl hover:bg-red-100 transition-all"
+                        >
+                          <Trash2 className="w-4 h-4" />
+                        </button>
+                      </div>
+                    )}
+
+                    {selectedConcept.status === 'rejected' && (
+                      <div className="pt-2 border-t border-gray-200">
+                        <button
+                          onClick={() => { handleSendForApproval(selectedConcept.id); setSelectedConcept(null); }}
+                          className="w-full flex items-center justify-center gap-2 px-6 py-3 bg-gradient-to-r from-blue-600 to-cyan-600 text-white rounded-xl hover:shadow-lg transition-all font-semibold"
+                        >
+                          <Send className="w-4 h-4" />
+                          Renvoyer pour approbation
+                        </button>
+                      </div>
+                    )}
+                  </>
+                )}
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* Modal de création */}
       <AnimatePresence>

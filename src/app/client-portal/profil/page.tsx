@@ -231,11 +231,11 @@ export default function ProfilePage() {
   }
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-5 md:space-y-8">
       {/* Header Section */}
       <div>
-        <h1 className="text-2xl font-bold text-gray-800 mb-2">Votre Profil</h1>
-        <p className="text-gray-600">Gérez vos informations personnelles et vos préférences de compte</p>
+        <h1 className="text-xl md:text-2xl font-bold text-gray-800 mb-1 md:mb-2">Votre Profil</h1>
+        <p className="text-gray-600 text-sm md:text-base">Gérez vos informations personnelles et vos préférences de compte</p>
       </div>
 
       {/* Success Message */}
@@ -264,7 +264,7 @@ export default function ProfilePage() {
 
       {/* User Profile Card */}
       <Card className="overflow-hidden">
-        <div className="bg-gradient-to-r from-indigo-600 to-indigo-800 px-6 py-4">
+        <div className="bg-gradient-to-r from-indigo-600 to-indigo-800 px-4 md:px-6 py-4">
           <div className="flex justify-between items-center">
             <h2 className="text-lg font-semibold text-white">Informations Personnelles</h2>
             {!isEditingProfile && !changePasswordMode && (
@@ -278,11 +278,11 @@ export default function ProfilePage() {
           </div>
         </div>
         
-        <div className="p-6">
+        <div className="p-4 md:p-6">
           {isEditingProfile ? (
             /* Edit Profile Form */
-            <div className="space-y-6">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="space-y-4 md:space-y-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">
                     Prénom
@@ -292,7 +292,7 @@ export default function ProfilePage() {
                     name="first_name"
                     value={editedProfile.first_name || ''}
                     onChange={handleInputChange}
-                    className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+                    className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-base"
                     placeholder="Votre prénom"
                   />
                 </div>
@@ -306,7 +306,7 @@ export default function ProfilePage() {
                     name="last_name"
                     value={editedProfile.last_name || ''}
                     onChange={handleInputChange}
-                    className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+                    className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-base"
                     placeholder="Votre nom"
                   />
                 </div>
@@ -319,7 +319,7 @@ export default function ProfilePage() {
                     type="email"
                     value={userProfile?.email || ''}
                     disabled
-                    className="w-full px-4 py-2 rounded-lg border border-gray-300 bg-gray-50 text-gray-500"
+                    className="w-full px-4 py-3 rounded-xl border border-gray-300 bg-gray-50 text-gray-500 text-base"
                   />
                   <p className="text-xs text-gray-500 mt-1">L'email ne peut pas être modifié</p>
                 </div>
@@ -333,7 +333,7 @@ export default function ProfilePage() {
                     name="phone"
                     value={editedProfile.phone || ''}
                     onChange={handleInputChange}
-                    className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+                    className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-base"
                     placeholder="Votre numéro de téléphone"
                   />
                 </div>
@@ -347,17 +347,17 @@ export default function ProfilePage() {
                     name="position"
                     value={editedProfile.position || ''}
                     onChange={handleInputChange}
-                    className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+                    className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-base"
                     placeholder="Votre poste dans l'entreprise"
                   />
                 </div>
               </div>
               
-              <div className="flex justify-end gap-3 pt-4 border-t border-gray-200">
+              <div className="flex flex-col sm:flex-row justify-end gap-3 pt-4 border-t border-gray-200">
                 <button
                   onClick={handleCancelEdit}
                   disabled={isSubmitting}
-                  className="px-4 py-2 text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                  className="w-full sm:w-auto px-4 py-3 text-gray-700 bg-white border border-gray-300 rounded-xl hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 font-medium"
                 >
                   Annuler
                 </button>
@@ -365,7 +365,7 @@ export default function ProfilePage() {
                 <button
                   onClick={handleSaveProfile}
                   disabled={isSubmitting}
-                  className="px-4 py-2 text-white bg-indigo-600 border border-transparent rounded-lg hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 flex items-center gap-2"
+                  className="w-full sm:w-auto px-4 py-3 text-white bg-indigo-600 border border-transparent rounded-xl hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 flex items-center justify-center gap-2 font-medium"
                 >
                   {isSubmitting ? (
                     <><Loader2 className="w-4 h-4 animate-spin" /> Enregistrement...</>
@@ -377,7 +377,7 @@ export default function ProfilePage() {
             </div>
           ) : changePasswordMode ? (
             /* Change Password Form */
-            <div className="space-y-6">
+            <div className="space-y-4 md:space-y-6">
               <div className="space-y-4">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">
@@ -388,7 +388,7 @@ export default function ProfilePage() {
                     name="currentPassword"
                     value={passwordData.currentPassword}
                     onChange={handlePasswordChange}
-                    className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+                    className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-base"
                     placeholder="Entrez votre mot de passe actuel"
                   />
                 </div>
@@ -402,7 +402,7 @@ export default function ProfilePage() {
                     name="newPassword"
                     value={passwordData.newPassword}
                     onChange={handlePasswordChange}
-                    className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+                    className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-base"
                     placeholder="Entrez un nouveau mot de passe"
                   />
                   <p className="text-xs text-gray-500 mt-1">Minimum 8 caractères</p>
@@ -417,17 +417,17 @@ export default function ProfilePage() {
                     name="confirmPassword"
                     value={passwordData.confirmPassword}
                     onChange={handlePasswordChange}
-                    className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+                    className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-base"
                     placeholder="Confirmez votre nouveau mot de passe"
                   />
                 </div>
               </div>
               
-              <div className="flex justify-end gap-3 pt-4 border-t border-gray-200">
+              <div className="flex flex-col sm:flex-row justify-end gap-3 pt-4 border-t border-gray-200">
                 <button
                   onClick={() => setChangePasswordMode(false)}
                   disabled={isSubmitting}
-                  className="px-4 py-2 text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                  className="w-full sm:w-auto px-4 py-3 text-gray-700 bg-white border border-gray-300 rounded-xl hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 font-medium"
                 >
                   Annuler
                 </button>
@@ -435,7 +435,7 @@ export default function ProfilePage() {
                 <button
                   onClick={handleChangePassword}
                   disabled={isSubmitting || !passwordData.currentPassword || !passwordData.newPassword || !passwordData.confirmPassword}
-                  className="px-4 py-2 text-white bg-indigo-600 border border-transparent rounded-lg hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 flex items-center gap-2"
+                  className="w-full sm:w-auto px-4 py-3 text-white bg-indigo-600 border border-transparent rounded-xl hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 flex items-center justify-center gap-2 font-medium"
                 >
                   {isSubmitting ? (
                     <><Loader2 className="w-4 h-4 animate-spin" /> Modification en cours...</>
@@ -448,7 +448,7 @@ export default function ProfilePage() {
           ) : (
             /* Profile Display */
             <div>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
                 <div className="space-y-4">
                   <div>
                     <h3 className="text-sm font-medium text-gray-500">Nom complet</h3>
@@ -503,10 +503,10 @@ export default function ProfilePage() {
                 </div>
               </div>
               
-              <div className="mt-6 pt-6 border-t border-gray-200">
+              <div className="mt-4 md:mt-6 pt-4 md:pt-6 border-t border-gray-200">
                 <button
                   onClick={() => setChangePasswordMode(true)}
-                  className="flex items-center gap-2 text-indigo-600 hover:text-indigo-800 font-medium"
+                  className="flex items-center gap-2 text-indigo-600 hover:text-indigo-800 font-medium py-1"
                 >
                   <Lock className="w-4 h-4" /> 
                   Changer mon mot de passe
@@ -524,8 +524,8 @@ export default function ProfilePage() {
             <h2 className="text-lg font-semibold text-white">Informations Société</h2>
           </div>
           
-          <div className="p-6">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="p-4 md:p-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
               <div className="space-y-4">
                 <div>
                   <h3 className="text-sm font-medium text-gray-500">Nom de l'entreprise</h3>
@@ -597,8 +597,8 @@ export default function ProfilePage() {
           </h2>
         </div>
         
-        <div className="p-6">
-          <div className="space-y-6">
+        <div className="p-4 md:p-6">
+          <div className="space-y-5">
             <div>
               <h3 className="font-medium text-gray-900 mb-1">Dernière connexion</h3>
               <p className="text-gray-600">Aujourd'hui à 14:25</p>
@@ -607,7 +607,7 @@ export default function ProfilePage() {
             <div>
               <h3 className="font-medium text-gray-900 mb-1">Double authentification</h3>
               <p className="text-gray-600 mb-2">Protégez votre compte avec la double authentification.</p>
-              <button className="px-4 py-2 bg-blue-100 text-blue-700 rounded-lg hover:bg-blue-200 transition-colors font-medium text-sm flex items-center gap-2">
+              <button className="w-full sm:w-auto px-4 py-3 bg-blue-100 text-blue-700 rounded-xl hover:bg-blue-200 active:scale-95 transition-all font-medium text-sm flex items-center justify-center gap-2">
                 <Lock className="w-4 h-4" />
                 Activer la double authentification
               </button>

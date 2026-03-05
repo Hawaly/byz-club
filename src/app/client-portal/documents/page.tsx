@@ -493,7 +493,7 @@ export default function DocumentsPage() {
             <FolderOpen className="w-5 h-5 text-amber-500" /> Dossiers
           </h2>
           
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+          <div className="grid gap-3 grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
             {folders
               .filter(folder => folder.parent_folder_id === currentFolderId)
               .map((folder) => (
@@ -532,82 +532,93 @@ export default function DocumentsPage() {
         </h2>
         
         {filteredDocuments.length > 0 ? (
-          <div className="overflow-hidden shadow-sm rounded-xl border border-gray-200">
-            <table className="min-w-full divide-y divide-gray-200">
-              <thead className="bg-gray-50">
-                <tr>
-                  <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Fichier</th>
-                  <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Catégorie</th>
-                  <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Taille</th>
-                  <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
-                  <th scope="col" className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
-                </tr>
-              </thead>
-              <tbody className="bg-white divide-y divide-gray-200">
-                {filteredDocuments.map((doc) => (
-                  <tr 
-                    key={doc.id}
-                    className="hover:bg-gray-50 transition-colors"
-                  >
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="flex items-center gap-3">
-                        <div className="p-2 rounded-md bg-gray-100">
-                          {getFileIcon(doc.file_type)}
-                        </div>
-                        <div className="flex flex-col">
-                          <span className="font-medium text-gray-900">{doc.title}</span>
-                          {doc.description && (
-                            <span className="text-sm text-gray-500 line-clamp-1">{doc.description}</span>
-                          )}
-                        </div>
-                      </div>
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <span className="px-2.5 py-1 rounded-full text-xs font-medium bg-purple-100 text-purple-800">
-                        {doc.category || 'Non classé'}
-                      </span>
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                      {formatFileSize(doc.file_size)}
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                      {new Date(doc.created_at).toLocaleDateString('fr-FR')}
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                      <div className="flex justify-end gap-2">
-                        <motion.button
-                          whileHover={{ scale: 1.1 }}
-                          whileTap={{ scale: 0.9 }}
-                          className="p-2 bg-purple-100 text-purple-700 rounded-lg hover:bg-purple-200 transition-colors"
-                          onClick={() => handleDownload(doc)}
-                          disabled={downloadingId === doc.id}
-                        >
-                          {downloadingId === doc.id ? (
-                            <Loader2 className="w-5 h-5 animate-spin" />
-                          ) : (
-                            <Download className="w-5 h-5" />
-                          )}
-                        </motion.button>
-                        
-                        <motion.button
-                          whileHover={{ scale: 1.1 }}
-                          whileTap={{ scale: 0.9 }}
-                          className="p-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors"
-                          onClick={() => handlePreview(doc)}
-                          disabled={viewingId === doc.id}
-                        >
-                          {viewingId === doc.id ? (
-                            <Loader2 className="w-5 h-5 animate-spin" />
-                          ) : (
-                            <Eye className="w-5 h-5" />
-                          )}
-                        </motion.button>
-                      </div>
-                    </td>
+          <div>
+            {/* Mobile: cards list */}
+            <div className="lg:hidden space-y-2">
+              {filteredDocuments.map((doc) => (
+                <motion.div
+                  key={doc.id}
+                  initial={{ opacity: 0, y: 8 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="bg-white rounded-2xl border border-gray-200 p-4 flex items-center gap-3 active:bg-gray-50 transition-colors"
+                  onClick={() => setSelectedDocument(doc)}
+                >
+                  <div className="p-2.5 rounded-xl bg-gray-100 flex-shrink-0">
+                    {getFileIcon(doc.file_type)}
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <p className="font-semibold text-gray-900 truncate">{doc.title}</p>
+                    <div className="flex items-center gap-2 mt-0.5">
+                      <span className="text-[10px] font-bold text-purple-600 bg-purple-50 px-1.5 py-0.5 rounded-md">{doc.category || 'Non classé'}</span>
+                      <span className="text-[10px] text-gray-400">{formatFileSize(doc.file_size)}</span>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-1.5 flex-shrink-0">
+                    <motion.button
+                      whileTap={{ scale: 0.9 }}
+                      className="p-2.5 bg-purple-100 text-purple-700 rounded-xl"
+                      onClick={(e) => { e.stopPropagation(); handleDownload(doc); }}
+                      disabled={downloadingId === doc.id}
+                    >
+                      {downloadingId === doc.id ? <Loader2 className="w-4 h-4 animate-spin" /> : <Download className="w-4 h-4" />}
+                    </motion.button>
+                    <motion.button
+                      whileTap={{ scale: 0.9 }}
+                      className="p-2.5 bg-gray-100 text-gray-600 rounded-xl"
+                      onClick={(e) => { e.stopPropagation(); handlePreview(doc); }}
+                      disabled={viewingId === doc.id}
+                    >
+                      {viewingId === doc.id ? <Loader2 className="w-4 h-4 animate-spin" /> : <Eye className="w-4 h-4" />}
+                    </motion.button>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+
+            {/* Desktop: table */}
+            <div className="hidden lg:block overflow-hidden shadow-sm rounded-xl border border-gray-200">
+              <table className="min-w-full divide-y divide-gray-200">
+                <thead className="bg-gray-50">
+                  <tr>
+                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Fichier</th>
+                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Catégorie</th>
+                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Taille</th>
+                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
+                    <th scope="col" className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody className="bg-white divide-y divide-gray-200">
+                  {filteredDocuments.map((doc) => (
+                    <tr key={doc.id} className="hover:bg-gray-50 transition-colors">
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <div className="flex items-center gap-3">
+                          <div className="p-2 rounded-md bg-gray-100">{getFileIcon(doc.file_type)}</div>
+                          <div className="flex flex-col">
+                            <span className="font-medium text-gray-900">{doc.title}</span>
+                            {doc.description && <span className="text-sm text-gray-500 line-clamp-1">{doc.description}</span>}
+                          </div>
+                        </div>
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <span className="px-2.5 py-1 rounded-full text-xs font-medium bg-purple-100 text-purple-800">{doc.category || 'Non classé'}</span>
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{formatFileSize(doc.file_size)}</td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{new Date(doc.created_at).toLocaleDateString('fr-FR')}</td>
+                      <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                        <div className="flex justify-end gap-2">
+                          <motion.button whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }} className="p-2 bg-purple-100 text-purple-700 rounded-lg hover:bg-purple-200 transition-colors" onClick={() => handleDownload(doc)} disabled={downloadingId === doc.id}>
+                            {downloadingId === doc.id ? <Loader2 className="w-5 h-5 animate-spin" /> : <Download className="w-5 h-5" />}
+                          </motion.button>
+                          <motion.button whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }} className="p-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors" onClick={() => handlePreview(doc)} disabled={viewingId === doc.id}>
+                            {viewingId === doc.id ? <Loader2 className="w-5 h-5 animate-spin" /> : <Eye className="w-5 h-5" />}
+                          </motion.button>
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </div>
         ) : (
           <div className="text-center py-8 bg-gray-50 rounded-xl">
@@ -630,11 +641,11 @@ export default function DocumentsPage() {
 
       {/* Document Detail Modal */}
       {selectedDocument && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+        <div className="fixed inset-0 bg-black/50 flex items-end sm:items-center justify-center z-50 p-0 sm:p-4">
           <motion.div
-            initial={{ opacity: 0, scale: 0.9, y: 20 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            className="bg-white rounded-2xl shadow-2xl overflow-hidden max-w-2xl w-full"
+            initial={{ opacity: 0, y: 40 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="bg-white rounded-t-3xl sm:rounded-2xl shadow-2xl overflow-hidden w-full sm:max-w-2xl"
           >
             <div className="bg-gradient-to-r from-purple-600 to-indigo-600 p-6 text-white flex justify-between items-center">
               <div className="flex items-center gap-3">

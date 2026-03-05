@@ -45,7 +45,8 @@ export async function POST(request: NextRequest) {
     }
 
     // 2. Récupérer les infos utilisateur depuis app_user
-    const { data: userData, error: userError } = await supabaseAdmin
+    // Chercher d'abord par auth_user_id
+    let { data: userData, error: userError } = await supabaseAdmin
       .from('app_user')
       .select(`
         id,
@@ -61,17 +62,53 @@ export async function POST(request: NextRequest) {
         )
       `)
       .eq('auth_user_id', authData.user.id)
-      .eq('is_active', true)
       .single();
 
+    // Fallback : chercher par email si auth_user_id non lié
     if (userError || !userData) {
-      console.error('❌ Erreur récupération user:', userError);
-      
-      // Déconnecter l'utilisateur Supabase si pas de données app_user
+      const { data: userByEmail, error: emailError } = await supabaseAdmin
+        .from('app_user')
+        .select(`
+          id,
+          email,
+          is_active,
+          client_id,
+          auth_user_id,
+          role:role_id (
+            id,
+            code,
+            name,
+            redirect_path
+          )
+        `)
+        .eq('email', authData.user.email!)
+        .single();
+
+      if (!emailError && userByEmail) {
+        // Lier auth_user_id automatiquement pour les prochaines connexions
+        await supabaseAdmin
+          .from('app_user')
+          .update({ auth_user_id: authData.user.id, updated_at: new Date().toISOString() })
+          .eq('id', userByEmail.id);
+
+        userData = { ...userByEmail, auth_user_id: authData.user.id };
+        userError = null;
+      }
+    }
+
+    if (!userData) {
+      console.error('❌ app_user introuvable pour auth_user_id:', authData.user.id, 'email:', authData.user.email);
       await supabase.auth.signOut();
-      
       return NextResponse.json(
-        { error: 'Utilisateur non trouvé ou inactif' },
+        { error: 'Compte non configuré. Contactez un administrateur.' },
+        { status: 401 }
+      );
+    }
+
+    if (userData.is_active === false) {
+      await supabase.auth.signOut();
+      return NextResponse.json(
+        { error: 'Compte désactivé. Contactez un administrateur.' },
         { status: 401 }
       );
     }

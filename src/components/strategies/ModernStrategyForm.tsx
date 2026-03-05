@@ -64,7 +64,7 @@ export function ModernStrategyForm({ clientId, strategy, onSave, onCancel }: Mod
 
   const [formData, setFormData] = useState<Partial<SocialMediaStrategyInsert>>({
     client_id: clientId,
-    status: 'brouillon',
+    status: 'actif',
     contexte_general: '',
     objectifs_business: '',
     objectifs_reseaux: '',

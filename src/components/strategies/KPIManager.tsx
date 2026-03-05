@@ -64,7 +64,9 @@ export function KPIManager({ strategyId }: KPIManagerProps) {
 
   const handleSave = async (data: KPIInsert) => {
     if (editingKPI) {
-      await updateKPI(editingKPI.id, data);
+      // Retirer strategy_id car KPIUpdate ne l'accepte pas
+      const { strategy_id, ...updateData } = data;
+      await updateKPI(editingKPI.id, updateData);
     } else {
       await createKPI({ ...data, strategy_id: strategyId });
     }

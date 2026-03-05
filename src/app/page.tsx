@@ -142,7 +142,7 @@ export default function Home() {
                       <div className="w-2 h-2 rounded-full bg-[#FF6633]"></div>
                       <p className="text-white/50 text-xs font-bold tracking-wider">NETWORKING</p>
                     </div>
-                    <p className="text-white font-medium">12 février, 18h30</p>
+                    <p className="text-white font-medium">Bientôt disponible</p>
                   </div>
                   
                   <div className="p-4 rounded-2xl bg-white/[0.03] border border-white/10">
@@ -158,7 +158,7 @@ export default function Home() {
                       <div className="w-2 h-2 rounded-full bg-white/40"></div>
                       <p className="text-white/50 text-xs font-bold tracking-wider">OFFICE HOURS</p>
                     </div>
-                    <p className="text-white font-medium">26 février, 17h00</p>
+                    <p className="text-white font-medium">Bientôt disponible</p>
                   </div>
                 </div>
               </div>
@@ -319,7 +319,7 @@ export default function Home() {
                   <svg className="w-5 h-5 text-[#FF6633]" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clipRule="evenodd" />
                   </svg>
-                  <p className="text-white font-medium"><strong>12 février, 18h30</strong></p>
+                  <p className="text-white font-medium"><strong>Bientôt disponible</strong></p>
                   <p className="text-white/60">Durée : env. 2h</p>
                 </div>
                 <div className="flex items-center gap-3">
@@ -522,10 +522,6 @@ export default function Home() {
                     </li>
                   ))}
                 </ul>
-                <div className="mb-8">
-                  <span className="text-6xl font-black text-white">750.–</span>
-                  <span className="text-white/50 text-base ml-1">/mo</span>
-                </div>
                 <a href="#contact" className="group/btn relative w-full inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-full border border-[#FF6633]/50 text-[#FF6633] text-sm font-bold hover:bg-[#FF6633] hover:text-white transition-all duration-300 overflow-hidden">
                   <span className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/10 to-white/0 translate-x-[-100%] group-hover/btn:translate-x-[100%] transition-transform duration-700"></span>
                   <svg className="relative w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" /></svg>
@@ -562,10 +558,6 @@ export default function Home() {
                     </li>
                   ))}
                 </ul>
-                <div className="mb-8">
-                  <span className="text-6xl font-black text-white">1450.–</span>
-                  <span className="text-white/50 text-base ml-1">/mo</span>
-                </div>
                 <a href="#contact" className="group/btn relative w-full inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-full bg-gradient-to-r from-[#FF6633] to-[#FF5522] hover:from-[#FF5522] hover:to-[#FF6633] text-white text-sm font-bold transition-all duration-500 hover:shadow-2xl hover:shadow-[#FF6633]/60 overflow-hidden">
                   <span className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/20 to-white/0 translate-x-[-100%] group-hover/btn:translate-x-[100%] transition-transform duration-1000"></span>
                   <svg className="relative w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" /></svg>
@@ -594,10 +586,6 @@ export default function Home() {
                     </li>
                   ))}
                 </ul>
-                <div className="mb-8">
-                  <span className="text-6xl font-black text-white">2250.–</span>
-                  <span className="text-white/50 text-base ml-1">/mo</span>
-                </div>
                 <a href="#contact" className="group/btn relative w-full inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-full border border-[#FF6633]/50 text-[#FF6633] text-sm font-bold hover:bg-[#FF6633] hover:text-white transition-all duration-300 overflow-hidden">
                   <span className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/10 to-white/0 translate-x-[-100%] group-hover/btn:translate-x-[100%] transition-transform duration-700"></span>
                   <svg className="relative w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" /></svg>

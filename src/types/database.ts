@@ -297,7 +297,7 @@ export const CLIENT_TYPE_COLORS: Record<ClientType, string> = {
 // SOCIAL MEDIA STRATEGY
 // =========================================================
 
-export type StrategyStatus = 'brouillon' | 'actif' | 'archive';
+export type StrategyStatus = 'brouillon' | 'actif' | 'valide' | 'archive';
 
 // Persona pour l'audience
 export interface Persona {
@@ -520,6 +520,7 @@ export type SocialMediaStrategyUpdate = Partial<
 export const STRATEGY_STATUS_LABELS: Record<StrategyStatus, string> = {
   brouillon: 'Brouillon',
   actif: 'Actif',
+  valide: 'Validé',
   archive: 'Archivé',
 };
 
@@ -527,6 +528,7 @@ export const STRATEGY_STATUS_LABELS: Record<StrategyStatus, string> = {
 export const STRATEGY_STATUS_COLORS: Record<StrategyStatus, string> = {
   brouillon: 'bg-white text-black font-black border-[3px] border-gray-600 shadow-sm',
   actif: 'bg-white text-black font-black border-[3px] border-green-600 shadow-sm',
+  valide: 'bg-white text-black font-black border-[3px] border-green-600 shadow-sm',
   archive: 'bg-white text-black font-black border-[3px] border-orange-600 shadow-sm',
 };
 
