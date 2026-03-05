@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import { Header } from "@/components/layout/Header";
 import { supabase } from "@/lib/supabaseClient";
 import { 
@@ -14,7 +14,8 @@ import {
   Save,
   X,
   Video,
-  CheckCircle2
+  CheckCircle2,
+  Eye
 } from "lucide-react";
 import { RichTextEditor } from "@/components/editors/RichTextEditor";
 import { ScriptCreatorWizard } from "@/components/script-creator/ScriptCreatorWizard";
@@ -39,8 +40,9 @@ interface Script {
   editorial_post?: {
     id: number;
     title: string;
-    publication_date: string;
+    publish_date: string;
     platform: string;
+    publication_date?: string;
   };
 }
 
@@ -77,7 +79,7 @@ interface Strategy {
 }
 
 export default function ScriptsPage() {
-  const router = useRouter();
+  const searchParams = useSearchParams();
   const [scripts, setScripts] = useState<Script[]>([]);
   const [clients, setClients] = useState<Client[]>([]);
   const [mandats, setMandats] = useState<Mandat[]>([]);
@@ -86,6 +88,8 @@ export default function ScriptsPage() {
   const [selectedScript, setSelectedScript] = useState<Script | null>(null);
   const [showEditor, setShowEditor] = useState(false);
   const [showWizard, setShowWizard] = useState(false);
+  const [showViewer, setShowViewer] = useState(false);
+  const [viewerScript, setViewerScript] = useState<Script | null>(null);
   const [editorContent, setEditorContent] = useState("");
   const [editorTitle, setEditorTitle] = useState("");
   const [editorClientId, setEditorClientId] = useState<string>("");
@@ -96,11 +100,22 @@ export default function ScriptsPage() {
   const [newPostTitle, setNewPostTitle] = useState("");
   const [newPostDate, setNewPostDate] = useState("");
   const [newPostPlatform, setNewPostPlatform] = useState("Instagram");
-  const [newPostType, setNewPostType] = useState("Vidéos courtes (Reels/Shorts)");
+  const [newPostType, setNewPostType] = useState("Post");
 
   useEffect(() => {
     loadData();
   }, []);
+
+  useEffect(() => {
+    const highlightId = searchParams.get('highlight');
+    if (highlightId && scripts.length > 0) {
+      const target = scripts.find(s => s.id === parseInt(highlightId));
+      if (target) {
+        setViewerScript(target);
+        setShowViewer(true);
+      }
+    }
+  }, [searchParams, scripts]);
 
   const loadData = async () => {
     setIsLoading(true);
@@ -111,15 +126,34 @@ export default function ScriptsPage() {
           .select(`
             *,
             client:client_id (id, name),
-            mandat:mandat_id (id, title),
-            editorial_post:editorial_post_id (id, title, publication_date, platform)
+            mandat:mandat_id (id, title)
           `)
           .order("updated_at", { ascending: false }),
         supabase.from("client").select("id, name").order("name"),
         supabase.from("mandat").select("id, title, client_id").order("title")
       ]);
 
-      if (scriptsRes.data) setScripts(scriptsRes.data as Script[]);
+      if (scriptsRes.data) {
+        const rawScripts = scriptsRes.data;
+        const postIds = rawScripts
+          .map((s: any) => s.editorial_post_id)
+          .filter((id: any) => id != null);
+        let postsMap: Record<number, { id: number; title: string; publish_date: string; platform: string }> = {};
+        if (postIds.length > 0) {
+          const { data: calPosts } = await supabase
+            .from("editorial_calendar")
+            .select("id, title, publish_date, platform")
+            .in("id", postIds);
+          if (calPosts) {
+            calPosts.forEach((p: any) => { postsMap[p.id] = p; });
+          }
+        }
+        const enriched = rawScripts.map((s: any) => ({
+          ...s,
+          editorial_post: s.editorial_post_id ? (postsMap[s.editorial_post_id] || null) : null,
+        }));
+        setScripts(enriched as Script[]);
+      }
       if (clientsRes.data) setClients(clientsRes.data);
       if (mandatsRes.data) setMandats(mandatsRes.data);
     } catch (error) {
@@ -189,41 +223,24 @@ export default function ScriptsPage() {
 
   const loadEditorialPosts = async (clientId: number) => {
     try {
-      // Récupérer les stratégies du client
-      const { data: strategies } = await supabase
-        .from("social_media_strategy")
-        .select("id")
-        .eq("client_id", clientId);
-
-      if (!strategies || strategies.length === 0) {
-        setEditorialPosts([]);
-        return;
-      }
-
-      const strategyIds = strategies.map(s => s.id);
-
-      // Récupérer les calendriers de ces stratégies
-      const { data: calendars } = await supabase
+      const { data: posts, error } = await supabase
         .from("editorial_calendar")
-        .select("id")
-        .in("strategy_id", strategyIds);
+        .select("id, title, publish_date, platform, content_type, status")
+        .eq("client_id", clientId)
+        .order("publish_date", { ascending: false });
 
-      if (!calendars || calendars.length === 0) {
-        setEditorialPosts([]);
-        return;
-      }
-
-      const calendarIds = calendars.map(c => c.id);
-
-      // Récupérer les posts de type vidéo
-      const { data: posts } = await supabase
-        .from("editorial_post")
-        .select("id, calendar_id, title, publication_date, platform, content_type, status")
-        .in("calendar_id", calendarIds)
-        .or('content_type.ilike.%vidéo%,content_type.ilike.%video%,content_type.ilike.%reel%,content_type.ilike.%short%')
-        .order("publication_date", { ascending: false });
-
-      setEditorialPosts(posts || []);
+      if (error) throw error;
+      // Mapper vers l'interface EditorialPost attendue
+      const mapped = (posts || []).map(p => ({
+        id: p.id,
+        calendar_id: p.id,
+        title: p.title,
+        publication_date: p.publish_date,
+        platform: p.platform,
+        content_type: p.content_type,
+        status: p.status,
+      }));
+      setEditorialPosts(mapped);
     } catch (error) {
       console.error("Erreur chargement posts:", error);
       setEditorialPosts([]);
@@ -264,9 +281,10 @@ export default function ScriptsPage() {
 
       await loadData();
       setShowEditor(false);
-    } catch (error) {
-      console.error("Erreur sauvegarde:", error);
-      alert("Erreur lors de la sauvegarde");
+    } catch (error: any) {
+      const msg = error?.message || error?.details || error?.hint || JSON.stringify(error);
+      console.error("Erreur sauvegarde:", msg);
+      alert(`Erreur lors de la sauvegarde: ${msg}`);
     } finally {
       setIsSaving(false);
     }
@@ -311,118 +329,90 @@ export default function ScriptsPage() {
     }
 
     try {
-      // Récupérer ou créer la stratégie du client
-      let { data: strategies } = await supabase
-        .from("social_media_strategy")
-        .select("id")
-        .eq("client_id", parseInt(editorClientId))
-        .eq("status", "actif")
-        .limit(1);
-
-      let strategyId: number;
-
-      if (!strategies || strategies.length === 0) {
-        // Créer une stratégie par défaut
-        const { data: newStrategy, error: stratError } = await supabase
-          .from("social_media_strategy")
-          .insert({
-            client_id: parseInt(editorClientId),
-            status: "actif",
-            version: 1
-          })
-          .select()
-          .single();
-
-        if (stratError) throw stratError;
-        strategyId = newStrategy.id;
-      } else {
-        strategyId = strategies[0].id;
-      }
-
-      // Récupérer ou créer le calendrier éditorial
-      let { data: calendars } = await supabase
-        .from("editorial_calendar")
-        .select("id")
-        .eq("strategy_id", strategyId)
-        .limit(1);
-
-      let calendarId: number;
-
-      if (!calendars || calendars.length === 0) {
-        const { data: newCalendar, error: calError } = await supabase
-          .from("editorial_calendar")
-          .insert({
-            strategy_id: strategyId,
-            name: "Calendrier éditorial"
-          })
-          .select()
-          .single();
-
-        if (calError) throw calError;
-        calendarId = newCalendar.id;
-      } else {
-        calendarId = calendars[0].id;
-      }
-
-      // Créer le post
       const { data: newPost, error: postError } = await supabase
-        .from("editorial_post")
+        .from("editorial_calendar")
         .insert({
-          calendar_id: calendarId,
+          client_id: parseInt(editorClientId),
           title: newPostTitle.trim(),
-          publication_date: newPostDate,
-          platform: newPostPlatform,
-          content_type: newPostType,
-          status: "draft",
-          likes: 0,
-          comments: 0,
-          shares: 0,
-          views: 0,
-          reach: 0
+          publish_date: newPostDate,
+          platform: newPostPlatform.toLowerCase(),
+          content_type: newPostType === "Post" ? "post" : newPostType === "Carousel" ? "carousel" : "video",
+          status: "idea",
+          objective: "engagement",
+          pillar: "education",
         })
         .select()
         .single();
 
       if (postError) throw postError;
 
-      // Mettre à jour la liste des posts
       await loadEditorialPosts(parseInt(editorClientId));
-      
-      // Sélectionner le post créé
       setEditorPostId(newPost.id.toString());
-      
-      // Réinitialiser le formulaire de création
       setNewPostTitle("");
       setNewPostDate("");
       setNewPostPlatform("Instagram");
-      setNewPostType("Vidéos courtes (Reels/Shorts)");
+      setNewPostType("Post");
       setShowCreatePost(false);
 
-      alert("Vidéo créée et planifiée avec succès !");
+      alert("Post créé et planifié avec succès !");
     } catch (error) {
       console.error("Erreur création post:", error);
-      alert("Erreur lors de la création de la vidéo");
+      alert("Erreur lors de la création du post");
     }
   };
 
   return (
     <>
-      <Header title="Scripts Vidéo" />
+      <Header title="Scripts" />
       <main className="p-4 sm:p-6 lg:p-8 max-w-[1800px] mx-auto">
-        {/* Header avec bouton nouveau script */}
-        <div className="bg-gradient-to-br from-brand-orange via-brand-orange-light to-orange-400 rounded-2xl shadow-2xl p-6 sm:p-8 text-white mb-6">
-          <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
+        {/* Header avec statistiques et actions */}
+        <div className="bg-gradient-to-br from-orange-500 via-orange-600 to-red-500 rounded-3xl shadow-2xl p-6 sm:p-8 text-white mb-8">
+          <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6 mb-6">
             <div>
-              <h1 className="text-3xl sm:text-4xl font-bold mb-2">Scripts Vidéo</h1>
-              <p className="text-white/90 text-lg">Créez et gérez vos scripts de vidéos</p>
+              <div className="flex items-center gap-3 mb-2">
+                <div className="p-3 bg-white/20 backdrop-blur-sm rounded-xl">
+                  <FileText className="w-8 h-8 text-white" />
+                </div>
+                <h1 className="text-3xl sm:text-4xl font-bold">Scripts</h1>
+              </div>
+              <p className="text-white/90 text-lg">Créez et gérez vos scripts de contenu</p>
             </div>
-            <button
-              onClick={handleNewScript}
-              className="flex items-center gap-2 px-6 py-3 bg-white text-brand-orange rounded-xl font-bold hover:shadow-xl transition-all"
-            >
-              <Plus className="w-5 h-5" />
-              Nouveau script
-            </button>
+            <div className="flex gap-3">
+              <button
+                onClick={() => setShowWizard(true)}
+                className="flex items-center gap-2 px-5 py-3 bg-white/20 backdrop-blur-sm text-white rounded-xl font-semibold hover:bg-white/30 transition-all border-2 border-white/30"
+              >
+                <Video className="w-5 h-5" />
+                Assistant IA
+              </button>
+              <button
+                onClick={handleNewScript}
+                className="flex items-center gap-2 px-6 py-3 bg-white text-orange-600 rounded-xl font-bold hover:shadow-xl transition-all"
+              >
+                <Plus className="w-5 h-5" />
+                Nouveau script
+              </button>
+            </div>
+          </div>
+          
+          {/* Statistiques */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4 border border-white/20">
+              <div className="text-3xl font-bold mb-1">{scripts.length}</div>
+              <div className="text-white/80 text-sm font-medium">Total scripts</div>
+            </div>
+            <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4 border border-white/20">
+              <div className="text-3xl font-bold mb-1">{scripts.filter(s => s.editorial_post).length}</div>
+              <div className="text-white/80 text-sm font-medium">Liés à des posts</div>
+            </div>
+            <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4 border border-white/20">
+              <div className="text-3xl font-bold mb-1">{scripts.filter(s => s.client).length}</div>
+              <div className="text-white/80 text-sm font-medium">Avec client</div>
+            </div>
+            <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4 border border-white/20">
+              <div className="text-3xl font-bold mb-1">{scripts.filter(s => s.mandat).length}</div>
+              <div className="text-white/80 text-sm font-medium">Avec mandat</div>
+            </div>
           </div>
         </div>
 
@@ -435,7 +425,7 @@ export default function ScriptsPage() {
           <div className="bg-white rounded-xl shadow-md p-12 text-center">
             <FileText className="w-16 h-16 text-gray-300 mx-auto mb-4" />
             <h3 className="text-xl font-bold text-gray-900 mb-2">Aucun script</h3>
-            <p className="text-gray-600 mb-6">Créez votre premier script vidéo</p>
+            <p className="text-gray-600 mb-6">Créez votre premier script</p>
             <button
               onClick={handleNewScript}
               className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-brand-orange to-brand-orange-light text-white rounded-xl font-bold hover:shadow-lg transition-all"
@@ -449,58 +439,87 @@ export default function ScriptsPage() {
             {scripts.map((script) => (
               <div
                 key={script.id}
-                className="bg-white rounded-xl shadow-md p-6 hover:shadow-lg transition-shadow border-l-4 border-brand-orange"
+                className="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden border border-slate-200 hover:border-orange-300"
               >
-                <div className="flex items-start justify-between mb-4">
-                  <div className="flex items-center gap-3">
-                    <div className="p-2 bg-orange-100 rounded-lg">
-                      <FileText className="w-5 h-5 text-brand-orange" />
+                {/* Header avec gradient */}
+                <div className="bg-gradient-to-r from-orange-50 to-red-50 p-5 border-b-2 border-orange-200">
+                  <div className="flex items-start justify-between">
+                    <div className="flex-1">
+                      <div className="flex items-center gap-2 mb-2">
+                        <div className="p-2 bg-gradient-to-br from-orange-500 to-red-500 rounded-lg shadow-lg">
+                          <FileText className="w-4 h-4 text-white" />
+                        </div>
+                        {script.editorial_post && (
+                          <div className="px-2 py-1 bg-green-100 text-green-700 rounded-full text-xs font-semibold flex items-center gap-1">
+                            <CheckCircle2 className="w-3 h-3" />
+                            Lié
+                          </div>
+                        )}
+                      </div>
+                      <h3 className="font-bold text-gray-900 text-lg leading-tight line-clamp-2">{script.title}</h3>
                     </div>
-                    <h3 className="font-bold text-gray-900 text-lg">{script.title}</h3>
-                  </div>
-                  <div className="flex gap-2">
-                    <button
-                      onClick={() => handleEditScript(script)}
-                      className="p-2 hover:bg-blue-50 rounded-lg transition-colors"
-                      title="Modifier"
-                    >
-                      <Edit3 className="w-4 h-4 text-blue-600" />
-                    </button>
-                    <button
-                      onClick={() => handleDeleteScript(script.id)}
-                      className="p-2 hover:bg-red-50 rounded-lg transition-colors"
-                      title="Supprimer"
-                    >
-                      <Trash2 className="w-4 h-4 text-red-600" />
-                    </button>
+                    <div className="flex gap-1 ml-2">
+                      <button
+                        onClick={() => { setViewerScript(script); setShowViewer(true); }}
+                        className="p-2 hover:bg-orange-100 rounded-lg transition-colors group/view"
+                        title="Lire"
+                      >
+                        <Eye className="w-4 h-4 text-orange-600 group-hover/view:scale-110 transition-transform" />
+                      </button>
+                      <button
+                        onClick={() => handleEditScript(script)}
+                        className="p-2 hover:bg-blue-100 rounded-lg transition-colors group/edit"
+                        title="Modifier"
+                      >
+                        <Edit3 className="w-4 h-4 text-blue-600 group-hover/edit:scale-110 transition-transform" />
+                      </button>
+                      <button
+                        onClick={() => handleDeleteScript(script.id)}
+                        className="p-2 hover:bg-red-100 rounded-lg transition-colors group/delete"
+                        title="Supprimer"
+                      >
+                        <Trash2 className="w-4 h-4 text-red-600 group-hover/delete:scale-110 transition-transform" />
+                      </button>
+                    </div>
                   </div>
                 </div>
 
-                {script.client && (
-                  <div className="flex items-center gap-2 text-sm text-gray-600 mb-2">
-                    <User className="w-4 h-4" />
-                    <span>{script.client.name}</span>
-                  </div>
-                )}
+                {/* Contenu */}
+                <div className="p-5 space-y-3">
+                  {script.client && (
+                    <div className="flex items-center gap-2 text-sm bg-slate-50 px-3 py-2 rounded-lg">
+                      <User className="w-4 h-4 text-slate-600" />
+                      <span className="font-medium text-slate-700">{script.client.name}</span>
+                    </div>
+                  )}
 
-                {script.mandat && (
-                  <div className="flex items-center gap-2 text-sm text-gray-600 mb-2">
-                    <FileText className="w-4 h-4" />
-                    <span>{script.mandat.title}</span>
-                  </div>
-                )}
+                  {script.mandat && (
+                    <div className="flex items-center gap-2 text-sm bg-blue-50 px-3 py-2 rounded-lg">
+                      <FileText className="w-4 h-4 text-blue-600" />
+                      <span className="font-medium text-blue-700">{script.mandat.title}</span>
+                    </div>
+                  )}
 
-                {script.editorial_post && (
-                  <div className="flex items-center gap-2 text-sm text-green-600 mb-2 font-semibold">
-                    <Video className="w-4 h-4" />
-                    <span>{script.editorial_post.title}</span>
-                    <span className="text-xs text-gray-500">({new Date(script.editorial_post.publication_date).toLocaleDateString('fr-FR')} - {script.editorial_post.platform})</span>
-                  </div>
-                )}
+                  {script.editorial_post && (
+                    <div className="bg-gradient-to-r from-green-50 to-emerald-50 border-2 border-green-200 rounded-lg p-3">
+                      <div className="flex items-start gap-2">
+                        <Calendar className="w-4 h-4 text-green-600 mt-0.5 flex-shrink-0" />
+                        <div className="flex-1 min-w-0">
+                          <div className="font-semibold text-green-900 text-sm line-clamp-1">{script.editorial_post.title}</div>
+                          <div className="text-xs text-green-700 mt-1 flex items-center gap-2">
+                            <span>{new Date(script.editorial_post.publish_date || script.editorial_post.publication_date || '').toLocaleDateString('fr-FR')}</span>
+                            <span>•</span>
+                            <span>{script.editorial_post.platform}</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  )}
 
-                <div className="flex items-center gap-2 text-xs text-gray-500 mt-4">
-                  <Calendar className="w-3 h-3" />
-                  <span>Modifié le {new Date(script.updated_at).toLocaleDateString('fr-FR')}</span>
+                  <div className="flex items-center gap-2 text-xs text-slate-500 pt-2 border-t border-slate-100">
+                    <Calendar className="w-3 h-3" />
+                    <span>Modifié le {new Date(script.updated_at).toLocaleDateString('fr-FR')}</span>
+                  </div>
                 </div>
               </div>
             ))}
@@ -583,13 +602,13 @@ export default function ScriptsPage() {
                   </div>
                 </div>
 
-                {/* Sélection de la vidéo planifiée */}
+                {/* Lier à un post du calendrier éditorial */}
                 {editorClientId && (
                   <div className="bg-gradient-to-br from-green-50 to-emerald-50 rounded-xl p-4 border-2 border-green-200">
                     <div className="flex items-center justify-between mb-3">
                       <label className="block text-sm font-bold text-gray-900">
-                        <Video className="w-4 h-4 inline mr-2 text-green-600" />
-                        Vidéo planifiée
+                        <Calendar className="w-4 h-4 inline mr-2 text-green-600" />
+                        Post du calendrier éditorial
                       </label>
                       <button
                         type="button"
@@ -597,7 +616,7 @@ export default function ScriptsPage() {
                         className="text-xs px-3 py-1.5 bg-green-600 text-white rounded-lg font-semibold hover:bg-green-700 transition-colors flex items-center gap-1"
                       >
                         <Plus className="w-3 h-3" />
-                        Créer une vidéo
+                        Créer un post
                       </button>
                     </div>
                     
@@ -606,29 +625,29 @@ export default function ScriptsPage() {
                       onChange={(e) => setEditorPostId(e.target.value)}
                       className="w-full px-4 py-3 border-2 border-green-300 rounded-xl focus:border-green-500 focus:ring-2 focus:ring-green-500/20 text-gray-900 font-medium bg-white"
                     >
-                      <option value="">Aucune vidéo liée</option>
+                      <option value="">Aucun post lié</option>
                       {editorialPosts.map(post => (
                         <option key={post.id} value={post.id}>
-                          {post.title} - {new Date(post.publication_date).toLocaleDateString('fr-FR')} ({post.platform})
+                          {post.title} — {new Date(post.publication_date).toLocaleDateString('fr-FR')} ({post.platform})
                         </option>
                       ))}
                     </select>
                     
                     {editorialPosts.length === 0 && !showCreatePost && (
                       <p className="text-xs text-gray-600 mt-2">
-                        Aucune vidéo planifiée pour ce client. Créez-en une pour lier ce script.
+                        Aucun post planifié pour ce client. Créez-en un pour lier ce script.
                       </p>
                     )}
                   </div>
                 )}
 
-                {/* Formulaire de création de vidéo */}
+                {/* Formulaire de création de post */}
                 {showCreatePost && editorClientId && (
                   <div className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-xl p-4 border-2 border-blue-200">
                     <div className="flex items-center justify-between mb-3">
                       <h3 className="text-sm font-bold text-gray-900">
-                        <Video className="w-4 h-4 inline mr-2 text-blue-600" />
-                        Créer une nouvelle vidéo planifiée
+                        <Calendar className="w-4 h-4 inline mr-2 text-blue-600" />
+                        Créer un nouveau post planifié
                       </h3>
                       <button
                         type="button"
@@ -642,14 +661,14 @@ export default function ScriptsPage() {
                     <div className="space-y-3">
                       <div>
                         <label className="block text-xs font-semibold text-gray-700 mb-1">
-                          Titre de la vidéo *
+                          Titre du post *
                         </label>
                         <input
                           type="text"
                           value={newPostTitle}
                           onChange={(e) => setNewPostTitle(e.target.value)}
                           className="w-full px-3 py-2 border-2 border-blue-300 rounded-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 text-sm"
-                          placeholder="Ex: Reel Instagram - Nouveau produit"
+                          placeholder="Ex: Reel Instagram — Lancement produit"
                         />
                       </div>
                       
@@ -693,10 +712,12 @@ export default function ScriptsPage() {
                           onChange={(e) => setNewPostType(e.target.value)}
                           className="w-full px-3 py-2 border-2 border-blue-300 rounded-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 text-sm"
                         >
-                          <option>Vidéos courtes (Reels/Shorts)</option>
-                          <option>Vidéos longues</option>
-                          <option>Stories</option>
-                          <option>Lives</option>
+                          <option>Post</option>
+                          <option>Vidéo courte (Reel/Short)</option>
+                          <option>Vidéo longue</option>
+                          <option>Carousel</option>
+                          <option>Story</option>
+                          <option>Live</option>
                         </select>
                       </div>
                       
@@ -706,7 +727,7 @@ export default function ScriptsPage() {
                         className="w-full px-4 py-2.5 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-lg font-bold hover:shadow-lg transition-all flex items-center justify-center gap-2"
                       >
                         <CheckCircle2 className="w-4 h-4" />
-                        Créer et lier la vidéo
+                        Créer et lier le post
                       </button>
                     </div>
                   </div>
@@ -749,6 +770,78 @@ export default function ScriptsPage() {
                       Sauvegarder
                     </>
                   )}
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Modal Visualisation du script */}
+        {showViewer && viewerScript && (
+          <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+            <div className="bg-white rounded-2xl shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-hidden flex flex-col">
+              <div className="bg-gradient-to-r from-orange-500 to-red-500 p-6 border-b-4 border-orange-600">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-3">
+                    <div className="p-2 bg-white/20 rounded-xl">
+                      <FileText className="w-6 h-6 text-white" />
+                    </div>
+                    <div>
+                      <h2 className="text-xl font-bold text-white">{viewerScript.title}</h2>
+                      <div className="flex items-center gap-3 mt-1">
+                        {viewerScript.client && (
+                          <span className="text-white/80 text-sm flex items-center gap-1">
+                            <User className="w-3 h-3" />{viewerScript.client.name}
+                          </span>
+                        )}
+                        {viewerScript.editorial_post && (
+                          <span className="text-white/80 text-sm flex items-center gap-1">
+                            <Calendar className="w-3 h-3" />{viewerScript.editorial_post.title}
+                          </span>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <button
+                      onClick={() => { setShowViewer(false); handleEditScript(viewerScript); }}
+                      className="flex items-center gap-2 px-4 py-2 bg-white/20 hover:bg-white/30 text-white rounded-xl text-sm font-semibold transition-all"
+                    >
+                      <Edit3 className="w-4 h-4" />
+                      Modifier
+                    </button>
+                    <button
+                      onClick={() => setShowViewer(false)}
+                      className="p-2 hover:bg-white/20 rounded-lg transition-colors"
+                    >
+                      <X className="w-6 h-6 text-white" />
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <div className="p-6 overflow-y-auto flex-1">
+                {viewerScript.content ? (
+                  <div
+                    className="prose prose-gray max-w-none text-gray-800 leading-relaxed"
+                    dangerouslySetInnerHTML={{ __html: viewerScript.content }}
+                  />
+                ) : (
+                  <div className="flex flex-col items-center justify-center py-16 text-gray-400">
+                    <FileText className="w-12 h-12 mb-3" />
+                    <p className="text-sm">Ce script ne contient pas encore de contenu.</p>
+                  </div>
+                )}
+              </div>
+              <div className="flex gap-3 p-4 border-t border-gray-200 bg-gray-50">
+                <div className="text-xs text-gray-500 flex items-center gap-1">
+                  <Calendar className="w-3 h-3" />
+                  Modifié le {new Date(viewerScript.updated_at).toLocaleDateString('fr-FR')}
+                </div>
+                <button
+                  onClick={() => setShowViewer(false)}
+                  className="ml-auto px-5 py-2 border-2 border-gray-300 text-gray-700 rounded-xl font-bold hover:bg-gray-100 transition-colors text-sm"
+                >
+                  Fermer
                 </button>
               </div>
             </div>

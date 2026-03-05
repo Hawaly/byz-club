@@ -30,7 +30,7 @@ export function AssignPackageButton({ clientId, clientName, onSuccess }: AssignP
       setIsLoading(true);
       setError(null);
 
-      const response = await fetch('/api/packages?active=true&include_features=true');
+      const response = await fetch('/api/packages?active_only=true&with_features=true');
       const result = await response.json();
 
       if (!response.ok) {

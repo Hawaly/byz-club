@@ -125,24 +125,24 @@ export default function StrategiesPage() {
       {/* Active Strategy */}
       {activeStrategies.length > 0 && (
         <div>
-          <div className="flex items-center gap-3 mb-6">
+          <div className="flex items-center gap-3 mb-4 md:mb-6">
             <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-green-500 to-emerald-600 flex items-center justify-center">
               <CheckCircle className="w-5 h-5 text-white" />
             </div>
-            <h2 className="text-2xl font-bold text-slate-900">Stratégie active</h2>
+            <h2 className="text-xl md:text-2xl font-bold text-slate-900">Stratégie active</h2>
           </div>
           
-          <div className="grid gap-6 lg:grid-cols-1">
+          <div className="grid gap-4 md:gap-6 lg:grid-cols-1">
             {activeStrategies.slice(0, 1).map(strategy => (
               <ModernCard key={strategy.id} className="overflow-hidden border-2 border-green-300" hover={true}>
-                <div className="bg-gradient-to-r from-green-50 to-emerald-50 p-6 border-b border-green-200">
+                <div className="bg-gradient-to-r from-green-50 to-emerald-50 p-4 md:p-6 border-b border-green-200">
                   <div className="flex justify-between items-start">
                     <div>
                       <div className="flex items-center gap-2 mb-3">
                         <span className="px-3 py-1.5 bg-gradient-to-r from-green-500 to-emerald-600 text-white text-xs font-bold rounded-full shadow-sm">Active</span>
                         <span className="text-slate-600 text-sm font-medium">Version {strategy.version}</span>
                       </div>
-                      <h3 className="text-2xl font-bold text-slate-900 mb-2">Stratégie Social Media</h3>
+                      <h3 className="text-xl md:text-2xl font-bold text-slate-900 mb-2">Stratégie Social Media</h3>
                       <p className="text-slate-600">
                         Dernière mise à jour: {new Date(strategy.updated_at || strategy.created_at).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' })}
                       </p>
@@ -159,7 +159,7 @@ export default function StrategiesPage() {
                   </div>
                 </div>
 
-                <div className="p-6">
+                <div className="p-4 md:p-6">
                   {/* Strategy Platforms */}
                   {strategy.plateformes && strategy.plateformes.length > 0 && (
                     <div className="mb-6">
@@ -190,7 +190,7 @@ export default function StrategiesPage() {
                     )}
                   </div>
 
-                  <div className="mt-6 pt-6 border-t border-slate-200 flex flex-col sm:flex-row justify-between items-stretch sm:items-center gap-3">
+                  <div className="mt-4 md:mt-6 pt-4 md:pt-6 border-t border-slate-200 flex flex-col sm:flex-row justify-between items-stretch sm:items-center gap-3">
                     <Link href={`/client-portal/strategies/${strategy.id}`} className="flex-1 sm:flex-initial">
                       <motion.div
                         whileHover={{ scale: 1.02 }}
@@ -204,7 +204,7 @@ export default function StrategiesPage() {
                     <motion.button
                       whileHover={{ scale: 1.02 }}
                       whileTap={{ scale: 0.98 }}
-                      className="flex items-center justify-center gap-2 px-4 py-2.5 bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white rounded-xl transition-all text-sm font-semibold shadow-sm w-full sm:w-auto"
+                      className="flex items-center justify-center gap-2 px-4 py-3 bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 active:scale-95 text-white rounded-xl transition-all text-sm font-semibold shadow-sm w-full sm:w-auto"
                     >
                       <Download className="w-4 h-4" /> Télécharger PDF
                     </motion.button>
@@ -219,20 +219,20 @@ export default function StrategiesPage() {
       {/* Other Strategies */}
       {inactiveStrategies.length > 0 && (
         <div>
-          <div className="flex items-center gap-3 mb-6">
+          <div className="flex items-center gap-3 mb-4 md:mb-6">
             <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-slate-500 to-slate-600 flex items-center justify-center">
               <Clock className="w-5 h-5 text-white" />
             </div>
-            <h2 className="text-2xl font-bold text-slate-900">Anciennes versions</h2>
+            <h2 className="text-xl md:text-2xl font-bold text-slate-900">Anciennes versions</h2>
           </div>
 
-          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          <div className="grid gap-4 md:gap-6 md:grid-cols-2 lg:grid-cols-3">
             {inactiveStrategies.map((strategy) => (
               <motion.div
                 key={strategy.id}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                whileHover={{ y: -8, scale: 1.02 }}
+                whileHover={{ y: -4, scale: 1.01 }}
                 transition={{ duration: 0.3 }}
               >
                 <ModernCard className="h-full border-2 border-transparent hover:border-orange-300 group" hover={true}>

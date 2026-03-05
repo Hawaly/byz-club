@@ -35,7 +35,11 @@ import {
   Package,
   FileSignature,
   Wallet,
-  Monitor
+  Monitor,
+  DollarSign,
+  FolderKanban,
+  Lightbulb,
+  UserCog
 } from "lucide-react";
 
 interface MenuItem {
@@ -59,65 +63,80 @@ const isMenuGroup = (item: MenuEntry): item is MenuGroup => {
 };
 
 const menuItems: MenuEntry[] = [
+  // RACINE
   { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard, color: "from-brand-orange to-brand-orange-light" },
   
-  // Groupe 1 : Comptabilité
+  // SECTION 1 : Business & Finance
   { 
-    label: "Comptabilité", 
-    icon: Calculator, 
-    color: "from-brand-orange to-brand-orange-light",
+    label: "Business & Finance", 
+    icon: DollarSign, 
+    color: "from-emerald-600 to-emerald-500",
     children: [
-      { href: "/comptabilite", label: "Tableau de bord", icon: BarChart3, color: "from-brand-orange to-brand-orange-light" },
-      { href: "/factures", label: "Factures", icon: FileText, color: "from-brand-orange to-brand-orange-light" },
-      { href: "/factures-recurrentes", label: "Factures récurrentes", icon: RefreshCw, color: "from-brand-orange to-brand-orange-light" },
-      { href: "/contrats", label: "Contrats clients", icon: FileSignature, color: "from-brand-orange to-brand-orange-light" },
-      { href: "/paiements", label: "Paiements", icon: Wallet, color: "from-brand-orange to-brand-orange-light" },
-      { href: "/rapports-mensuels", label: "Rapports mensuels", icon: BarChart3, color: "from-brand-orange to-brand-orange-light" },
-      { href: "/depenses", label: "Dépenses", icon: Receipt, color: "from-brand-orange to-brand-orange-light" },
+      { href: "/comptabilite", label: "Vue financière", icon: BarChart3, color: "from-emerald-600 to-emerald-500" },
+      { href: "/factures", label: "Factures", icon: FileText, color: "from-emerald-600 to-emerald-500" },
+      { href: "/factures-recurrentes", label: "Factures récurrentes", icon: RefreshCw, color: "from-emerald-600 to-emerald-500" },
+      { href: "/paiements", label: "Paiements", icon: Wallet, color: "from-emerald-600 to-emerald-500" },
+      { href: "/depenses", label: "Dépenses", icon: Receipt, color: "from-emerald-600 to-emerald-500" },
+      { href: "/rapports-mensuels", label: "Rapports mensuels", icon: BarChart3, color: "from-emerald-600 to-emerald-500" },
+      { href: "/contrats", label: "Contrats clients", icon: FileSignature, color: "from-emerald-600 to-emerald-500" },
     ]
   },
   
-  // Groupe 2 : Gestion d'agence
+  // SECTION 2 : Clients & Projets
   { 
-    label: "Gestion d'agence", 
+    label: "Clients & Projets", 
     icon: Building2, 
-    color: "from-brand-orange to-brand-orange-light",
+    color: "from-blue-600 to-blue-500",
     children: [
-      { href: "/clients", label: "Clients", icon: Users, color: "from-brand-orange to-brand-orange-light" },
-      { href: "/mandats", label: "Mandats", icon: Briefcase, color: "from-brand-orange to-brand-orange-light" },
-      { href: "/packages", label: "Packs de services", icon: Package, color: "from-brand-orange to-brand-orange-light" },
+      { href: "/clients", label: "Clients", icon: Users, color: "from-blue-600 to-blue-500" },
+      { href: "/mandats", label: "Projets", icon: Briefcase, color: "from-blue-600 to-blue-500" },
+      { href: "/packages", label: "Packs de services", icon: Package, color: "from-blue-600 to-blue-500" },
     ]
   },
   
-  // Groupe 3 : Gestion du travail & tâches
+  // SECTION 3 : Production & Création
   { 
-    label: "Travail & Tâches", 
-    icon: ClipboardList, 
-    color: "from-brand-orange to-brand-orange-light",
+    label: "Production & Création", 
+    icon: FolderKanban, 
+    color: "from-purple-600 to-purple-500",
     children: [
-      { href: "/taches", label: "Toutes les tâches", icon: ClipboardList, color: "from-brand-orange to-brand-orange-light" },
-      { href: "/scripts", label: "Scripts vidéo", icon: Film, color: "from-brand-orange to-brand-orange-light" },
+      { href: "/taches", label: "Toutes les tâches", icon: ClipboardList, color: "from-purple-600 to-purple-500" },
+      { href: "/concepts", label: "Concepts créatifs", icon: Lightbulb, color: "from-purple-600 to-purple-500" },
+      { href: "/calendrier", label: "Calendrier éditorial", icon: Calendar, color: "from-purple-600 to-purple-500" },
+      { href: "/scripts", label: "Scripts", icon: Film, color: "from-purple-600 to-purple-500" },
+      { href: "/strategie", label: "Stratégie", icon: Target, color: "from-purple-600 to-purple-500" },
+      { href: "/clients", label: "Gérer le client", icon: UserCog, color: "from-purple-600 to-purple-500" },
     ]
   },
   
-  // Groupe 4 : Sales & CRM
+  // SECTION 4 : Sales & CRM
   { 
-    label: "Sales", 
+    label: "Sales & CRM", 
     icon: Target, 
     color: "from-brand-orange to-brand-orange-light",
     children: [
       { href: "/sales/prospects", label: "Prospects", icon: UserPlus, color: "from-brand-orange to-brand-orange-light" },
       { href: "/sales/pipeline", label: "Pipeline", icon: Kanban, color: "from-brand-orange to-brand-orange-light" },
-      { href: "/sales/activities", label: "Activités", icon: CheckSquare, color: "from-brand-orange to-brand-orange-light" },
       { href: "/sales/meetings", label: "Rendez-vous", icon: Calendar, color: "from-brand-orange to-brand-orange-light" },
       { href: "/sales/meeting-minutes", label: "PV Réunions", icon: FileEdit, color: "from-brand-orange to-brand-orange-light" },
       { href: "/sales/pitch-decks", label: "Pitch Decks", icon: Presentation, color: "from-brand-orange to-brand-orange-light" },
+      { href: "/sales/activities", label: "Activités", icon: CheckSquare, color: "from-brand-orange to-brand-orange-light" },
     ]
   },
   
-  { href: "/users", label: "Gestion des utilisateurs", icon: ShieldCheck, color: "from-purple-600 to-purple-500" },
-  { href: "/sessions", label: "Sessions actives", icon: Monitor, color: "from-blue-600 to-blue-500" },
-  { href: "/security", label: "Sécurité & Audit", icon: Shield, color: "from-red-600 to-red-500" },
+  // SECTION 5 : Administration & Sécurité
+  { 
+    label: "Administration & Sécurité", 
+    icon: ShieldCheck, 
+    color: "from-red-600 to-red-500",
+    children: [
+      { href: "/users", label: "Utilisateurs", icon: ShieldCheck, color: "from-red-600 to-red-500" },
+      { href: "/sessions", label: "Sessions actives", icon: Monitor, color: "from-red-600 to-red-500" },
+      { href: "/security", label: "Sécurité & Audit", icon: Shield, color: "from-red-600 to-red-500" },
+    ]
+  },
+  
+  // RACINE (fin)
   { href: "/settings", label: "Paramètres", icon: Settings, color: "from-gray-700 to-gray-800" },
 ];
 
@@ -213,7 +232,7 @@ export function Sidebar() {
           <div className="relative">
             <div className="w-11 h-11 bg-white rounded-xl flex items-center justify-center shadow-brand group-hover:shadow-brand-lg transition-all duration-300 p-1.5">
               <img 
-                src="/images/logos/urstoryBlack.png" 
+                src="/images/Logo.png" 
                 alt="BYZCLUB Logo" 
                 className="w-8 h-8 object-contain"
               />
@@ -225,7 +244,7 @@ export function Sidebar() {
               BYZCLUB
             </span>
             <span className="text-xs text-slate-400 font-medium">
-              Comptabilité
+              Marketing Digital
             </span>
           </div>
         </Link>

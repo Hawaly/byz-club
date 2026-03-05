@@ -148,7 +148,6 @@ export default function ClientDashboard() {
     fetchDashboardData();
   }, [user]);
 
-  // Loading state
   if (isLoading) {
     return (
       <div className="flex items-center justify-center h-64">
@@ -157,269 +156,270 @@ export default function ClientDashboard() {
     );
   }
 
-  // Calculate payment progress percentage
-  const paymentProgress = stats.invoices.montantTotal > 0 
-    ? Math.round((stats.invoices.montantPaye / stats.invoices.montantTotal) * 100) 
+  const paymentProgress = stats.invoices.montantTotal > 0
+    ? Math.round((stats.invoices.montantPaye / stats.invoices.montantTotal) * 100)
     : 0;
 
+  const greeting = (() => {
+    const h = new Date().getHours();
+    if (h < 12) return 'Bonjour';
+    if (h < 18) return 'Bon après-midi';
+    return 'Bonsoir';
+  })();
+
   return (
-    <div className="space-y-6 sm:space-y-8">
-      {/* Modern Header - Mobile optimized */}
-      <motion.div 
-        initial={{ opacity: 0, y: -20 }} 
+    <div className="space-y-6">
+
+      {/* ── Hero Banner ── */}
+      <motion.div
+        initial={{ opacity: 0, y: -16 }}
         animate={{ opacity: 1, y: 0 }}
-        className="form-section !p-6 sm:!p-8"
+        className="relative overflow-hidden rounded-2xl md:rounded-3xl bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 p-5 md:p-10 shadow-2xl"
       >
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-6">
-          <div className="space-y-1">
-            <h1 className="text-2xl sm:text-4xl font-black text-slate-900 leading-tight">
-              Bonjour, {user?.client_name?.split(' ')[0] || 'Client'} 👋
-            </h1>
-            <p className="text-slate-500 font-bold text-sm sm:text-lg uppercase tracking-wide">Voici un aperçu de votre activité</p>
+        {/* Déco circles */}
+        <div className="absolute -top-12 -right-12 w-56 h-56 rounded-full bg-orange-500/10 blur-3xl" />
+        <div className="absolute -bottom-8 -left-8 w-40 h-40 rounded-full bg-pink-500/10 blur-2xl" />
+
+        <div className="relative z-10">
+          {/* Mobile: compact row */}
+          <div className="flex items-center justify-between sm:hidden">
+            <div>
+              <p className="text-orange-400 text-xs font-bold uppercase tracking-widest mb-0.5">{greeting} 👋</p>
+              <h1 className="text-2xl font-black text-white leading-tight">
+                {user?.client_name?.split(' ')[0] || 'Bienvenue'}
+              </h1>
+            </div>
+            {stats.mandats.enCours > 0 && (
+              <div className="bg-emerald-500/10 border border-emerald-500/20 px-3 py-2 rounded-xl text-right">
+                <p className="text-[9px] text-emerald-400 font-black uppercase">Actifs</p>
+                <p className="text-white font-black text-lg leading-none flex items-center gap-1 justify-end">
+                  <span className="w-1.5 h-1.5 bg-emerald-400 rounded-full animate-pulse" />
+                  {stats.mandats.enCours}
+                </p>
+              </div>
+            )}
           </div>
 
-          <div className="flex flex-wrap items-center gap-3">
-            {clientInfo && (
-              <div className="bg-orange-50 px-4 py-2.5 rounded-2xl border-2 border-orange-100 flex-1 sm:flex-none">
-                <div className="text-[10px] text-orange-600 font-black uppercase tracking-widest">Client depuis</div>
-                <div className="text-sm font-bold text-slate-900 mt-0.5">
-                  {new Date(clientInfo.created_at).toLocaleDateString('fr-FR', { month: 'long', year: 'numeric' })}
+          {/* Desktop: original layout */}
+          <div className="hidden sm:flex sm:flex-row sm:items-center justify-between gap-6">
+            <div>
+              <p className="text-orange-400 text-sm font-bold uppercase tracking-widest mb-1">{greeting} 👋</p>
+              <h1 className="text-3xl md:text-4xl font-black text-white leading-tight">
+                {user?.client_name?.split(' ')[0] || 'Bienvenue'}
+              </h1>
+              <p className="text-slate-400 mt-1.5 text-sm font-medium">
+                Voici un aperçu de votre activité en temps réel
+              </p>
+            </div>
+            <div className="flex flex-wrap gap-3">
+              {clientInfo && (
+                <div className="bg-white/5 backdrop-blur border border-white/10 px-4 py-3 rounded-2xl">
+                  <p className="text-[9px] text-orange-400 font-black uppercase tracking-widest">Client depuis</p>
+                  <p className="text-white font-bold text-sm mt-0.5">
+                    {new Date(clientInfo.created_at).toLocaleDateString('fr-FR', { month: 'long', year: 'numeric' })}
+                  </p>
                 </div>
-              </div>
-            )}
-
-            {stats.mandats.enCours > 0 && (
-              <div className="bg-emerald-50 px-4 py-2.5 rounded-2xl border-2 border-emerald-100 flex-1 sm:flex-none">
-                <div className="text-[10px] text-emerald-600 font-black uppercase tracking-widest">Projets actifs</div>
-                <div className="text-sm font-bold text-slate-900 mt-0.5 flex items-center gap-2">
-                  <span className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse" />
-                  {stats.mandats.enCours} en cours
+              )}
+              {stats.mandats.enCours > 0 && (
+                <div className="bg-emerald-500/10 backdrop-blur border border-emerald-500/20 px-4 py-3 rounded-2xl">
+                  <p className="text-[9px] text-emerald-400 font-black uppercase tracking-widest">Projets actifs</p>
+                  <p className="text-white font-bold text-sm mt-0.5 flex items-center gap-1.5">
+                    <span className="w-2 h-2 bg-emerald-400 rounded-full animate-pulse" />
+                    {stats.mandats.enCours} en cours
+                  </p>
                 </div>
-              </div>
-            )}
+              )}
+            </div>
           </div>
         </div>
       </motion.div>
 
-      {/* Modern Stats Cards - Standardized */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6">
+      {/* ── Stats Cards ── */}
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
         {[
-          { 
-            label: 'Stratégies', 
-            value: stats.strategies.total, 
-            sub: `${stats.strategies.active} active${stats.strategies.active > 1 ? 's' : ''}`, 
-            icon: Target, 
-            href: '/client-portal/strategies', 
-            bgColor: 'from-orange-500 to-orange-600',
-            lightBg: 'bg-orange-50',
-            textColor: 'text-orange-600'
+          {
+            label: 'Stratégies', value: stats.strategies.total,
+            sub: `${stats.strategies.active} active${stats.strategies.active > 1 ? 's' : ''}`,
+            icon: Target, href: '/client-portal/strategies',
+            gradient: 'from-orange-400 to-pink-500', glow: 'shadow-orange-500/20',
+            tag: 'bg-orange-50 text-orange-600',
           },
-          { 
-            label: 'Mandats', 
-            value: stats.mandats.total, 
-            sub: `${stats.mandats.enCours} en cours`, 
-            icon: Briefcase, 
-            href: '/client-portal/mandats', 
-            bgColor: 'from-blue-500 to-blue-600',
-            lightBg: 'bg-blue-50',
-            textColor: 'text-blue-600'
+          {
+            label: 'Mandats', value: stats.mandats.total,
+            sub: `${stats.mandats.enCours} en cours`,
+            icon: Briefcase, href: '/client-portal/mandats',
+            gradient: 'from-blue-500 to-violet-500', glow: 'shadow-blue-500/20',
+            tag: 'bg-blue-50 text-blue-600',
           },
-          { 
-            label: 'Factures', 
-            value: stats.invoices.total, 
-            sub: `${stats.invoices.payees} payée${stats.invoices.payees > 1 ? 's' : ''}`, 
-            icon: FileText, 
-            href: '/client-portal/factures', 
-            bgColor: 'from-purple-500 to-purple-600',
-            lightBg: 'bg-purple-50',
-            textColor: 'text-purple-600'
+          {
+            label: 'Factures', value: stats.invoices.total,
+            sub: `${stats.invoices.payees} payée${stats.invoices.payees > 1 ? 's' : ''}`,
+            icon: FileText, href: '/client-portal/factures',
+            gradient: 'from-purple-500 to-fuchsia-500', glow: 'shadow-purple-500/20',
+            tag: 'bg-purple-50 text-purple-600',
           },
-          { 
-            label: 'Montant Total', 
-            value: `${stats.invoices.montantTotal.toLocaleString('fr-CH')}`, 
-            sub: 'CHF TTC', 
-            icon: DollarSign, 
-            href: '/client-portal/factures', 
-            bgColor: 'from-emerald-500 to-emerald-600',
-            lightBg: 'bg-emerald-50',
-            textColor: 'text-emerald-600'
-          }
-        ].map((stat, i) => (
-          <Link href={stat.href} key={i}>
-            <motion.div 
-              initial={{ opacity: 0, y: 20 }} 
-              animate={{ opacity: 1, y: 0 }} 
-              transition={{ delay: i * 0.1 }}
+          {
+            label: 'Total Facturé',
+            value: stats.invoices.montantTotal.toLocaleString('fr-CH'),
+            sub: 'CHF TTC',
+            icon: DollarSign, href: '/client-portal/factures',
+            gradient: 'from-emerald-400 to-teal-500', glow: 'shadow-emerald-500/20',
+            tag: 'bg-emerald-50 text-emerald-600',
+          },
+        ].map((card, i) => (
+          <Link key={i} href={card.href}>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: i * 0.08 }}
               whileHover={{ y: -4, scale: 1.02 }}
-              className="form-section !p-4 sm:!p-6 border-none hover:shadow-lg transition-all cursor-pointer h-full group"
+              className="group bg-white rounded-2xl border border-slate-200 p-4 md:p-5 hover:shadow-xl hover:border-slate-300 transition-all cursor-pointer overflow-hidden relative"
             >
-              <div className={`w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-gradient-to-br ${stat.bgColor} flex items-center justify-center mb-4 group-hover:scale-110 transition-transform shadow-lg`}>
-                <stat.icon className="w-6 h-6 sm:w-7 sm:h-7 text-white" />
+              <div className={`absolute inset-0 bg-gradient-to-br ${card.gradient} opacity-0 group-hover:opacity-5 transition-opacity duration-300`} />
+              <div className={`w-10 h-10 md:w-12 md:h-12 rounded-xl md:rounded-2xl bg-gradient-to-br ${card.gradient} flex items-center justify-center mb-3 md:mb-4 shadow-lg ${card.glow} group-hover:scale-110 transition-transform`}>
+                <card.icon className="w-5 h-5 md:w-6 md:h-6 text-white" />
               </div>
-              
-              <div className="mb-3">
-                <div className="text-xl sm:text-2xl font-black text-slate-900 mb-0.5 truncate">{stat.value}</div>
-                <div className="text-[10px] sm:text-xs font-bold text-slate-500 uppercase tracking-wider">{stat.label}</div>
-              </div>
-                
-              <div className={`text-[10px] font-black ${stat.textColor} ${stat.lightBg} px-2.5 py-1 rounded-lg uppercase tracking-tight`}>
-                {stat.sub}
-              </div>
+              <p className="text-xl md:text-2xl font-black text-slate-900 mb-0.5 truncate">{card.value}</p>
+              <p className="text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-2 md:mb-3">{card.label}</p>
+              <span className={`text-[10px] font-black px-2 py-0.5 md:px-2.5 md:py-1 rounded-lg ${card.tag}`}>{card.sub}</span>
             </motion.div>
           </Link>
         ))}
       </div>
 
-      {/* Activity and Deadlines */}
-      <div className="grid gap-6 lg:grid-cols-3">
-        {/* Recent Activity */}
-        <div className="form-section !p-0 overflow-hidden lg:col-span-2">
-          <div className="p-6 sm:p-8 flex items-center justify-between border-b-2 border-slate-50">
-            <div className="flex items-center gap-4">
-              <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-orange-500 to-orange-600 flex items-center justify-center shadow-lg shadow-orange-500/20">
-                <Activity className="w-6 h-6 text-white" />
+      {/* ── Activité + Échéances ── */}
+      <div className="grid gap-4 md:gap-5 lg:grid-cols-3">
+
+        {/* Activité récente */}
+        <div className="lg:col-span-2 bg-white rounded-2xl md:rounded-3xl border border-slate-200 overflow-hidden shadow-sm">
+          <div className="flex items-center justify-between px-4 md:px-6 py-4 md:py-5 border-b border-slate-100">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-orange-400 to-pink-500 flex items-center justify-center shadow-md shadow-orange-500/20">
+                <Activity className="w-5 h-5 text-white" />
               </div>
               <div>
-                <h3 className="text-lg sm:text-xl font-black text-slate-900 uppercase tracking-tight">Activité Récente</h3>
-                <p className="text-xs font-bold text-slate-500 uppercase">Dernières actions</p>
+                <h3 className="font-black text-slate-900 text-base">Activité Récente</h3>
+                <p className="text-[10px] text-slate-400 font-semibold uppercase tracking-wider">Dernières actions</p>
               </div>
             </div>
-            
             <Link href="/client-portal/mandats">
-              <span className="btn btn-secondary !py-2 !px-4 text-xs font-black uppercase tracking-wider">
-                Tout voir
+              <span className="text-xs font-bold text-orange-500 hover:text-orange-600 transition-colors flex items-center gap-1">
+                Tout voir <ChevronRight className="w-3.5 h-3.5" />
               </span>
             </Link>
           </div>
 
-          <div className="p-4 sm:p-6 space-y-3">
-            {recentActivity.length > 0 ? recentActivity.slice(0, 4).map((activity, i) => (
-              <motion.div 
-                key={activity.id} 
-                initial={{ opacity: 0, x: -20 }} 
-                animate={{ opacity: 1, x: 0 }} 
-                transition={{ delay: i * 0.1 }} 
-                className="flex items-center gap-4 p-4 rounded-2xl bg-slate-50 border-2 border-transparent hover:border-slate-100 transition-all cursor-pointer"
+          <div className="p-3 md:p-5 space-y-1 md:space-y-2">
+            {recentActivity.length > 0 ? recentActivity.slice(0, 4).map((item, i) => (
+              <motion.div
+                key={item.id}
+                initial={{ opacity: 0, x: -16 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: i * 0.07 }}
+                className="flex items-center gap-3 px-3 md:px-4 py-3 rounded-xl md:rounded-2xl hover:bg-slate-50 active:bg-slate-100 transition-colors cursor-pointer group"
               >
-                <div className={`w-10 h-10 sm:w-12 sm:h-12 rounded-xl flex items-center justify-center flex-shrink-0 shadow-sm ${
-                  activity.type === 'strategy' ? 'bg-gradient-to-br from-orange-500 to-orange-600' :
-                  activity.type === 'invoice' ? 'bg-gradient-to-br from-purple-500 to-purple-600' : 
-                  'bg-gradient-to-br from-blue-500 to-blue-600'
-                  }`}>
-                  {activity.type === 'strategy' && <Target className="w-5 h-5 sm:w-6 sm:h-6 text-white" />}
-                  {activity.type === 'invoice' && <FileText className="w-5 h-5 sm:w-6 sm:h-6 text-white" />}
-                  {activity.type === 'mandat' && <Briefcase className="w-5 h-5 sm:w-6 sm:h-6 text-white" />}
+                <div className={`w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 ${
+                  item.type === 'strategy' ? 'bg-gradient-to-br from-orange-400 to-pink-500' :
+                  item.type === 'invoice'  ? 'bg-gradient-to-br from-purple-500 to-fuchsia-500' :
+                                             'bg-gradient-to-br from-blue-500 to-violet-500'
+                }`}>
+                  {item.type === 'strategy' && <Target className="w-4.5 h-4.5 text-white" />}
+                  {item.type === 'invoice'  && <FileText className="w-4.5 h-4.5 text-white" />}
+                  {item.type === 'mandat'   && <Briefcase className="w-4.5 h-4.5 text-white" />}
                 </div>
-
                 <div className="flex-1 min-w-0">
-                  <h4 className="font-black text-slate-900 text-sm sm:text-base truncate">{activity.title}</h4>
-                  <p className="text-xs font-bold text-slate-500 uppercase mt-0.5">{activity.action}</p>
+                  <p className="font-bold text-slate-900 text-sm truncate">{item.title}</p>
+                  <p className="text-[11px] text-slate-500 mt-0.5">{item.action}</p>
                 </div>
-                
-                <div className="text-right flex-shrink-0">
-                  <div className="text-xs font-black text-slate-900">
-                    {new Date(activity.date).toLocaleDateString('fr-FR', { day: 'numeric', month: 'short' })}
-                  </div>
-                  <div className="text-[10px] font-bold text-slate-400 uppercase">
-                    {new Date(activity.date).toLocaleDateString('fr-FR', { year: 'numeric' })}
-                  </div>
-                </div>
+                <span className="text-[11px] font-semibold text-slate-400 flex-shrink-0">
+                  {new Date(item.date).toLocaleDateString('fr-FR', { day: 'numeric', month: 'short' })}
+                </span>
               </motion.div>
             )) : (
-              <div className="text-center py-12 text-slate-400 font-bold uppercase text-xs">Aucune activité récente</div>
+              <div className="text-center py-14">
+                <div className="w-14 h-14 rounded-2xl bg-slate-100 flex items-center justify-center mx-auto mb-3">
+                  <Activity className="w-7 h-7 text-slate-300" />
+                </div>
+                <p className="text-sm text-slate-400 font-semibold">Aucune activité récente</p>
+              </div>
             )}
           </div>
         </div>
 
-        {/* Upcoming Deadlines */}
-        <div className="form-section !p-0 overflow-hidden">
-          <div className="p-6 sm:p-8 flex items-center justify-between border-b-2 border-slate-50">
-            <div className="flex items-center gap-4">
-              <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-rose-500 to-red-600 flex items-center justify-center shadow-lg shadow-rose-500/20">
-                <Calendar className="w-6 h-6 text-white" />
+        {/* Échéances + progression */}
+        <div className="bg-white rounded-2xl md:rounded-3xl border border-slate-200 overflow-hidden shadow-sm flex flex-col">
+          <div className="flex items-center justify-between px-4 md:px-6 py-4 md:py-5 border-b border-slate-100">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-rose-500 to-red-600 flex items-center justify-center shadow-md shadow-rose-500/20">
+                <Calendar className="w-5 h-5 text-white" />
               </div>
               <div>
-                <h3 className="text-lg font-black text-slate-900 uppercase tracking-tight">Échéances</h3>
-                <p className="text-xs font-bold text-slate-500 uppercase">À venir</p>
+                <h3 className="font-black text-slate-900 text-base">Échéances</h3>
+                <p className="text-[10px] text-slate-400 font-semibold uppercase tracking-wider">À venir</p>
               </div>
             </div>
-            
-            <Link href="/client-portal/calendrier">
-              <span className="text-xs font-black text-blue-600 uppercase tracking-widest hover:text-blue-700 transition-colors">
-                Calendrier
+            <Link href="/client-portal/calendrier-editorial">
+              <span className="text-xs font-bold text-blue-500 hover:text-blue-600 transition-colors flex items-center gap-1">
+                Calendrier <ChevronRight className="w-3.5 h-3.5" />
               </span>
             </Link>
           </div>
 
-          <div className="p-4 sm:p-6 space-y-3">
-            {upcomingDeadlines.length > 0 ? upcomingDeadlines.map((deadline, i) => {
-              const daysLeft = Math.ceil((new Date(deadline.date).getTime() - Date.now()) / 86400000);
-              const isUrgent = daysLeft <= 7;
-              
+          <div className="p-3 md:p-5 space-y-2 flex-1">
+            {upcomingDeadlines.length > 0 ? upcomingDeadlines.map((dl, i) => {
+              const days = Math.ceil((new Date(dl.date).getTime() - Date.now()) / 86400000);
+              const urgent = days <= 7;
               return (
-                <motion.div 
-                  key={deadline.id} 
-                  initial={{ opacity: 0, scale: 0.95 }} 
-                  animate={{ opacity: 1, scale: 1 }} 
-                  transition={{ delay: i * 0.1 }}
-                  whileHover={{ scale: 1.02 }}
-                  className={`flex items-center gap-4 p-4 rounded-2xl border-2 transition-all cursor-pointer ${
-                    isUrgent 
-                      ? 'bg-rose-50 border-rose-200' 
-                      : 'bg-slate-50 border-slate-100 hover:border-slate-200'
-                  }`}
+                <motion.div
+                  key={dl.id}
+                  initial={{ opacity: 0, scale: 0.96 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ delay: i * 0.07 }}
+                  className={`flex items-center gap-3 p-3.5 rounded-2xl border ${
+                    urgent ? 'bg-rose-50 border-rose-200' : 'bg-slate-50 border-transparent hover:border-slate-200'
+                  } transition-all`}
                 >
-                  <div className={`w-10 h-10 sm:w-12 sm:h-12 rounded-xl flex items-center justify-center flex-shrink-0 shadow-sm ${
-                    deadline.type === 'invoice' 
-                      ? 'bg-gradient-to-br from-purple-500 to-purple-600' 
-                      : 'bg-gradient-to-br from-blue-500 to-blue-600'
+                  <div className={`w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0 ${
+                    dl.type === 'invoice' ? 'bg-gradient-to-br from-purple-500 to-fuchsia-500' : 'bg-gradient-to-br from-blue-500 to-violet-500'
                   }`}>
-                    {deadline.type === 'invoice' ? <FileText className="w-5 h-5 sm:w-6 sm:h-6 text-white" /> : <Briefcase className="w-5 h-5 sm:w-6 sm:h-6 text-white" />}
+                    {dl.type === 'invoice'
+                      ? <FileText className="w-4 h-4 text-white" />
+                      : <Briefcase className="w-4 h-4 text-white" />}
                   </div>
-                  
                   <div className="flex-1 min-w-0">
-                    <p className="font-black text-slate-900 text-sm truncate">{deadline.title}</p>
-                    {deadline.amount && <p className="text-xs font-bold text-slate-500 uppercase mt-0.5">{deadline.amount.toLocaleString('fr-CH')} CHF</p>}
+                    <p className="font-bold text-slate-900 text-xs truncate">{dl.title}</p>
+                    {dl.amount && <p className="text-[10px] text-slate-500 mt-0.5">{dl.amount.toLocaleString('fr-CH')} CHF</p>}
                   </div>
-                  
-                  <div className={`px-3 py-1.5 rounded-xl text-center flex-shrink-0 min-w-[50px] ${
-                    isUrgent ? 'bg-rose-600' : 'bg-slate-900'
-                  }`}>
-                    <p className="text-base font-black text-white leading-tight">
-                      {daysLeft <= 0 ? '0j' : `${daysLeft}j`}
-                    </p>
-                    <p className="text-[8px] font-bold text-white/80 uppercase">
-                      Restant
-                    </p>
+                  <div className={`px-2.5 py-1.5 rounded-xl text-center flex-shrink-0 ${urgent ? 'bg-rose-600' : 'bg-slate-800'}`}>
+                    <p className="text-sm font-black text-white leading-none">{days <= 0 ? '0' : days}</p>
+                    <p className="text-[8px] text-white/70 uppercase font-bold">j</p>
                   </div>
                 </motion.div>
               );
             }) : (
-              <div className="text-center py-12">
-                <div className="w-16 h-16 rounded-2xl bg-slate-100 flex items-center justify-center mx-auto mb-4 border-2 border-dashed border-slate-200">
-                  <Calendar className="w-8 h-8 text-slate-300" />
+              <div className="text-center py-10">
+                <div className="w-14 h-14 rounded-2xl bg-slate-100 border-2 border-dashed border-slate-200 flex items-center justify-center mx-auto mb-3">
+                  <Calendar className="w-7 h-7 text-slate-300" />
                 </div>
-                <p className="text-xs font-black text-slate-400 uppercase">Aucune échéance</p>
+                <p className="text-sm text-slate-400 font-semibold">Aucune échéance</p>
               </div>
             )}
           </div>
 
-          {/* Payment Progress */}
           {stats.invoices.montantTotal > 0 && (
-            <div className="mt-4 p-6 bg-slate-50/50 border-t-2 border-slate-100">
-              <div className="flex justify-between items-center mb-3">
+            <div className="px-6 py-5 bg-slate-50 border-t border-slate-100">
+              <div className="flex justify-between items-center mb-2">
                 <span className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Paiements reçus</span>
                 <span className="text-xs font-black text-emerald-600">{paymentProgress}%</span>
               </div>
-              <div className="h-2.5 bg-slate-200 rounded-full overflow-hidden">
-                <motion.div 
-                  initial={{ width: 0 }} 
-                  animate={{ width: `${paymentProgress}%` }} 
-                  transition={{ duration: 1, delay: 0.3 }}
-                  className="h-full bg-gradient-to-r from-emerald-500 to-teal-500 rounded-full" 
+              <div className="h-2 bg-slate-200 rounded-full overflow-hidden">
+                <motion.div
+                  initial={{ width: 0 }} animate={{ width: `${paymentProgress}%` }}
+                  transition={{ duration: 1.2, delay: 0.4, ease: 'easeOut' }}
+                  className="h-full bg-gradient-to-r from-emerald-400 to-teal-500 rounded-full"
                 />
               </div>
-              <div className="flex justify-between mt-3 text-[10px] font-bold text-slate-400 uppercase">
+              <div className="flex justify-between mt-2 text-[10px] font-bold text-slate-400">
                 <span>{stats.invoices.montantPaye.toLocaleString('fr-CH')} CHF</span>
                 <span>{stats.invoices.montantTotal.toLocaleString('fr-CH')} CHF</span>
               </div>
@@ -428,41 +428,67 @@ export default function ClientDashboard() {
         </div>
       </div>
 
-      {/* Quick Actions */}
-      <div className="form-section !p-6 sm:!p-8">
-        <div className="mb-6 sm:mb-8">
-          <h3 className="text-xl sm:text-2xl font-black text-slate-900 uppercase tracking-tight flex items-center gap-3">
-            <div className="w-1.5 h-8 bg-orange-500 rounded-full" />
-            Actions Rapides
-          </h3>
-          <p className="text-xs sm:text-sm font-bold text-slate-500 uppercase mt-1">Accédez à vos outils</p>
+      {/* ── Accès rapides ── */}
+      <div className="bg-white rounded-2xl md:rounded-3xl border border-slate-200 p-4 md:p-6 shadow-sm">
+        <div className="flex items-center gap-3 mb-4 md:mb-6">
+          <div className="w-1 h-7 bg-gradient-to-b from-orange-400 to-pink-500 rounded-full" />
+          <div>
+            <h3 className="font-black text-slate-900 text-base md:text-lg">Accès Rapides</h3>
+            <p className="text-[10px] text-slate-400 font-semibold uppercase tracking-wider hidden sm:block">Vos outils en un clic</p>
+          </div>
         </div>
-        
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6">
+
+        {/* Mobile: horizontal scroll */}
+        <div className="flex gap-3 overflow-x-auto pb-1 -mx-1 px-1 snap-x snap-mandatory md:hidden">
           {[
-            { label: 'Stratégies', href: '/client-portal/strategies', gradient: 'from-orange-500 to-orange-600', icon: Target },
-            { label: 'Factures', href: '/client-portal/factures', gradient: 'from-purple-500 to-purple-600', icon: FileText },
-            { label: 'Mandats', href: '/client-portal/mandats', gradient: 'from-blue-500 to-blue-600', icon: Briefcase },
-            { label: 'Contact', href: '/client-portal/contact', gradient: 'from-emerald-500 to-emerald-600', icon: MessageSquare },
-          ].map((action, i) => (
-            <Link key={i} href={action.href}>
-              <motion.div 
-                whileHover={{ y: -4 }} 
-                whileTap={{ scale: 0.98 }}
-                className="p-5 sm:p-6 rounded-3xl bg-white border-2 border-slate-100 hover:border-orange-200 hover:bg-orange-50/10 transition-all group flex flex-col items-center sm:items-start text-center sm:text-left"
+            { label: 'Stratégies',  href: '/client-portal/strategies',          gradient: 'from-orange-400 to-pink-500',   icon: Target },
+            { label: 'Factures',    href: '/client-portal/factures',             gradient: 'from-purple-500 to-fuchsia-500', icon: FileText },
+            { label: 'Projets',     href: '/client-portal/mandats',              gradient: 'from-blue-500 to-violet-500',    icon: Briefcase },
+            { label: 'Calendrier',  href: '/client-portal/calendrier-editorial', gradient: 'from-rose-400 to-red-500',       icon: Calendar },
+            { label: 'Contact',     href: '/client-portal/contact',              gradient: 'from-emerald-400 to-teal-500',   icon: MessageSquare },
+          ].map((a, i) => (
+            <Link key={i} href={a.href} className="snap-start flex-shrink-0">
+              <motion.div
+                whileTap={{ scale: 0.94 }}
+                className="flex flex-col items-center gap-2 p-3.5 rounded-2xl bg-slate-50 active:bg-slate-100 border border-slate-100 w-[88px] text-center"
               >
-                <div className={`w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-gradient-to-br ${action.gradient} flex items-center justify-center mb-4 shadow-lg group-hover:scale-110 transition-transform`}>
-                  <action.icon className="w-6 h-6 sm:w-7 sm:h-7 text-white" />
+                <div className={`w-11 h-11 rounded-2xl bg-gradient-to-br ${a.gradient} flex items-center justify-center shadow-md`}>
+                  <a.icon className="w-5 h-5 text-white" />
                 </div>
-                <span className="font-black text-slate-900 text-base sm:text-lg uppercase tracking-tight">{action.label}</span>
-                <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest flex items-center gap-1 mt-1 group-hover:text-orange-600 transition-colors">
-                  Accéder <ChevronRight className="w-3 h-3 group-hover:translate-x-1 transition-transform" />
-                </span>
+                <p className="font-bold text-slate-800 text-xs leading-tight">{a.label}</p>
+              </motion.div>
+            </Link>
+          ))}
+        </div>
+
+        {/* Desktop: grid */}
+        <div className="hidden md:grid grid-cols-2 lg:grid-cols-4 gap-4">
+          {[
+            { label: 'Stratégies',  href: '/client-portal/strategies',  gradient: 'from-orange-400 to-pink-500',   icon: Target },
+            { label: 'Factures',    href: '/client-portal/factures',     gradient: 'from-purple-500 to-fuchsia-500', icon: FileText },
+            { label: 'Projets',     href: '/client-portal/mandats',      gradient: 'from-blue-500 to-violet-500',    icon: Briefcase },
+            { label: 'Contact',     href: '/client-portal/contact',      gradient: 'from-emerald-400 to-teal-500',   icon: MessageSquare },
+          ].map((a, i) => (
+            <Link key={i} href={a.href}>
+              <motion.div
+                whileHover={{ y: -4 }} whileTap={{ scale: 0.97 }}
+                className="group flex flex-col items-center gap-3 p-5 rounded-2xl bg-slate-50 hover:bg-white border-2 border-transparent hover:border-slate-200 hover:shadow-lg transition-all cursor-pointer text-center"
+              >
+                <div className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${a.gradient} flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform`}>
+                  <a.icon className="w-7 h-7 text-white" />
+                </div>
+                <div>
+                  <p className="font-black text-slate-900 text-sm">{a.label}</p>
+                  <p className="text-[10px] text-slate-400 font-semibold uppercase tracking-wide flex items-center justify-center gap-0.5 mt-0.5 group-hover:text-orange-500 transition-colors">
+                    Accéder <ChevronRight className="w-3 h-3 group-hover:translate-x-0.5 transition-transform" />
+                  </p>
+                </div>
               </motion.div>
             </Link>
           ))}
         </div>
       </div>
+
     </div>
   );
 }
